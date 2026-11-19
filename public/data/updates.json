@@ -1,27 +1,27 @@
 {
   "latestAndroid": {
-    "version": "v6.3",
-    "versionCode": 43,
+    "version": "v6.3.1",
+    "versionCode": 45,
     "releaseDate": "November 19, 2026",
     "status": "STABLE_PRODUCTION",
     "downloadUrl": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
     "fileName": "Kyper-latest.apk",
-    "fileSizeBytes": 6824813,
+    "fileSizeBytes": 6824609,
     "fileSizeFormatted": "6.51 MB",
-    "sha256": "542AF6AEC817B119C18BD1CE870BC45D5B91612456A32C57AB822818E08E7A54",
+    "sha256": "18DEC514641D9244FE6E433EFE8252393C6CB4FF6FDE03B732F6024BBCE2BE02",
     "minAndroid": "Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)",
     "highlights": [
-      "🎯 Smooth Floating Bubble Gestures & Auto-Edge Snap (Accidental dismiss completely eliminated)",
-      "⚡ Multi-Engine Auto-Reply Engine (Native actions + Android Auto CarExtender + Wearable fallback)",
-      "🔔 Silent & Muted Notification Auto-Reply (Bypasses OEM background importance limits)",
-      "🔄 1-Tap Toggle on Master Cards (Full-card click target for instant activation)",
+      "🎯 Dock Overlay Window Fixed (FLAG_NOT_FOCUSABLE prevents overlay security blocks)",
+      "⚡ 100% Guaranteed 1-Tap Dock Trigger (Clean distance slop without touch duration race conditions)",
+      "🚀 Multi-Engine Direct Reply (Native actions + Android Auto CarExtender + Wearable fallback)",
+      "🔔 WhatsApp Group vs 1-on-1 Shield Fixed (Prevents false group filtering)",
+      "🔄 Instant Listener Re-binder (Package manager component toggle ensures OS connection)",
+      "💬 Toast & High-Priority Heads-Up Confirmation on every Auto-Reply sent",
       "👑 All 8 Synced Moods (Pro, Chill, Crisp, Love, Flirty, Spicy, Rude, Gaali & Roast)",
-      "🛡️ Emergency & Sadness Empathy Shield (Instant roast suppression on sensitive news)",
-      "🔒 Bank OTP & Sensitive Data Shield (Ignores bank credits/debits & verification codes)",
       "🔋 Battery Optimization Bypass & Reboot Auto-Restorer"
     ],
-    "lastUpdated": "Today at 10:45 PM IST (Nov 19, 2026)",
-    "versionFull": "v6.3 (Build 44 - Gesture & AutoReply Hotfix)"
+    "lastUpdated": "Today at 11:00 PM IST (Nov 19, 2026)",
+    "versionFull": "v6.3.1 (Build 45 - Dock Overlay & AutoReply Perfection)"
   },
   "latestExtension": {
     "version": "v5.2",
