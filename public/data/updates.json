@@ -1,27 +1,27 @@
 {
   "latestAndroid": {
-    "version": "v6.3.2",
-    "versionCode": 46,
+    "version": "v6.3.3",
+    "versionCode": 47,
     "releaseDate": "November 19, 2026",
     "status": "STABLE_PRODUCTION",
     "downloadUrl": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
     "fileName": "Kyper-latest.apk",
-    "fileSizeBytes": 6825033,
+    "fileSizeBytes": 6825753,
     "fileSizeFormatted": "6.51 MB",
-    "sha256": "DCF494637E0E40D4E089A512922223CCB3853D5DD6F4FD0FD495B2F6899C808D",
+    "sha256": "CFC09D11B75DE53887C1CDE1F409A41C36C4A7C5C567E05930972F9A81CEC95D",
     "minAndroid": "Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)",
     "highlights": [
-      "⚡ Instant 0ms Bubble Dismiss (Switch OFF cleanly removes popup and foreground service)",
-      "🎯 Dock Overlay Window Fixed (FLAG_NOT_FOCUSABLE prevents overlay security blocks)",
-      "⚡ 100% Guaranteed 1-Tap Dock Trigger (Clean distance slop without touch duration race conditions)",
+      "⚡ 1-Tap Direct Suggest & Type (Single tap bubble instantly reads chat & types AI reply into WhatsApp/Instagram)",
+      "🎨 Long-Press Mood Selector (>450ms opens full dock to switch between all 8 moods or check quota)",
+      "🤖 Autonomous Hands-Free Auto-Reply (Direct replies in background without touching bubble)",
+      "✨ Instant 0ms Bubble Dismiss (Switch OFF cleanly vanishes popup from screen)",
+      "🛡️ Fixed Toggle Conflict (Card & switch toggle smoothly in 1 click without double-toggling)",
       "🚀 Multi-Engine Direct Reply (Native actions + Android Auto CarExtender + Wearable fallback)",
-      "🔔 WhatsApp Group vs 1-on-1 Shield Fixed (Prevents false group filtering)",
-      "🔄 Instant Listener Re-binder (Package manager component toggle ensures OS connection)",
       "💬 Toast & High-Priority Heads-Up Confirmation on every Auto-Reply sent",
       "👑 All 8 Synced Moods (Pro, Chill, Crisp, Love, Flirty, Spicy, Rude, Gaali & Roast)"
     ],
-    "lastUpdated": "Today at 11:15 PM IST (Nov 19, 2026)",
-    "versionFull": "v6.3.2 (Build 46 - Instant Dismiss & Direct Reply)"
+    "lastUpdated": "Today at 11:25 PM IST (Nov 19, 2026)",
+    "versionFull": "v6.3.3 (Build 47 - 1-Tap Direct Suggest & Hands-Free Auto-Reply)"
   },
   "latestExtension": {
     "version": "v5.2",
@@ -46,10 +46,23 @@
   },
   "history": [
     {
+      "version": "v6.3.3",
+      "platform": "Android APK",
+      "date": "Nov 19, 2026 • 11:25 PM",
+      "badge": "LATEST",
+      "changes": [
+        "1-Tap Direct Suggest & Type: Single tap on the floating KYPER bubble directly reads active chat and types AI reply into WhatsApp/Instagram.",
+        "Long-Press Mood Selector: Hold (>450ms) to open mood dock and switch between all 8 moods or inspect quota.",
+        "Autonomous Hands-Free Auto-Reply: Responds in background via DirectReply without needing to touch the bubble.",
+        "Instant 0ms Bubble Dismiss: Turning OFF Floating KYPER switch in app removes the bubble from the screen immediately.",
+        "Fixed toggle conflict: Clean single-tap toggling for Floating Bubble, Auto-Reply, and Group Shield."
+      ]
+    },
+    {
       "version": "v6.3",
       "platform": "Android APK",
       "date": "Nov 19, 2026 • 10:30 PM",
-      "badge": "LATEST",
+      "badge": "STABLE",
       "changes": [
         "Synchronized all 8 AI Moods with Chrome Extension (Pro, Chill, Crisp, Love, Flirty, Spicy 18+, Rude, Gaali & Roast).",
         "3D Cyber-Shield brand logo upgrade across app and launcher icon.",
