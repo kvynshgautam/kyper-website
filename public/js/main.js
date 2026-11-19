@@ -35,10 +35,16 @@ async function loadUpdatesData() {
     // Populate Android Card
     if (data.latestAndroid) {
       const a = data.latestAndroid;
-      document.querySelectorAll('.val-android-ver').forEach(el => el.textContent = a.version);
+      document.querySelectorAll('.val-android-ver').forEach(el => el.textContent = a.versionFull || a.version);
       document.querySelectorAll('.val-android-size').forEach(el => el.textContent = a.fileSizeFormatted);
       document.querySelectorAll('.val-android-date').forEach(el => el.textContent = a.releaseDate);
       document.querySelectorAll('.val-android-sha').forEach(el => el.textContent = a.sha256);
+      if (a.lastUpdated) {
+        document.querySelectorAll('.val-android-updated').forEach(el => el.textContent = a.lastUpdated);
+      }
+      if (a.version) {
+        document.querySelectorAll('.val-latest-version-badge').forEach(el => el.textContent = `${a.version} LIVE`);
+      }
 
       const dlApkBtn = document.getElementById('btnDownloadApk');
       if (dlApkBtn) dlApkBtn.href = a.downloadUrl;
@@ -49,10 +55,13 @@ async function loadUpdatesData() {
     // Populate Extension Card
     if (data.latestExtension) {
       const e = data.latestExtension;
-      document.querySelectorAll('.val-ext-ver').forEach(el => el.textContent = e.version);
+      document.querySelectorAll('.val-ext-ver').forEach(el => el.textContent = e.versionFull || e.version);
       document.querySelectorAll('.val-ext-size').forEach(el => el.textContent = e.fileSizeFormatted);
       document.querySelectorAll('.val-ext-date').forEach(el => el.textContent = e.releaseDate);
       document.querySelectorAll('.val-ext-sha').forEach(el => el.textContent = e.sha256);
+      if (e.lastUpdated) {
+        document.querySelectorAll('.val-ext-updated').forEach(el => el.textContent = e.lastUpdated);
+      }
 
       const dlExtBtn = document.getElementById('btnDownloadExt');
       if (dlExtBtn) dlExtBtn.href = e.downloadUrl;

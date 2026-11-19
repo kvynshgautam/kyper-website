@@ -20,7 +20,9 @@
       "🔒 Bank OTP & Sensitive Data Shield (Ignores bank credits/debits & verification codes)",
       "🔄 Anti-Loop Ping-Pong Guard (Caps bot-to-bot chat loops at 3 replies)",
       "🔋 Battery Optimization Bypass & Reboot Auto-Restorer"
-    ]
+    ],
+    "lastUpdated": "Today at 10:15 PM IST (Nov 19, 2026)",
+    "versionFull": "v6.3 (Build 43)"
   },
   "latestExtension": {
     "version": "v5.2",
@@ -39,13 +41,15 @@
       "✍️ Short Words & Hinglish Style Cloner (nahi ➔ nhi, baat ➔ btt, etc.)",
       "⚡ Cloudflare AI Worker Backbone with sub-150ms generation time",
       "🔑 Seamless UPI Pro Activation with key storage"
-    ]
+    ],
+    "lastUpdated": "Nov 19, 2026 • 8:00 PM IST",
+    "versionFull": "v5.2 (Production)"
   },
   "history": [
     {
       "version": "v6.3",
       "platform": "Android APK",
-      "date": "Nov 19, 2026",
+      "date": "Nov 19, 2026 • 10:15 PM",
       "badge": "LATEST",
       "changes": [
         "3D Cyber-Shield brand logo upgrade across app and launcher icon.",
