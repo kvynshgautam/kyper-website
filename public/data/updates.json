@@ -1,25 +1,25 @@
 {
   "latestAndroid": {
-    "version": "v6.3.5",
-    "versionCode": 49,
+    "version": "v6.3.6",
+    "versionCode": 50,
     "releaseDate": "November 19, 2026",
     "status": "STABLE_PRODUCTION",
     "downloadUrl": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
     "fileName": "Kyper-latest.apk",
-    "fileSizeBytes": 6831193,
-    "fileSizeFormatted": "6.51 MB",
-    "sha256": "8F754F06D8EB2C27C2D25D1CE6F0568CA7EFD8CD9CDF8720B5CE5B7D6463B16D",
+    "fileSizeBytes": 6834349,
+    "fileSizeFormatted": "6.52 MB",
+    "sha256": "9187092A0D984D4B54D3BCF83CF9532262FDB89CA6A706148726443592D1652B",
     "minAndroid": "Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)",
     "highlights": [
-      "🚫 AI Refusal Fix — 'I'm sorry but I can't' auto-detected & silently retried with safe prompt",
-      "✨ Dock Popup Fix — Bubble switch OFF now instantly removes dock overlay (removeViewImmediate + animation cancel)",
-      "⚡ Always Replies — Even when WhatsApp/Instagram is open in foreground",
-      "🚫 Contact Blocklist — Block specific contacts from getting auto-replied",
-      "🎯 1-Tap Direct Suggest & Type — Single tap reads chat and types AI reply instantly",
-      "🤖 Autonomous Hands-Free Auto-Reply — DirectReply in background without touching screen"
+      "⚡ 1-Tap Reply Hang Fix (Added try-finally flag reset & 15s coroutine timeout so thinking never gets stuck)",
+      "🔍 Multi-Window Chat & Input Detection (Scans interactive windows to locate active WhatsApp/Instagram input box)",
+      "🎯 Bottom-Pinned Composer Protection (Prevents header search bars from dropping chat messages)",
+      "💬 Natural Empty-Chat Fallback (Sends engaging Hinglish openers when chat transcript is fresh)",
+      "🚫 AI Refusal Auto-Retry ('I'm sorry' phrases silently retried with safe neutral prompt)",
+      "✨ Instant 0ms Bubble & Dock Dismiss (removeViewImmediate + animation cancel)"
     ],
-    "lastUpdated": "Today at 11:35 PM IST (Nov 19, 2026)",
-    "versionFull": "v6.3.5 (Build 49 - AI Refusal Fix & Dock Dismiss Fix)"
+    "lastUpdated": "Today at 11:48 PM IST (Nov 19, 2026)",
+    "versionFull": "v6.3.6 (Build 50 - 1-Tap Thinking Hang Fix & Multi-Window Accessibility)"
   },
   "latestExtension": {
     "version": "v5.2",
@@ -44,10 +44,22 @@
   },
   "history": [
     {
+      "version": "v6.3.6",
+      "platform": "Android APK",
+      "date": "Nov 19, 2026 • 11:48 PM",
+      "badge": "LATEST",
+      "changes": [
+        "1-Tap Thinking Hang Fix: Added try-finally flag reset and 15s coroutine timeout so bubble never gets locked in 'KYPER is thinking...'.",
+        "Multi-Window Accessibility: Iterates interactive windows to locate active WhatsApp/Instagram window and message input box even when overlay is clicked.",
+        "Bottom-Pinned Composer Protection: Prevents header search bars from dropping chat messages.",
+        "Natural Empty-Chat Fallback: Prompts intelligent Hinglish openers when chat transcript is fresh."
+      ]
+    },
+    {
       "version": "v6.3.5",
       "platform": "Android APK",
       "date": "Nov 19, 2026 • 11:35 PM",
-      "badge": "LATEST",
+      "badge": "STABLE",
       "changes": [
         "AI Refusal Fix: 'I'm sorry but I can't help with that' auto-detected and silently retried with a safe neutral prompt.",
         "Dock Popup Fix: Bubble switch OFF now instantly removes the dock overlay from screen (removeViewImmediate + animation cancel prevents race condition).",
