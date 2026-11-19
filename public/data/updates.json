@@ -6,9 +6,9 @@
     "status": "STABLE_PRODUCTION",
     "downloadUrl": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
     "fileName": "Kyper-latest.apk",
-    "fileSizeBytes": 7807299,
+    "fileSizeBytes": 7807503,
     "fileSizeFormatted": "7.45 MB",
-    "sha256": "BEF88F98808780E9997CBFDD4E49F69C31DB5CBCD311DB5860F6FE43F2CECD22",
+    "sha256": "717C7561B4B6FB6D696D5BFCA8A35DC52BBBB2249C42DC1D2C2E469180FD2E89",
     "minAndroid": "Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)",
     "highlights": [
       "⚡ 3D Cyber-Shield Brand Logo & Adaptive Obsidian Launcher Icon",
@@ -51,7 +51,8 @@
         "3D Cyber-Shield brand logo upgrade across app and launcher icon.",
         "Fixed Android 14/15 floating bubble Foreground Service crash (added SPECIAL_USE type).",
         "Fixed 1-click Auto-Reply switch toggle (seamless intent restoration after notification permission grant).",
-        "Safe window manager & vibration handling to prevent restart loops."
+        "Safe window manager & vibration handling to prevent restart loops.",
+        "Fixed floating bubble background persistence (START_STICKY, ongoing notification, stopWithTask=false, clean monochrome stat icon)."
       ]
     },
     {
