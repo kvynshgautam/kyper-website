@@ -1,92 +1,107 @@
-﻿{
-    "latestAndroid":  {
-                          "version":  "v6.3",
-                          "versionCode":  42,
-                          "releaseDate":  "November 19, 2026",
-                          "status":  "STABLE_PRODUCTION",
-                          "downloadUrl":  "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
-                          "fileName":  "Kyper-v6.3.apk",
-                          "fileSizeBytes":  7803779,
-                          "fileSizeFormatted":  "7.44 MB",
-                          "sha256":  "7A2F59BEFE5D439924A71CC26232DC437E284DA3B95903C4C3E864E2C04A71F7",
-                          "minAndroid":  "Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)",
-                          "highlights":  [
-                                             "âš¡ Silent Background Auto-Reply via Notification Listener (WhatsApp, Instagram, Telegram)",
-                                             "ðŸ‘‘ Tu vs Tum vs Aap 3-Tier Cultural Intelligence (Sanskar \u0026 Elder respect override)",
-                                             "ðŸ§  15-Message Deep Context Memory \u0026 Multi-Turn Understanding",
-                                             "ðŸ›¡ï¸ Emergency \u0026 Sadness Empathy Shield (Instant roast suppression on sensitive news)",
-                                             "ðŸ”’ Bank OTP \u0026 Sensitive Data Shield (Ignores bank credits/debits \u0026 verification codes)",
-                                             "ðŸ”„ Anti-Loop Ping-Pong Guard (Caps bot-to-bot chat loops at 3 replies)",
-                                             "ðŸ”‹ Battery Optimization Bypass \u0026 Reboot Auto-Restorer"
-                                         ]
-                      },
-    "latestExtension":  {
-                            "version":  "v5.2",
-                            "releaseDate":  "November 19, 2026",
-                            "status":  "STABLE_PRODUCTION",
-                            "downloadUrl":  "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-extension.zip",
-                            "fileName":  "Kyper-extension.zip",
-                            "fileSizeBytes":  86181,
-                            "fileSizeFormatted":  "84.2 KB",
-                            "sha256":  "D716AB7C78C41DCC49D741A8E68C9329E1BEBC879709BAE55D3C102EE9F23657",
-                            "supportedBrowsers":  "Chrome, Brave, Edge, Opera, Arc",
-                            "highlights":  [
-                                               "ðŸŒ Universal DOM Injection for WhatsApp Web, Instagram Web, LinkedIn, Twitter/X",
-                                               "ðŸ’Ž Cyber Floating Dock with instant tone toggles \u0026 smart expand",
-                                               "ðŸ‘‘ Tu vs Tum vs Aap Dynamic \u0026 Natural Pronoun Engine",
-                                               "âœï¸ Short Words \u0026 Hinglish Style Cloner (nahi âž¡ï¸ nhi, baat âž¡ï¸ btt, etc.)",
-                                               "âš¡ Cloudflare AI Worker Backbone with sub-150ms generation time",
-                                               "ðŸ” Seamless UPI Pro Activation with key storage"
-                                           ]
-                        },
-    "history":  [
-                    {
-                        "version":  "v6.1",
-                        "platform":  "Android APK",
-                        "date":  "Nov 19, 2026",
-                        "badge":  "LATEST",
-                        "changes":  [
-                                        "Rebranded as KYPER - Autonomous AI Communicator.",
-                                        "Refined Papa/Elder natural replies to sound 100% human without robotic phrasing.",
-                                        "Added KyperNotificationListenerService for DirectReply auto-responding without opening chat apps.",
-                                        "Added Tu / Tum / Aap cultural pronoun mirroring and Elder/Boss respect override.",
-                                        "Integrated emergency empathy detection to abort roasts during accidents/crises.",
-                                        "Integrated Bank OTP shield and ping-pong loop guard."
-                                    ]
-                    },
-                    {
-                        "version":  "v6.0",
-                        "platform":  "Android APK",
-                        "date":  "Nov 19, 2026",
-                        "badge":  "MAJOR",
-                        "changes":  [
-                                        "15-Message Deep Context Memory Engine for multi-turn conversations.",
-                                        "Hinglish Slang \u0026 Short-Word Transformer integration.",
-                                        "Added Male/Female grammar ending switcher (karta hu vs karti hu)."
-                                    ]
-                    },
-                    {
-                        "version":  "v5.5",
-                        "platform":  "Android APK",
-                        "date":  "Nov 19, 2026",
-                        "badge":  "FEATURE",
-                        "changes":  [
-                                        "Floating Cyber Dock with smooth screen-edge magnet snapping.",
-                                        "Low-RAM mode for budget Android devices (under 2GB free RAM).",
-                                        "Direct UPI Upgrade Dialog with one-click QR code scanner."
-                                    ]
-                    },
-                    {
-                        "version":  "v5.2",
-                        "platform":  "Chrome Extension",
-                        "date":  "Nov 19, 2026",
-                        "badge":  "LATEST",
-                        "changes":  [
-                                        "Rebranded as KYPER with instant WhatsApp Web \u0026 Instagram DM injector.",
-                                        "Natural pronoun mirroring and respect dynamic engine.",
-                                        "Pro License UPI System with Kavyansh Gautam (KG) branding.",
-                                        "Short Words Style Cloner settings tab."
-                                    ]
-                    }
-                ]
+{
+  "latestAndroid": {
+    "version": "v6.3",
+    "versionCode": 43,
+    "releaseDate": "November 19, 2026",
+    "status": "STABLE_PRODUCTION",
+    "downloadUrl": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
+    "fileName": "Kyper-latest.apk",
+    "fileSizeBytes": 7807299,
+    "fileSizeFormatted": "7.45 MB",
+    "sha256": "BEF88F98808780E9997CBFDD4E49F69C31DB5CBCD311DB5860F6FE43F2CECD22",
+    "minAndroid": "Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)",
+    "highlights": [
+      "⚡ 3D Cyber-Shield Brand Logo & Adaptive Obsidian Launcher Icon",
+      "🛡️ Android 14/15 Foreground Service Special Use Crash Fix",
+      "⚡ 1-Click Auto-Reply Switch Toggle (Restores intent instantly upon granting Notification Access)",
+      "👑 Tu vs Tum vs Aap 3-Tier Cultural Intelligence (Sanskar & Elder respect override)",
+      "🧠 15-Message Deep Context Memory & Multi-Turn Understanding",
+      "🛡️ Emergency & Sadness Empathy Shield (Instant roast suppression on sensitive news)",
+      "🔒 Bank OTP & Sensitive Data Shield (Ignores bank credits/debits & verification codes)",
+      "🔄 Anti-Loop Ping-Pong Guard (Caps bot-to-bot chat loops at 3 replies)",
+      "🔋 Battery Optimization Bypass & Reboot Auto-Restorer"
+    ]
+  },
+  "latestExtension": {
+    "version": "v5.2",
+    "releaseDate": "November 19, 2026",
+    "status": "STABLE_PRODUCTION",
+    "downloadUrl": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-extension.zip",
+    "fileName": "Kyper-extension.zip",
+    "fileSizeBytes": 105592,
+    "fileSizeFormatted": "103.1 KB",
+    "sha256": "595B5933CEDCC1C07C36F210E8E88426D3C4192FF885028210ACB4AF5FC9323A",
+    "supportedBrowsers": "Chrome, Brave, Edge, Opera, Arc",
+    "highlights": [
+      "🌐 Universal DOM Injection for WhatsApp Web, Instagram Web, LinkedIn, Twitter/X",
+      "💎 Cyber Floating Dock with 3D Cyber-Shield Vector Emblem & neon aura",
+      "👑 Tu vs Tum vs Aap Dynamic & Natural Pronoun Engine",
+      "✍️ Short Words & Hinglish Style Cloner (nahi ➔ nhi, baat ➔ btt, etc.)",
+      "⚡ Cloudflare AI Worker Backbone with sub-150ms generation time",
+      "🔑 Seamless UPI Pro Activation with key storage"
+    ]
+  },
+  "history": [
+    {
+      "version": "v6.3",
+      "platform": "Android APK",
+      "date": "Nov 19, 2026",
+      "badge": "LATEST",
+      "changes": [
+        "3D Cyber-Shield brand logo upgrade across app and launcher icon.",
+        "Fixed Android 14/15 floating bubble Foreground Service crash (added SPECIAL_USE type).",
+        "Fixed 1-click Auto-Reply switch toggle (seamless intent restoration after notification permission grant).",
+        "Safe window manager & vibration handling to prevent restart loops."
+      ]
+    },
+    {
+      "version": "v6.1",
+      "platform": "Android APK",
+      "date": "Nov 19, 2026",
+      "badge": "STABLE",
+      "changes": [
+        "Rebranded as KYPER - Autonomous AI Communicator.",
+        "Refined Papa/Elder natural replies to sound 100% human without robotic phrasing.",
+        "Added KyperNotificationListenerService for DirectReply auto-responding without opening chat apps.",
+        "Added Tu / Tum / Aap cultural pronoun mirroring and Elder/Boss respect override.",
+        "Integrated emergency empathy detection to abort roasts during accidents/crises.",
+        "Integrated Bank OTP shield and ping-pong loop guard."
+      ]
+    },
+    {
+      "version": "v6.0",
+      "platform": "Android APK",
+      "date": "Nov 19, 2026",
+      "badge": "MAJOR",
+      "changes": [
+        "15-Message Deep Context Memory Engine for multi-turn conversations.",
+        "Hinglish Slang & Short-Word Transformer integration.",
+        "Added Male/Female grammar ending switcher (karta hu vs karti hu)."
+      ]
+    },
+    {
+      "version": "v5.5",
+      "platform": "Android APK",
+      "date": "Nov 19, 2026",
+      "badge": "FEATURE",
+      "changes": [
+        "Floating Cyber Dock with smooth screen-edge magnet snapping.",
+        "Low-RAM mode for budget Android devices (under 2GB free RAM).",
+        "Direct UPI Upgrade Dialog with one-click QR code scanner."
+      ]
+    },
+    {
+      "version": "v5.2",
+      "platform": "Chrome Extension",
+      "date": "Nov 19, 2026",
+      "badge": "LATEST",
+      "changes": [
+        "Upgraded extension branding to 3D Cyber-Shield vector icon & cyber dock.",
+        "Rebranded as KYPER with instant WhatsApp Web & Instagram DM injector.",
+        "Natural pronoun mirroring and respect dynamic engine.",
+        "Pro License UPI System with Kavyansh Gautam (KG) branding.",
+        "Short Words Style Cloner settings tab."
+      ]
+    }
+  ]
 }
