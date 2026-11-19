@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/download/apk",
+      "destination": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
+      "permanent": false
+    },
+    {
+      "source": "/download/extension",
+      "destination": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-extension.zip",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/server.js" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

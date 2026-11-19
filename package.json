@@ -1,0 +1,25 @@
+{
+  "name": "kyper-website",
+  "version": "6.3.0",
+  "description": "Official High-Octane Distribution Website & Release Hub for KYPER (Android & Chrome)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "kyper",
+    "android",
+    "apk",
+    "chrome-extension",
+    "ai-reply",
+    "whatsapp",
+    "instagram"
+  ],
+  "author": "Kavyansh Gautam (KG)",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}

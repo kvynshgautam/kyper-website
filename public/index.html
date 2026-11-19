@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KYPER™ | The World's Fastest AI Auto-Reply & Context-Aware Keyboard</title>
+  <meta name="description" content="Official website & release portal for KYPER Android APK (v6.1) & Chrome Extension (v5.2). Silent notification auto-reply, Tu vs Tum vs Aap intelligence, savage roasts, and bank shields. Engineered by Kavyansh Gautam (KG).">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Ambient Animated Background Canvas -->
+  <div class="bg-canvas">
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="#" class="brand">
+        <div class="brand-icon">⚡</div>
+        <div class="brand-name">KY<span class="gradient-text">PER</span></div>
+        <span class="brand-tag">v6.1</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#simulator" class="nav-link">Live Simulator</a></li>
+        <li><a href="#features" class="nav-link">Intelligence</a></li>
+        <li><a href="#downloads" class="nav-link">Downloads</a></li>
+        <li><a href="#updates" class="nav-link">Changelog</a></li>
+        <li><a href="#install-guide" class="nav-link">Setup Guide</a></li>
+        <li><a href="#pricing" class="nav-link">Upgrade Pro</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button id="audioToggleBtn" class="btn-audio-toggle">🔊 Audio: ON</button>
+        <a href="#downloads" class="btn-primary" style="padding: 8px 18px; font-size: 0.85rem;">Get KYPER</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="badge hero-pill-badge">
+          <span class="pulse-dot"></span>
+          <span>KYPER v6.1 Production Live • Android + Web</span>
+        </div>
+
+        <h1 class="hero-title">
+          Talk Less. <br>
+          <span class="gradient-text">Dominate Every Chat.</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          The ultimate AI background companion for Android & Chrome. Silently auto-replies to WhatsApp, Instagram & Telegram notifications with <strong>"Tu vs Tum vs Aap"</strong> cultural respect, sharp savage comebacks, and zero battery drain.
+        </p>
+
+        <div class="hero-actions">
+          <a href="https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk" id="heroBtnDownloadApk" class="btn-primary">
+            <span>📱 Download Android APK</span>
+            <span style="font-size:0.75rem; opacity:0.85; background:rgba(0,0,0,0.25); padding:2px 8px; border-radius:999px;">v6.3</span>
+          </a>
+
+          <a href="https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-extension.zip" id="heroBtnDownloadExt" class="btn-secondary">
+            <span>💻 Chrome Extension</span>
+            <span style="font-size:0.75rem; color:#94a3b8;">v5.2 .zip</span>
+          </a>
+
+          <a href="#simulator" class="btn-secondary" style="border-color: rgba(139, 92, 246, 0.4);">
+            <span>🎮 Try Live Demo</span>
+          </a>
+        </div>
+
+        <div class="hero-stats-row">
+          <div class="stat-item">
+            <span class="stat-number">150ms</span>
+            <span class="stat-label">Sub-Second AI Latency</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Background Execution</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">0.0B</span>
+            <span class="stat-label">Data Logged / Stored</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">18+</span>
+            <span class="stat-label">Uncensored Roast Engine</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3D Phone Mockup -->
+      <div class="hero-visual">
+        <div class="phone-wrapper">
+          <div class="phone-screen">
+            <div class="phone-notch">
+              <div class="notch-pill">
+                <div class="notch-camera"></div>
+              </div>
+            </div>
+
+            <div class="phone-chat-header">
+              <div class="avatar-badge">KG</div>
+              <div class="chat-contact-info">
+                <div class="chat-contact-name">
+                  <span>Aman (Bhai)</span>
+                  <span style="font-size: 0.7rem; color: #10b981;">● Online</span>
+                </div>
+                <div class="chat-status">WhatsApp • KYPER Auto-Listener</div>
+              </div>
+            </div>
+
+            <div class="phone-chat-body">
+              <div class="chat-bubble chat-bubble-incoming">
+                Abe saale kahan mar gaya? 30 min se wait kar raha hu, nikal jaldi gedi pe chalte h! 🔥
+              </div>
+
+              <div class="chat-bubble chat-bubble-ghost">
+                <div class="ghost-ai-badge">
+                  <span>⚡ KYPER Auto-Replied (142ms)</span>
+                </div>
+                Abe ruk ja 2 min lavde, bike nikaal li hai petrol pump pr hu, 5 min me pahuch rha hu! 🛵
+              </div>
+
+              <div class="chat-bubble chat-bubble-incoming" style="margin-top: 10px;">
+                Chalo badhiya, aaja fatafat!
+              </div>
+            </div>
+
+            <!-- Floating Cyber Bubble Mock -->
+            <div class="phone-floating-pill">
+              <span>⚡ KYPER 6 Tones Active</span>
+            </div>
+
+            <div class="phone-input-bar">
+              <div class="fake-input">DirectReply handled via RemoteInput...</div>
+              <div class="fake-send">⚡</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Live Simulator Section -->
+  <section id="simulator" class="section-padding">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge badge-emerald">Interactive Test Flight</div>
+        <h2 class="section-title">Experience the <span class="gradient-text">KYPER Brain</span> Live</h2>
+        <p class="section-desc">Select who is messaging you and pick a tone. Watch KYPER dynamically detect relationships, respect elders, suppress roasts in emergencies, and protect bank OTPs.</p>
+      </div>
+
+      <div class="simulator-card">
+        <!-- Control selectors -->
+        <div class="simulator-controls">
+          <div class="control-group">
+            <span class="control-label">1. Pick Incoming Message Scenario:</span>
+            <div class="selector-buttons">
+              <button class="btn-select active" data-scenario="papa">👨‍🦳 Papa (Elder)</button>
+              <button class="btn-select" data-scenario="boss">💼 Boss (Senior)</button>
+              <button class="btn-select" data-scenario="dost">😈 Dost (Bhai / Peer)</button>
+              <button class="btn-select" data-scenario="crush">❤️ Crush / Romantic</button>
+              <button class="btn-select" data-scenario="emergency">🚨 Emergency / Crisis</button>
+              <button class="btn-select" data-scenario="bank">🏦 Bank OTP / INR</button>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <span class="control-label">2. Select Desired Tone:</span>
+            <div class="selector-buttons">
+              <button class="btn-select active" data-tone="savage">🤬 Savage & Roast</button>
+              <button class="btn-select" data-tone="respect">👑 Respect (Aap / Ji)</button>
+              <button class="btn-select" data-tone="flirty">❤️ Flirty Romantic</button>
+              <button class="btn-select" data-tone="chill">⚡ Chill Dost (Hinglish)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Workbench Grid -->
+        <div class="simulator-workbench">
+          <!-- Left: Incoming Notification -->
+          <div class="sim-panel">
+            <div class="sim-panel-title">
+              <span>Incoming Message</span>
+              <span id="simAppBadge" class="badge badge-cyan">WhatsApp</span>
+            </div>
+
+            <div class="sim-message-box">
+              <div id="simSenderName" style="font-weight: 700; margin-bottom: 4px; color: #fff;">Papa 👨‍🦳</div>
+              <div id="simIncomingMsg" style="color: #cbd5e1; font-style: italic;">
+                "Ghar kab tak aa rahe ho beta? Dinner ready hai."
+              </div>
+              <div class="sim-meta-pill">Captured via KyperNotificationListenerService (API 26+)</div>
+            </div>
+
+            <!-- Brain Telemetry Console -->
+            <div class="sim-panel-title" style="margin-top: 6px;">
+              <span>AI Decision Matrix</span>
+            </div>
+            <pre id="simBrainConsole" class="sim-brain-console">Analyzing relationship dynamics...</pre>
+          </div>
+
+          <!-- Right: KYPER Generated Auto-Reply -->
+          <div class="sim-panel">
+            <div class="sim-panel-title">
+              <span>KYPER DirectReply Response</span>
+              <span class="badge badge-emerald">RemoteInput Dispatched</span>
+            </div>
+
+            <div id="simReplyOutput" class="sim-reply-output">
+              <span class="typing-cursor"></span>
+            </div>
+
+            <div style="font-size: 0.8rem; color: #94a3b8; line-height: 1.5; margin-top: 10px;">
+              <strong style="color: #c4b5fd;">Notice the Intelligence:</strong> Even if you choose "🤬 Savage", when Papa or Boss messages, the AI strictly suppresses slang and forces respectful <em>"Aap"</em> and <em>"Haanji"</em>. In emergencies, humor is aborted instantly!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Features Section -->
+  <section id="features" class="section-padding" style="background: rgba(10, 14, 22, 0.4);">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge badge-cyan">Engineered for Dominance</div>
+        <h2 class="section-title">Built Different. <span class="gradient-text">Engineered for Perfection.</span></h2>
+        <p class="section-desc">KYPER isn't just another ChatGPT wrapper. It's a deep-learning communication engine with cultural awareness, situational empathy, and system-level Android integration.</p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Feature 1 -->
+        <div class="glass-panel feature-card">
+          <div class="feature-icon-box">⚡</div>
+          <h3 class="feature-title">Silent Background Auto-Reply</h3>
+          <p class="feature-desc">
+            No need to unlock your phone or launch WhatsApp. Uses Android's native <code>RemoteInput</code> directly inside the Notification Service to silently reply in the background.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="glass-panel feature-card">
+          <div class="feature-icon-box">👑</div>
+          <h3 class="feature-title">Tu vs Tum vs Aap Dynamic</h3>
+          <p class="feature-desc">
+            Automatically learns relationship dynamics. Elder/Boss override forces respectful "Aap" and "Ji", romantic partners get warm "Tum", and close friends get natural "Tu" mirroring.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="glass-panel feature-card">
+          <div class="feature-icon-box">🧠</div>
+          <h3 class="feature-title">15-Message Deep Context Memory</h3>
+          <p class="feature-desc">
+            Never replies to just the last message in isolation. Understands the ongoing multi-turn conversation thread, previous context, and intent to craft deeply relevant human replies.
+          </p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="glass-panel feature-card">
+          <div class="feature-icon-box">🛡️</div>
+          <h3 class="feature-title">Emergency & Empathy Shield</h3>
+          <p class="feature-desc">
+            Detects medical emergencies, accidents, or distress keywords. Automatically overrides humor and roasts to send warm, supportive, and urgent help.
+          </p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="glass-panel feature-card">
+          <div class="feature-icon-box">🔒</div>
+          <h3 class="feature-title">Bank OTP & Loop Shield</h3>
+          <p class="feature-desc">
+            Filters out bank transactions, INR alerts, and OTPs. Anti-loop ping-pong guard caps consecutive auto-replies to 3 per contact to prevent bot-to-bot infinite loops.
+          </p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="glass-panel feature-card">
+          <div class="feature-icon-box">✍️</div>
+          <h3 class="feature-title">Short Words / Style Cloner</h3>
+          <p class="feature-desc">
+            Types exactly like you do in modern chat: automatically transforms words into casual Hinglish abbreviations (<em>nahi ➡️ nhi, baat ➡️ btt, raha ➡️ rha, pata ➡️ pta</em>).
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Downloads Section -->
+  <section id="downloads" class="section-padding">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge badge-emerald">Direct Distribution Hub</div>
+        <h2 class="section-title">Get <span class="gradient-text">KYPER</span> Now</h2>
+        <p class="section-desc">Always grab the latest verified release. Fast direct downloads hosted on high-speed infrastructure.</p>
+      </div>
+
+      <div class="download-grid">
+        <!-- Android Card -->
+        <div class="glass-panel download-card download-card-featured">
+          <div class="download-header">
+            <div>
+              <span class="badge badge-emerald" style="margin-bottom: 8px;">RECOMMENDED FOR MOBILE</span>
+              <h3 class="download-title">KYPER for Android</h3>
+              <p style="color: var(--text-secondary); font-size: 0.9rem;">Full Background Auto-Reply & Floating Cyber Bubble</p>
+            </div>
+            <div class="download-platform-icon">🤖</div>
+          </div>
+
+          <ul class="download-meta-list">
+            <li class="download-meta-item">
+              <span>📦 Version:</span>
+              <strong class="val-android-ver" style="color: #fff;">v6.1 (Build 42)</strong>
+            </li>
+            <li class="download-meta-item">
+              <span>💾 Size:</span>
+              <strong class="val-android-size" style="color: #fff;">7.44 MB</strong>
+            </li>
+            <li class="download-meta-item">
+              <span>📅 Release Date:</span>
+              <strong class="val-android-date" style="color: #fff;">November 19, 2026</strong>
+            </li>
+            <li class="download-meta-item">
+              <span>📱 Supported:</span>
+              <span style="color: #38bdf8;">Android 8.0 to Android 15 (Samsung, Pixel, OnePlus, Xiaomi)</span>
+            </li>
+          </ul>
+
+          <div class="sha256-box">
+            <span>SHA-256: <span class="val-android-sha">F06DA01D17AFA61CAAB82AD9A330E922EA2DB1E8B3CCD683AB04ADE612336950</span></span>
+            <button class="btn-copy-sha" data-hash="F06DA01D17AFA61CAAB82AD9A330E922EA2DB1E8B3CCD683AB04ADE612336950">Copy</button>
+          </div>
+
+          <a href="https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk" id="btnDownloadApk" class="btn-primary" style="width: 100%; text-align: center;">
+            <span>⚡ Download Kyper-latest.apk (v6.3)</span>
+          </a>
+        </div>
+
+        <!-- Chrome Extension Card -->
+        <div class="glass-panel download-card">
+          <div class="download-header">
+            <div>
+              <span class="badge badge-cyan" style="margin-bottom: 8px;">FOR DESKTOP BROWSERS</span>
+              <h3 class="download-title">KYPER for Chrome</h3>
+              <p style="color: var(--text-secondary); font-size: 0.9rem;">DOM Injection for WhatsApp Web & Instagram DM</p>
+            </div>
+            <div class="download-platform-icon">🌐</div>
+          </div>
+
+          <ul class="download-meta-list">
+            <li class="download-meta-item">
+              <span>📦 Version:</span>
+              <strong class="val-ext-ver" style="color: #fff;">v5.2 (Production)</strong>
+            </li>
+            <li class="download-meta-item">
+              <span>💾 Size:</span>
+              <strong class="val-ext-size" style="color: #fff;">83.3 KB</strong>
+            </li>
+            <li class="download-meta-item">
+              <span>📅 Release Date:</span>
+              <strong class="val-ext-date" style="color: #fff;">November 19, 2026</strong>
+            </li>
+            <li class="download-meta-item">
+              <span>💻 Supported:</span>
+              <span style="color: #38bdf8;">Chrome, Brave, Edge, Arc, Opera</span>
+            </li>
+          </ul>
+
+          <div class="sha256-box">
+            <span>SHA-256: <span class="val-ext-sha">E116B3D5B6002E9AA16BD2E77D5CD2918CA26719E8B261464743523622C93E96</span></span>
+            <button class="btn-copy-sha" data-hash="E116B3D5B6002E9AA16BD2E77D5CD2918CA26719E8B261464743523622C93E96">Copy</button>
+          </div>
+
+          <a href="https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-extension.zip" id="btnDownloadExt" class="btn-secondary" style="width: 100%; text-align: center; border-color: rgba(6, 182, 212, 0.4);">
+            <span>📦 Download Kyper-extension.zip</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Release History / Changelog Section -->
+      <div id="updates" class="changelog-section">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h3 style="font-size: 1.4rem;">Release Changelog & Updates Log</h3>
+            <p style="color: var(--text-secondary); font-size: 0.88rem;">Complete history of builds, safety patches, and engine upgrades.</p>
+          </div>
+          <span class="badge badge-emerald">Live Telemetry Synchronized</span>
+        </div>
+
+        <div id="changelogTimeline" class="changelog-timeline">
+          <!-- Dynamically populated by main.js from updates.json -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step-by-Step Installation Guides -->
+  <section id="install-guide" class="section-padding" style="background: rgba(10, 14, 22, 0.4);">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge badge-purple">Effortless Setup</div>
+        <h2 class="section-title">Quick 3-Minute <span class="gradient-text">Installation Guide</span></h2>
+        <p class="section-desc">Follow these quick visual steps to start auto-replying in minutes.</p>
+      </div>
+
+      <div class="tabs-container">
+        <button class="tab-btn active" data-tab="tab-android">📱 Android APK Setup</button>
+        <button class="tab-btn" data-tab="tab-chrome">💻 Chrome Extension Setup</button>
+      </div>
+
+      <!-- Android Guide Content -->
+      <div id="tab-android" class="tab-content active">
+        <div class="glass-panel guide-step-card">
+          <div class="step-number">01</div>
+          <h3 class="step-title">Download & Install APK</h3>
+          <p class="step-desc">
+            Click the download button above. When Chrome prompts <em>"File might be harmful"</em>, tap <strong>"Download anyway"</strong>. Open the file and allow <em>"Install unknown apps"</em> for your browser or file manager.
+          </p>
+        </div>
+
+        <div class="glass-panel guide-step-card">
+          <div class="step-number">02</div>
+          <h3 class="step-title">Grant 2 Android Permissions</h3>
+          <p class="step-desc">
+            Open KYPER:
+            <br>1. Tap <strong>"Grant Accessibility"</strong> to enable the floating bubble & typing overlay.
+            <br>2. Tap <strong>"Enable Auto-Reply"</strong> to allow Notification Access so KYPER can respond directly to WhatsApp & Insta.
+          </p>
+        </div>
+
+        <div class="glass-panel guide-step-card">
+          <div class="step-number">03</div>
+          <h3 class="step-title">Configure & Relax</h3>
+          <p class="step-desc">
+            Set your preferred tone (Savage, Romantic, Respectful) and gender grammar. Tap <strong>"Disable Battery Optimizations"</strong> so Android doesn't kill the service during deep sleep. You're set!
+          </p>
+        </div>
+      </div>
+
+      <!-- Chrome Extension Guide Content -->
+      <div id="tab-chrome" class="tab-content">
+        <div class="glass-panel guide-step-card">
+          <div class="step-number">01</div>
+          <h3 class="step-title">Download & Extract Zip</h3>
+          <p class="step-desc">
+            Download <code>Kyper-extension.zip</code>. Right-click the downloaded zip and choose <strong>"Extract All"</strong> to a permanent folder on your computer.
+          </p>
+        </div>
+
+        <div class="glass-panel guide-step-card">
+          <div class="step-number">02</div>
+          <h3 class="step-title">Load Unpacked Extension</h3>
+          <p class="step-desc">
+            Open Chrome/Brave and navigate to <code>chrome://extensions</code>. Toggle the <strong>"Developer mode"</strong> switch in the top-right corner, then click <strong>"Load unpacked"</strong> and select the extracted folder.
+          </p>
+        </div>
+
+        <div class="glass-panel guide-step-card">
+          <div class="step-number">03</div>
+          <h3 class="step-title">Pin & Enjoy Web AI</h3>
+          <p class="step-desc">
+            Click the puzzle piece icon in Chrome's toolbar and pin KYPER. Open WhatsApp Web or Instagram DM—the floating cyber dock will automatically appear in your chat field!
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pro Pricing & UPI Gateway -->
+  <section id="pricing" class="section-padding">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge badge-amber">Unlock Maximum Power</div>
+        <h2 class="section-title">Upgrade to <span class="gradient-text-amber">KYPER Pro</span></h2>
+        <p class="section-desc">Unlimited AI replies, uncensored roast mode, all 6 VIP tones, and priority Cloudflare v2.0 compute.</p>
+      </div>
+
+      <div class="glass-panel pricing-card">
+        <span class="badge badge-emerald">CHOOSE YOUR ACCESS PLAN</span>
+        
+        <!-- Multi-Plan Interactive Grid -->
+        <div class="plans-grid" id="pricingPlansGrid">
+          <!-- Plan 1: 1 Month -->
+          <div class="plan-item-card active" data-plan="monthly" data-amount="99" data-days="30" data-title="1 Month Pro">
+            <span class="plan-top-badge badge badge-cyan">STARTER</span>
+            <div class="plan-item-title">1 Month</div>
+            <div class="plan-item-sub">30 Days Full Access</div>
+            <div class="plan-price-row">
+              <span class="plan-current-price">₹99</span>
+              <span class="plan-strike-price">₹149</span>
+            </div>
+            <div class="plan-effective-rate">₹99 / month</div>
+          </div>
+
+          <!-- Plan 2: 3 Months -->
+          <div class="plan-item-card" data-plan="quarterly" data-amount="249" data-days="90" data-title="3 Months Pro">
+            <span class="plan-top-badge badge badge-emerald">POPULAR</span>
+            <div class="plan-item-title">3 Months</div>
+            <div class="plan-item-sub">Quarterly Pass</div>
+            <div class="plan-price-row">
+              <span class="plan-current-price">₹249</span>
+              <span class="plan-strike-price">₹297</span>
+            </div>
+            <div class="plan-effective-rate">₹83/mo • Save ₹48</div>
+          </div>
+
+          <!-- Plan 3: 6 Months -->
+          <div class="plan-item-card" data-plan="semi_annual" data-amount="449" data-days="180" data-title="6 Months Pro">
+            <span class="plan-top-badge badge badge-cyan">BEST VALUE</span>
+            <div class="plan-item-title">6 Months</div>
+            <div class="plan-item-sub">Semi-Annual Pass</div>
+            <div class="plan-price-row">
+              <span class="plan-current-price">₹449</span>
+              <span class="plan-strike-price">₹594</span>
+            </div>
+            <div class="plan-effective-rate">₹75/mo • Save ₹145</div>
+          </div>
+
+          <!-- Plan 4: 1 Year -->
+          <div class="plan-item-card" data-plan="annual" data-amount="799" data-days="365" data-title="1 Year VIP">
+            <span class="plan-top-badge badge badge-emerald">SUPER SAVER</span>
+            <div class="plan-item-title">1 Year</div>
+            <div class="plan-item-sub">365 Days VIP Access</div>
+            <div class="plan-price-row">
+              <span class="plan-current-price">₹799</span>
+              <span class="plan-strike-price">₹1,188</span>
+            </div>
+            <div class="plan-effective-rate">₹66/mo • Save ₹389</div>
+          </div>
+
+          <!-- Plan 5: Lifetime -->
+          <div class="plan-item-card featured-lifetime" data-plan="lifetime" data-amount="1499" data-days="0" data-title="Lifetime VIP Pass">
+            <span class="plan-top-badge badge badge-crimson" style="background:rgba(245,158,11,0.2); border-color:#f59e0b; color:#fbbf24;">👑 LIFETIME</span>
+            <div class="plan-item-title">Lifetime</div>
+            <div class="plan-item-sub">Pay Once, Own Forever</div>
+            <div class="plan-price-row">
+              <span class="plan-current-price" style="color:#fbbf24;">₹1,499</span>
+              <span class="plan-strike-price">₹2,999</span>
+            </div>
+            <div class="plan-effective-rate" style="color:#fbbf24;">One-Time • Never Pay Again</div>
+          </div>
+        </div>
+
+        <ul class="pricing-features-list">
+          <li class="pricing-feature-item"><span>⚡</span> Unlimited AI Responses</li>
+          <li class="pricing-feature-item"><span>🤬</span> 18+ Uncensored Savage Roast Mode</li>
+          <li class="pricing-feature-item"><span>👑</span> Tu vs Tum vs Aap Sanskar Engine</li>
+          <li class="pricing-feature-item"><span>🛡️</span> Bank OTP & Ping-Pong Safeguards</li>
+          <li class="pricing-feature-item"><span>🚀</span> Sub-150ms Cloudflare Edge Compute</li>
+          <li class="pricing-feature-item"><span>🔑</span> Dual Activation (Android + Chrome)</li>
+        </ul>
+
+        <!-- Dynamic UPI Payment Box -->
+        <div class="upi-box">
+          <div id="selectedPlanHeader" style="font-weight: 700; color: #fff; font-size: 1.05rem;">
+            Scan to Pay <span style="color:var(--accent-emerald);" id="displayPlanAmount">₹99</span> for <span id="displayPlanTitle" style="color:#a78bfa;">1 Month Pro</span>:
+          </div>
+          
+          <div class="upi-qr-frame">
+            <img id="upiQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=kavyanshgautam1@ptyes%26pn=KYPER%26am=99%26cu=INR" alt="UPI QR Code for KYPER Pro" width="154" height="154" style="display:block; border-radius: 8px;">
+          </div>
+
+          <div class="upi-id-badge">
+            <span>kavyanshgautam1@ptyes</span>
+            <button id="btnCopyUpi" class="btn-copy-sha" style="font-weight: 700; color: #a78bfa;">Copy UPI ID</button>
+          </div>
+
+          <!-- UTR Submission Form -->
+          <form id="utrForm" style="width: 100%; display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+            <div id="utrPromptText" style="font-size: 0.85rem; color: var(--text-secondary); text-align: center;">
+              After paying <strong id="utrAmtText" style="color:#fff;">₹99</strong>, enter your 12-digit UPI UTR / Reference No. to verify:
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="utrInput" placeholder="e.g. 432198765432 (12-digit UTR)" required style="flex:1; background: #07090e; border: 1px solid var(--border-color); padding: 10px 14px; border-radius: var(--radius-sm); color: #fff; font-family: var(--font-mono); font-size: 0.88rem;">
+              <button type="submit" class="btn-primary" style="padding: 10px 20px; font-size: 0.9rem;">Verify & Unlock</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Developer & Architect Terminal -->
+  <section id="about" class="section-padding" style="background: rgba(5, 7, 10, 0.8);">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge badge-cyan">System Architecture</div>
+        <h2 class="section-title">Architected by <span class="gradient-text">Kavyansh Gautam (KG)</span></h2>
+        <p class="section-desc">Hardware-level telemetry, security sandboxing, and ultra-low latency mobile engineering.</p>
+      </div>
+
+      <div class="terminal-wrapper">
+        <div class="terminal-top-bar">
+          <div class="terminal-dots">
+            <div class="dot dot-red"></div>
+            <div class="dot dot-yellow"></div>
+            <div class="dot dot-green"></div>
+          </div>
+          <span class="terminal-title">kyper-telemetry@kg-workstation ~ v6.1-production</span>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-select" data-term-cmd="status" style="padding: 3px 10px; font-size: 0.72rem;">status</button>
+            <button class="btn-select" data-term-cmd="defense" style="padding: 3px 10px; font-size: 0.72rem;">defense</button>
+            <button class="btn-select" data-term-cmd="benchmark" style="padding: 3px 10px; font-size: 0.72rem;">benchmark</button>
+          </div>
+        </div>
+
+        <div id="terminalBody" class="terminal-body">
+<span class="term-highlight">================================================================================</span>
+<span class="term-success">⚡ KYPER™ CORE TELEMETRY SUBSYSTEM INITIALIZED</span>
+<span class="term-highlight">================================================================================</span>
+[ARCHITECT] Kavyansh Gautam (KG)
+[RELEASE] Build 42 (v6.1 STABLE)
+[BACKEND] Cloudflare AI Worker Gateway (https://ghosttyper-api.26c648ynfx.workers.dev)
+[UPI VERIFIER] kavyanshgautam1@ptyes (Instant Auto-Activation)
+<span class="term-cmd">> kyper --status</span>
+<span class="term-success">[OK] Android Service: Listening to WhatsApp, Instagram, Telegram notifications</span>
+<span class="term-success">[OK] Respect Classifier: 3-Tier dynamic active (Tu / Tum / Aap)</span>
+<span class="term-success">[OK] Sensitive Filters: OTP + Bank Alert bypass active</span>
+<span class="term-highlight">[READY] Click the buttons above (status / defense / benchmark) to run live diagnostic tests.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="brand">
+            <div class="brand-icon">⚡</div>
+            <div class="brand-name">KY<span class="gradient-text">PER</span></div>
+          </div>
+          <p class="footer-desc">
+            The next-generation autonomous messaging intelligence. Crafted for power users who demand speed, authenticity, and respect in digital conversations.
+          </p>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">
+            Engineered with Precision by <strong>Kavyansh Gautam (KG)</strong>.
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <div class="footer-links-title">Quick Downloads</div>
+          <ul class="footer-links-list">
+            <li><a href="https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk">KYPER APK (v6.3)</a></li>
+            <li><a href="https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-extension.zip">Chrome Extension (v5.2)</a></li>
+            <li><a href="data/updates.json" target="_blank">Raw updates.json API</a></li>
+            <li><a href="#updates">Full Version History</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <div class="footer-links-title">Support & Pro</div>
+          <ul class="footer-links-list">
+            <li><a href="#pricing">Upgrade to Pro (₹99)</a></li>
+            <li><a href="#install-guide">Installation Instructions</a></li>
+            <li><a href="#simulator">Try Live Simulator</a></li>
+            <li><span style="color: #64748b;">UPI: kavyanshgautam1@ptyes</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 KYPER™. All rights reserved. Designed & built by Kavyansh Gautam (KG).</div>
+        <div style="display: flex; gap: 14px;">
+          <span style="color: var(--accent-emerald);">● All Systems Operational</span>
+          <span>v6.1-PROD</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/audio-fx.js"></script>
+  <script src="js/simulator.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
