@@ -1,26 +1,25 @@
 {
   "latestAndroid": {
-    "version": "v6.3.4",
-    "versionCode": 48,
+    "version": "v6.3.5",
+    "versionCode": 49,
     "releaseDate": "November 19, 2026",
     "status": "STABLE_PRODUCTION",
     "downloadUrl": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
     "fileName": "Kyper-latest.apk",
-    "fileSizeBytes": 6829125,
+    "fileSizeBytes": 6831193,
     "fileSizeFormatted": "6.51 MB",
-    "sha256": "33E69785E5591D7252A7A851185B4E5F97C8F473425ED8E180773D9D7F92C76C",
+    "sha256": "8F754F06D8EB2C27C2D25D1CE6F0568CA7EFD8CD9CDF8720B5CE5B7D6463B16D",
     "minAndroid": "Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)",
     "highlights": [
-      "⚡ Always Replies — Even When WhatsApp/Instagram Is Open (Foreground app no longer blocks auto-reply)",
-      "🚫 Contact Blocklist — Block specific contacts from getting auto-replied (Add/Remove anytime)",
-      "🎯 1-Tap Direct Suggest & Type (Single tap bubble reads chat & types AI reply instantly)",
-      "🎨 Long-Press Mood Selector (Hold >450ms to open mood dock and switch all 8 moods)",
-      "🤖 Autonomous Hands-Free Auto-Reply (DirectReply in background without touching screen)",
-      "✨ Instant 0ms Bubble Dismiss (Switch OFF removes bubble immediately)",
-      "🛡️ Fixed Toggle Conflict (All switches toggle cleanly in 1 click)"
+      "🚫 AI Refusal Fix — 'I'm sorry but I can't' auto-detected & silently retried with safe prompt",
+      "✨ Dock Popup Fix — Bubble switch OFF now instantly removes dock overlay (removeViewImmediate + animation cancel)",
+      "⚡ Always Replies — Even when WhatsApp/Instagram is open in foreground",
+      "🚫 Contact Blocklist — Block specific contacts from getting auto-replied",
+      "🎯 1-Tap Direct Suggest & Type — Single tap reads chat and types AI reply instantly",
+      "🤖 Autonomous Hands-Free Auto-Reply — DirectReply in background without touching screen"
     ],
-    "lastUpdated": "Today at 11:30 PM IST (Nov 19, 2026)",
-    "versionFull": "v6.3.4 (Build 48 - Foreground Reply Fix & Contact Blocklist)"
+    "lastUpdated": "Today at 11:35 PM IST (Nov 19, 2026)",
+    "versionFull": "v6.3.5 (Build 49 - AI Refusal Fix & Dock Dismiss Fix)"
   },
   "latestExtension": {
     "version": "v5.2",
@@ -45,10 +44,22 @@
   },
   "history": [
     {
+      "version": "v6.3.5",
+      "platform": "Android APK",
+      "date": "Nov 19, 2026 • 11:35 PM",
+      "badge": "LATEST",
+      "changes": [
+        "AI Refusal Fix: 'I'm sorry but I can't help with that' auto-detected and silently retried with a safe neutral prompt.",
+        "Dock Popup Fix: Bubble switch OFF now instantly removes the dock overlay from screen (removeViewImmediate + animation cancel prevents race condition).",
+        "Contact Blocklist: Block specific contacts from getting auto-replied (Add/Remove from app).",
+        "Always replies even when WhatsApp/Instagram is open in foreground."
+      ]
+    },
+    {
       "version": "v6.3.4",
       "platform": "Android APK",
       "date": "Nov 19, 2026 • 11:30 PM",
-      "badge": "LATEST",
+      "badge": "STABLE",
       "changes": [
         "Always replies even when WhatsApp/Instagram is open in foreground (Android importance bypass fix).",
         "Contact Blocklist: Block specific contacts from getting auto-replied (Add/Remove anytime from app).",
