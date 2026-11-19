@@ -6,9 +6,9 @@
     "status": "STABLE_PRODUCTION",
     "downloadUrl": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
     "fileName": "Kyper-latest.apk",
-    "fileSizeBytes": 7807503,
+    "fileSizeBytes": 7807663,
     "fileSizeFormatted": "7.45 MB",
-    "sha256": "717C7561B4B6FB6D696D5BFCA8A35DC52BBBB2249C42DC1D2C2E469180FD2E89",
+    "sha256": "B236E751D2E1C7FC62E9FC8A1A2D7AE210C754FAE57B704FCBDA51C9E7592FB8",
     "minAndroid": "Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)",
     "highlights": [
       "⚡ 3D Cyber-Shield Brand Logo & Adaptive Obsidian Launcher Icon",
@@ -21,7 +21,7 @@
       "🔄 Anti-Loop Ping-Pong Guard (Caps bot-to-bot chat loops at 3 replies)",
       "🔋 Battery Optimization Bypass & Reboot Auto-Restorer"
     ],
-    "lastUpdated": "Today at 10:15 PM IST (Nov 19, 2026)",
+    "lastUpdated": "Today at 10:30 PM IST (Nov 19, 2026)",
     "versionFull": "v6.3 (Build 43)"
   },
   "latestExtension": {
@@ -49,9 +49,10 @@
     {
       "version": "v6.3",
       "platform": "Android APK",
-      "date": "Nov 19, 2026 • 10:15 PM",
+      "date": "Nov 19, 2026 • 10:30 PM",
       "badge": "LATEST",
       "changes": [
+        "Synchronized all 8 AI Moods with Chrome Extension (Pro, Chill, Crisp, Love, Flirty, Spicy 18+, Rude, Gaali & Roast).",
         "3D Cyber-Shield brand logo upgrade across app and launcher icon.",
         "Fixed Android 14/15 floating bubble Foreground Service crash (added SPECIAL_USE type).",
         "Fixed 1-click Auto-Reply switch toggle (seamless intent restoration after notification permission grant).",
