@@ -21,10 +21,20 @@
       "source": "/download/extension",
       "destination": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-extension.zip",
       "permanent": false
+    },
+    {
+      "source": "/downloads/Kyper-latest.apk",
+      "destination": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
+      "permanent": false
+    },
+    {
+      "source": "/downloads/Kyper-extension.zip",
+      "destination": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-extension.zip",
+      "permanent": false
     }
   ],
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/server.js" },
+    { "source": "/api/updates", "destination": "/data/updates.json" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
