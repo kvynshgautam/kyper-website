@@ -1,27 +1,26 @@
 {
   "latestAndroid": {
-    "version": "v6.3.3",
-    "versionCode": 47,
+    "version": "v6.3.4",
+    "versionCode": 48,
     "releaseDate": "November 19, 2026",
     "status": "STABLE_PRODUCTION",
     "downloadUrl": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
     "fileName": "Kyper-latest.apk",
-    "fileSizeBytes": 6825753,
+    "fileSizeBytes": 6829125,
     "fileSizeFormatted": "6.51 MB",
-    "sha256": "CFC09D11B75DE53887C1CDE1F409A41C36C4A7C5C567E05930972F9A81CEC95D",
+    "sha256": "33E69785E5591D7252A7A851185B4E5F97C8F473425ED8E180773D9D7F92C76C",
     "minAndroid": "Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)",
     "highlights": [
-      "⚡ 1-Tap Direct Suggest & Type (Single tap bubble instantly reads chat & types AI reply into WhatsApp/Instagram)",
-      "🎨 Long-Press Mood Selector (>450ms opens full dock to switch between all 8 moods or check quota)",
-      "🤖 Autonomous Hands-Free Auto-Reply (Direct replies in background without touching bubble)",
-      "✨ Instant 0ms Bubble Dismiss (Switch OFF cleanly vanishes popup from screen)",
-      "🛡️ Fixed Toggle Conflict (Card & switch toggle smoothly in 1 click without double-toggling)",
-      "🚀 Multi-Engine Direct Reply (Native actions + Android Auto CarExtender + Wearable fallback)",
-      "💬 Toast & High-Priority Heads-Up Confirmation on every Auto-Reply sent",
-      "👑 All 8 Synced Moods (Pro, Chill, Crisp, Love, Flirty, Spicy, Rude, Gaali & Roast)"
+      "⚡ Always Replies — Even When WhatsApp/Instagram Is Open (Foreground app no longer blocks auto-reply)",
+      "🚫 Contact Blocklist — Block specific contacts from getting auto-replied (Add/Remove anytime)",
+      "🎯 1-Tap Direct Suggest & Type (Single tap bubble reads chat & types AI reply instantly)",
+      "🎨 Long-Press Mood Selector (Hold >450ms to open mood dock and switch all 8 moods)",
+      "🤖 Autonomous Hands-Free Auto-Reply (DirectReply in background without touching screen)",
+      "✨ Instant 0ms Bubble Dismiss (Switch OFF removes bubble immediately)",
+      "🛡️ Fixed Toggle Conflict (All switches toggle cleanly in 1 click)"
     ],
-    "lastUpdated": "Today at 11:25 PM IST (Nov 19, 2026)",
-    "versionFull": "v6.3.3 (Build 47 - 1-Tap Direct Suggest & Hands-Free Auto-Reply)"
+    "lastUpdated": "Today at 11:30 PM IST (Nov 19, 2026)",
+    "versionFull": "v6.3.4 (Build 48 - Foreground Reply Fix & Contact Blocklist)"
   },
   "latestExtension": {
     "version": "v5.2",
@@ -46,10 +45,25 @@
   },
   "history": [
     {
+      "version": "v6.3.4",
+      "platform": "Android APK",
+      "date": "Nov 19, 2026 • 11:30 PM",
+      "badge": "LATEST",
+      "changes": [
+        "Always replies even when WhatsApp/Instagram is open in foreground (Android importance bypass fix).",
+        "Contact Blocklist: Block specific contacts from getting auto-replied (Add/Remove anytime from app).",
+        "1-Tap Direct Suggest & Type: Single tap on floating bubble reads chat and types reply into WhatsApp/Instagram.",
+        "Long-Press Mood Selector: Hold >450ms to open mood dock and switch between all 8 moods.",
+        "Autonomous Hands-Free Auto-Reply: DirectReply in background without touching screen.",
+        "Instant 0ms Bubble Dismiss: Switch OFF removes floating bubble immediately.",
+        "Fixed toggle conflict: All switches toggle cleanly in 1 click."
+      ]
+    },
+    {
       "version": "v6.3.3",
       "platform": "Android APK",
       "date": "Nov 19, 2026 • 11:25 PM",
-      "badge": "LATEST",
+      "badge": "STABLE",
       "changes": [
         "1-Tap Direct Suggest & Type: Single tap on the floating KYPER bubble directly reads active chat and types AI reply into WhatsApp/Instagram.",
         "Long-Press Mood Selector: Hold (>450ms) to open mood dock and switch between all 8 moods or inspect quota.",
