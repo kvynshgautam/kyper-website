@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css?v=20261119b">
 </head>
 <body>
 
@@ -39,6 +39,7 @@
         <li><a href="#updates" class="nav-link">Changelog</a></li>
         <li><a href="#install-guide" class="nav-link">Setup Guide</a></li>
         <li><a href="#pricing" class="nav-link">Upgrade Pro</a></li>
+        <li><a href="#creator" class="nav-link" style="color: var(--accent-cyan); font-weight: 700;">About KG</a></li>
       </ul>
 
       <div class="nav-actions">
@@ -592,43 +593,71 @@
     </div>
   </section>
 
-  <!-- Developer & Architect Terminal -->
-  <section id="about" class="section-padding" style="background: rgba(5, 7, 10, 0.8);">
+  <!-- Developer Showcase: Meet the Creator (KG) -->
+  <section class="developer-section section-padding" id="creator">
     <div class="container">
       <div class="section-header">
-        <div class="badge badge-cyan">System Architecture</div>
-        <h2 class="section-title">Architected by <span class="gradient-text">Kavyansh Gautam (KG)</span></h2>
-        <p class="section-desc">Hardware-level telemetry, security sandboxing, and ultra-low latency mobile engineering.</p>
+        <div class="badge badge-purple">LEAD ARCHITECT & CREATOR</div>
+        <h2 class="section-title">Crafted by <span class="gradient-text">KG</span></h2>
+        <p class="section-desc">Driven by an obsession with extreme speed, zero bloat, and total user privacy.</p>
       </div>
 
-      <div class="terminal-wrapper">
-        <div class="terminal-top-bar">
+      <div class="terminal-card">
+        <div class="terminal-header">
           <div class="terminal-dots">
-            <div class="dot dot-red"></div>
-            <div class="dot dot-yellow"></div>
-            <div class="dot dot-green"></div>
+            <span class="term-dot dot-red"></span>
+            <span class="term-dot dot-yellow"></span>
+            <span class="term-dot dot-green"></span>
           </div>
-          <span class="terminal-title">kyper-telemetry@kg-workstation ~ v6.1-production</span>
-          <div style="display: flex; gap: 8px;">
-            <button class="btn-select" data-term-cmd="status" style="padding: 3px 10px; font-size: 0.72rem;">status</button>
-            <button class="btn-select" data-term-cmd="defense" style="padding: 3px 10px; font-size: 0.72rem;">defense</button>
-            <button class="btn-select" data-term-cmd="benchmark" style="padding: 3px 10px; font-size: 0.72rem;">benchmark</button>
+          <div class="terminal-title">kg@kyper-core:~$ whoami</div>
+          <div style="font-family: var(--font-mono); font-size: 11px; color: #10b981; display: flex; align-items: center; gap: 6px;">
+            <span class="pulse-dot" style="width: 7px; height: 7px; background: #10b981;"></span> ACTIVE ARCHITECT
           </div>
         </div>
 
-        <div id="terminalBody" class="terminal-body">
-<span class="term-highlight">--------------------------------------------------</span>
-<span class="term-success">⚡ KYPER™ CORE TELEMETRY SUBSYSTEM INITIALIZED</span>
-<span class="term-highlight">--------------------------------------------------</span>
-[ARCHITECT] Kavyansh Gautam (KG)
-[RELEASE] Build 42 (v6.1 STABLE)
-[BACKEND] Cloudflare AI Worker Gateway (https://ghosttyper-api.26c648ynfx.workers.dev)
-[UPI VERIFIER] kavyanshgautam1@ptyes (Instant Auto-Activation)
-<span class="term-cmd">> kyper --status</span>
-<span class="term-success">[OK] Android Service: Listening to WhatsApp, Instagram, Telegram notifications</span>
-<span class="term-success">[OK] Respect Classifier: 3-Tier dynamic active (Tu / Tum / Aap)</span>
-<span class="term-success">[OK] Sensitive Filters: OTP + Bank Alert bypass active</span>
-<span class="term-highlight">[READY] Click the buttons above (status / defense / benchmark) to run live diagnostic tests.</span>
+        <div class="terminal-body">
+          <div class="dev-avatar-wrapper">
+            <div class="dev-avatar">
+              <img src="assets/kg.jpg" alt="KG - Lead Architect & Creator" class="dev-avatar-img">
+            </div>
+            <span class="dev-role-badge">LEAD ARCHITECT & CREATOR</span>
+          </div>
+
+          <div class="dev-content">
+            <h3>KG</h3>
+            <div class="dev-tagline">Architect & Creator of KYPER & KYNX Ecosystem</div>
+            <p class="dev-bio">
+              "I built KYPER with an uncompromising vision: <strong>Autonomous, Context-Aware Intelligence with Zero Lag, Human-Grade Authenticity, and Absolute Privacy</strong>. While typical AI auto-reply tools are robotic, sluggish, or leak conversations to remote servers, KYPER was engineered to operate with surgical precision — respecting interpersonal dynamics (Tu / Tum / Aap), executing sub-second neural inference (~157ms), and never storing a single word of personal conversations."
+            </p>
+
+            <div class="dev-tech-tags">
+              <span class="tech-tag">⚡ Android Accessibility & RemoteInput</span>
+              <span class="tech-tag">🛡️ 5-Tier Sensitive Shield Matrix</span>
+              <span class="tech-tag">🌐 Cloudflare Workers Edge AI</span>
+              <span class="tech-tag">🧠 DeepSeek & Gemini Multi-Model</span>
+              <span class="tech-tag">💻 Chrome Extension Manifest V3</span>
+              <span class="tech-tag">🎯 3-Tier Respect Engine (Tu / Tum / Aap)</span>
+              <span class="tech-tag">🔒 Zero-Log Local Security</span>
+              <span class="tech-tag">⚡ 157ms DirectReply Roundtrip</span>
+            </div>
+
+            <!-- Interactive Terminal Prompt -->
+            <div class="terminal-interactive-box">
+              <div style="color: #a78bfa; margin-bottom: 8px;">kg@kyper-core:~$ <span id="term-cmd-text">kyper --status</span><span class="cursor-blink">_</span></div>
+              <div class="term-cmd-output" id="term-output">
+[SYS] KYPER Neural Core v6.3 [ONLINE]
+[ARCHITECT] KG (Lead Systems Engineer)
+[AI_GATEWAY] Cloudflare Edge AI (134.8ms avg inference)
+[RESPECT_MATRIX] 3-Tier Dynamic Tone (Tu / Tum / Aap) [ARMED]
+[SECURITY] OTP + Banking Shield + Zero Cloud Logging [ENFORCED]
+[STATUS] Android DirectReply + Chrome MV3 Operational ✓</div>
+              <div class="term-btn-row">
+                <button class="term-btn active" onclick="runTermCommand('status')">kyper --status</button>
+                <button class="term-btn" onclick="runTermCommand('defense')">kyper --defense</button>
+                <button class="term-btn" onclick="runTermCommand('benchmark')">kyper --benchmark</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -656,6 +685,7 @@
           <ul class="footer-links-list">
             <li><a href="https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk">KYPER APK (v6.3)</a></li>
             <li><a href="https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-extension.zip">Chrome Extension (v5.2)</a></li>
+            <li><a href="#creator">Crafted by KG</a></li>
             <li><a href="data/updates.json" target="_blank">Raw updates.json API</a></li>
             <li><a href="#updates">Full Version History</a></li>
           </ul>
@@ -684,6 +714,6 @@
   <!-- Scripts -->
   <script src="js/audio-fx.js"></script>
   <script src="js/simulator.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=20261119b"></script>
 </body>
 </html>

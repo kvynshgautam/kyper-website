@@ -216,47 +216,52 @@ function showToast(message) {
   }, 3500);
 }
 
-// Interactive Terminal
-function initTerminal() {
-  const termBody = document.getElementById('terminalBody');
-  const termBtns = document.querySelectorAll('[data-term-cmd]');
-  if (!termBody || !termBtns.length) return;
+// Interactive Developer Terminal (Crafted by KG)
+window.runTermCommand = function(cmd) {
+  const cmdText = document.getElementById('term-cmd-text');
+  const out = document.getElementById('term-output');
+  const btns = document.querySelectorAll('.term-btn');
+  btns.forEach(b => {
+    if (b.getAttribute('onclick')?.includes(cmd)) {
+      b.classList.add('active');
+    } else {
+      b.classList.remove('active');
+    }
+  });
 
-  const COMMANDS = {
-    'status': `
-<span class="term-cmd">> kyper --status</span>
-<span class="term-success">[OK] Cloudflare AI Worker v2.0: Online (99.98% uptime)</span>
-<span class="term-highlight">[HOST] https://ghosttyper-api.26c648ynfx.workers.dev</span>
-<span class="term-success">[ANDROID] v6.1 (Build 42) • DirectReply RemoteInput Active</span>
-<span class="term-success">[EXTENSION] v5.2 (Universal DOM Injector) • Active</span>
-<span class="term-highlight">[AUTH] Key Engine: Online • Developer ID: KG (Kavyansh Gautam)</span>
-`,
-    'defense': `
-<span class="term-cmd">> kyper --defense-matrix</span>
-<span class="term-success">[SHIELD 1] Emergency & Crisis Empathy Filter: RUNNING</span>
-<span class="term-success">[SHIELD 2] Bank OTP / Sensitive Transaction Shield: ENFORCED</span>
-<span class="term-success">[SHIELD 3] Ping-Pong Loop Guard: Active (Max 3 turns / 15m)</span>
-<span class="term-success">[SHIELD 4] Muted Chat Discard Engine: Silent RankingMap Active</span>
-<span class="term-success">[SHIELD 5] Pure Media & Audio Voice Note Guard: ACTIVE</span>
-`,
-    'benchmark': `
-<span class="term-cmd">> kyper --benchmark</span>
-[BENCHMARK] Android Notification Intercept: 8.2ms
+  if (window.soundEngine && typeof window.soundEngine.playType === 'function') {
+    window.soundEngine.playType();
+  }
+
+  if (!cmdText || !out) return;
+
+  if (cmd === 'status') {
+    cmdText.textContent = 'kyper --status';
+    out.innerHTML = `[SYS] KYPER Neural Core v6.3 [ONLINE]
+[ARCHITECT] KG (Lead Systems Engineer)
+[AI_GATEWAY] Cloudflare Edge AI (134.8ms avg inference)
+[RESPECT_MATRIX] 3-Tier Dynamic Tone (Tu / Tum / Aap) [ARMED]
+[SECURITY] OTP + Banking Shield + Zero Cloud Logging [ENFORCED]
+[STATUS] Android DirectReply + Chrome MV3 Operational ✓`;
+  } else if (cmd === 'defense') {
+    cmdText.textContent = 'kyper --defense';
+    out.innerHTML = `[SHIELD 1] Emergency & Crisis Empathy Filter: RUNNING
+[SHIELD 2] Bank OTP / Sensitive Transaction Shield: ENFORCED
+[SHIELD 3] Ping-Pong Loop Guard: Active (Max 3 turns / 15m)
+[SHIELD 4] Muted Chat Discard Engine: Silent RankingMap Active
+[SHIELD 5] Pure Media & Audio Voice Note Guard: ACTIVE
+[VERDICT] 100% Zero-Leak Privacy Matrix Verified ✓`;
+  } else if (cmd === 'benchmark') {
+    cmdText.textContent = 'kyper --benchmark';
+    out.innerHTML = `[BENCHMARK] Android Notification Intercept: 8.2ms
 [BENCHMARK] AI Generation (Cloudflare Edge): 134.8ms
 [BENCHMARK] RemoteInput DirectReply Dispatch: 14.1ms
-<span class="term-highlight">[TOTAL ROUNDTRIP] 157.1ms (World Record Auto-Reply)</span>
-<span class="term-success">[BATTERY DRAIN] <0.8% per 24 hours in deep sleep</span>
-`
-  };
+[TOTAL ROUNDTRIP] 157.1ms (World Record Auto-Reply)
+[BATTERY DRAIN] <0.8% per 24 hours in deep sleep
+[VERDICT] 120 FPS Realtime System Architecture Verified ✓`;
+  }
+};
 
-  termBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const cmd = btn.dataset.termCmd;
-      if (COMMANDS[cmd]) {
-        termBody.innerHTML += COMMANDS[cmd];
-        termBody.scrollTop = termBody.scrollHeight;
-        if (window.soundEngine) window.soundEngine.playType();
-      }
-    });
-  });
+function initTerminal() {
+  // Backwards compatibility hook
 }
