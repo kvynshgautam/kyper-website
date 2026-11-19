@@ -6,23 +6,22 @@
     "status": "STABLE_PRODUCTION",
     "downloadUrl": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
     "fileName": "Kyper-latest.apk",
-    "fileSizeBytes": 7807663,
-    "fileSizeFormatted": "7.45 MB",
-    "sha256": "B236E751D2E1C7FC62E9FC8A1A2D7AE210C754FAE57B704FCBDA51C9E7592FB8",
+    "fileSizeBytes": 6824813,
+    "fileSizeFormatted": "6.51 MB",
+    "sha256": "542AF6AEC817B119C18BD1CE870BC45D5B91612456A32C57AB822818E08E7A54",
     "minAndroid": "Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)",
     "highlights": [
-      "⚡ 3D Cyber-Shield Brand Logo & Adaptive Obsidian Launcher Icon",
-      "🛡️ Android 14/15 Foreground Service Special Use Crash Fix",
-      "⚡ 1-Click Auto-Reply Switch Toggle (Restores intent instantly upon granting Notification Access)",
-      "👑 Tu vs Tum vs Aap 3-Tier Cultural Intelligence (Sanskar & Elder respect override)",
-      "🧠 15-Message Deep Context Memory & Multi-Turn Understanding",
+      "🎯 Smooth Floating Bubble Gestures & Auto-Edge Snap (Accidental dismiss completely eliminated)",
+      "⚡ Multi-Engine Auto-Reply Engine (Native actions + Android Auto CarExtender + Wearable fallback)",
+      "🔔 Silent & Muted Notification Auto-Reply (Bypasses OEM background importance limits)",
+      "🔄 1-Tap Toggle on Master Cards (Full-card click target for instant activation)",
+      "👑 All 8 Synced Moods (Pro, Chill, Crisp, Love, Flirty, Spicy, Rude, Gaali & Roast)",
       "🛡️ Emergency & Sadness Empathy Shield (Instant roast suppression on sensitive news)",
       "🔒 Bank OTP & Sensitive Data Shield (Ignores bank credits/debits & verification codes)",
-      "🔄 Anti-Loop Ping-Pong Guard (Caps bot-to-bot chat loops at 3 replies)",
       "🔋 Battery Optimization Bypass & Reboot Auto-Restorer"
     ],
-    "lastUpdated": "Today at 10:30 PM IST (Nov 19, 2026)",
-    "versionFull": "v6.3 (Build 43)"
+    "lastUpdated": "Today at 10:45 PM IST (Nov 19, 2026)",
+    "versionFull": "v6.3 (Build 44 - Gesture & AutoReply Hotfix)"
   },
   "latestExtension": {
     "version": "v5.2",
