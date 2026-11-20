@@ -1,24 +1,24 @@
 {
   "latestAndroid": {
-    "version": "v6.3.7",
-    "versionCode": 51,
+    "version": "v6.3.8",
+    "versionCode": 52,
     "releaseDate": "November 20, 2026",
     "status": "STABLE_PRODUCTION",
     "downloadUrl": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
     "fileName": "Kyper-latest.apk",
-    "fileSizeBytes": 6841053,
+    "fileSizeBytes": 6842481,
     "fileSizeFormatted": "6.52 MB",
-    "sha256": "30FAD1D1ADB4DD4E40EB750223D694F7AE5F0058A206C80A60F7D82D625FE7D1",
+    "sha256": "7DA14E53A47D11D289C6D633DE3891D83ADE1D6137D7CB090A4AEE5EB66DB7EB",
     "minAndroid": "Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)",
     "highlights": [
-      "🛡️ AI Safety Refusal Elimination (All prompt trigger words sanitized + Unicode curly-quote refusal detector & fallback)",
-      "🎯 Contact Control & Whitelist Engine (Safely limit auto-replies to chosen contacts only; block unwanted contacts)",
-      "⚡ On-Screen WhatsApp Foreground Auto-Reply (Accessibility listener replies dynamically even when chat is open on screen)",
-      "📱 1-Tap Floating Bubble Reply (Directly queries AI and types response into active WhatsApp/Instagram chat)",
-      "✨ Instant 0ms Bubble & Dock Dismiss (removeViewImmediate + animation cancel)"
+      "🎯 1-Tap Dock Toggle (Normal tap opens complete dock; 2nd tap closes dock; bubble stays visible)",
+      "🛑 Bulletproof OFF Dismissal (Synchronously removes overlays and cleanly terminates without restart)",
+      "⚡ Live Auto & Chat Chips (Added functional Auto-reply and Chat target whitelist toggle chips in dock)",
+      "👻 Snapchat Support & Sync (Added Snapchat to accessibility & notification listener with platform prefs sync)",
+      "🛡️ Substring Collision Guard (Fixed contact whitelist/blocklist matching with length >= 3 guard)"
     ],
-    "lastUpdated": "Today at 10:45 AM IST (Nov 20, 2026)",
-    "versionFull": "v6.3.7 (Build 51 - AI Safety Refusal Fix, Contact Whitelist & Foreground Auto-Reply)"
+    "lastUpdated": "Today at 11:25 AM IST (Nov 20, 2026)",
+    "versionFull": "v6.3.8 (Build 52 - 1-Tap Dock, Reliable Lifecycle, Auto & Chat Chips, Snapchat Support)"
   },
   "latestExtension": {
     "version": "v5.2",
@@ -43,10 +43,23 @@
   },
   "history": [
     {
+      "version": "v6.3.8",
+      "platform": "Android APK",
+      "date": "Nov 20, 2026 • 11:25 AM",
+      "badge": "LATEST",
+      "changes": [
+        "1-Tap Dock Toggle: Tapping floating bubble toggles complete dock open/closed; bubble stays visible; snap animation preserved.",
+        "Reliable OFF Dismissal: Immediately removes both dock and bubble without restarting service; validates isBubbleEnabled in onCreate & onStartCommand.",
+        "Live Auto & Chat Chips: Added functional Auto-reply toggle chip and per-chat whitelist target chip in floating dock.",
+        "Snapchat Support & Sync: Added Snapchat package filtering, UI noise suppression, and platform preference synchronization across services.",
+        "Substring Guard: Contact whitelist and blocklist matching fortified to eliminate false-positive collision on short substrings."
+      ]
+    },
+    {
       "version": "v6.3.7",
       "platform": "Android APK",
       "date": "Nov 20, 2026 • 10:45 AM",
-      "badge": "LATEST",
+      "badge": "STABLE",
       "changes": [
         "AI Safety Refusal Fix: Completely removed prompt trigger words and added Unicode-normalized refusal detector with intelligent fallbacks.",
         "Contact Whitelist Control: User can select between Whitelist Mode (reply only to selected contacts) and Blocklist Mode to prevent embarrassing replies.",
