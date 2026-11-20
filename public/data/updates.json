@@ -6,9 +6,9 @@
     "status": "STABLE_PRODUCTION",
     "downloadUrl": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
     "fileName": "Kyper-latest.apk",
-    "fileSizeBytes": 6844357,
-    "fileSizeFormatted": "6.53 MB",
-    "sha256": "E4021BEE0B3D37A0CB421D15CA6F79AD2F67A20CBF7F13B508D3F86E05387A26",
+    "fileSizeBytes": 6933529,
+    "fileSizeFormatted": "6.61 MB",
+    "sha256": "EEB841694155D2B608F9457975A18F994B77AA13D6FF4387EA15429E243826C6",
     "minAndroid": "Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)",
     "highlights": [
       "🛡️ Strict Cross-Conversation Token Verification (Zero accidental insertions across switched chat tabs)",
