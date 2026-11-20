@@ -1,24 +1,26 @@
 {
   "latestAndroid": {
-    "version": "v6.3.9",
-    "versionCode": 53,
+    "version": "v6.3.10",
+    "versionCode": 54,
     "releaseDate": "November 20, 2026",
     "status": "STABLE_PRODUCTION",
     "downloadUrl": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
     "fileName": "Kyper-latest.apk",
-    "fileSizeBytes": 6845373,
+    "fileSizeBytes": 6844357,
     "fileSizeFormatted": "6.53 MB",
-    "sha256": "52848FF6E159485FED0CA05628977DA0C112AD4D2E419DEE30FC2E5A6E8966C5",
+    "sha256": "E4021BEE0B3D37A0CB421D15CA6F79AD2F67A20CBF7F13B508D3F86E05387A26",
     "minAndroid": "Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)",
     "highlights": [
-      "🖐️ Flawless 360° Drag & Smooth Move (Scaled touch slop threshold + isDragging state machine prevents stuck bubble)",
-      "🎯 Clean Interaction Separation (Tap toggles dock; drag moves bubble; cancel resets without accidental tap)",
-      "📐 Dynamic System Insets Clamping (Status bar and navigation bar insets strictly respected so bubble never gets lost)",
-      "💾 Persistent Bubble Coordinates (Remembers last position on screen and restores clamped on relaunch)",
-      "⚡ Robust Layout Logging (Detailed updateViewLayout exception & attachment diagnostics replace silent catch)"
+      "🛡️ Strict Cross-Conversation Token Verification (Zero accidental insertions across switched chat tabs)",
+      "⚡ Auto-Cancel Pending Jobs on Toggle OFF (Instant cleanup across notification & accessibility services)",
+      "🔒 Exact Normalized Identity Matching (No false-positive substring matches on names or phone numbers)",
+      "🔄 Persistent Anti-Duplicate Engine (SharedPreferences backed duplicate detection survives app restarts)",
+      "📱 Google Play Accessibility Compliance (Autonomous sending removed; all suggestions reviewable before sending)",
+      "🛑 Safe Quota & API Failure Handling (Explicit ok=false on HTTP failure, quota exhaustion, or error)",
+      "🔞 Teen Build Cleanup & Privacy Disclosure (Removed 18+ mode, cleartext traffic disabled, data disclosure added)"
     ],
-    "lastUpdated": "Today at 11:32 AM IST (Nov 20, 2026)",
-    "versionFull": "v6.3.9 (Build 53 - Flawless Dragging, Slop Detection, Insets Clamping & Position Persistence)"
+    "lastUpdated": "Today at 12:05 PM IST (Nov 20, 2026)",
+    "versionFull": "v6.3.10 (Build 54 - Deep Bug Audit, Google Play Compliance & Strict Privacy Shield)"
   },
   "latestExtension": {
     "version": "v5.2",
@@ -43,10 +45,24 @@
   },
   "history": [
     {
+      "version": "v6.3.10",
+      "platform": "Android APK",
+      "date": "Nov 20, 2026 • 12:05 PM",
+      "badge": "LATEST",
+      "changes": [
+        "Cross-Conversation Shield: Package and contact tokens verified at generation and immediately before insertion to prevent typing into switched chats.",
+        "Toggle Cleanup: Disabling Auto Reply instantly cancels all active pending reply jobs across both services.",
+        "Exact Contact Matching: Normalized phone digits and exact identity matching replaces unsafe substring whitelist/blocklist lookups.",
+        "Google Play Compliance: Removed autonomous accessibility auto-sending and clickSendButton; all generated replies remain reviewable in composer.",
+        "API Failure Honesty: GhostCloudApi returns ok=false on network/HTTP errors or quota exhaustion; hardcoded fallbacks no longer masked as success.",
+        "Privacy & Security: Cleartext HTTP disabled, backup disabled for sensitive IDs, raw chat stripped from Logcat, and in-app data disclosure added."
+      ]
+    },
+    {
       "version": "v6.3.9",
       "platform": "Android APK",
       "date": "Nov 20, 2026 • 11:32 AM",
-      "badge": "LATEST",
+      "badge": "",
       "changes": [
         "Flawless Dragging: Implemented ViewConfiguration.getScaledTouchSlop() and isDragging state machine so the floating bubble moves freely and never gets stuck.",
         "Interaction Separation: Clean separation between Tap (toggles dock), Drag (moves and snaps to edge), and Cancel (resets without accidental tap).",
