@@ -1,25 +1,24 @@
 {
   "latestAndroid": {
-    "version": "v6.3.6",
-    "versionCode": 50,
-    "releaseDate": "November 19, 2026",
+    "version": "v6.3.7",
+    "versionCode": 51,
+    "releaseDate": "November 20, 2026",
     "status": "STABLE_PRODUCTION",
     "downloadUrl": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
     "fileName": "Kyper-latest.apk",
-    "fileSizeBytes": 6834349,
+    "fileSizeBytes": 6841053,
     "fileSizeFormatted": "6.52 MB",
-    "sha256": "9187092A0D984D4B54D3BCF83CF9532262FDB89CA6A706148726443592D1652B",
+    "sha256": "30FAD1D1ADB4DD4E40EB750223D694F7AE5F0058A206C80A60F7D82D625FE7D1",
     "minAndroid": "Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)",
     "highlights": [
-      "⚡ 1-Tap Reply Hang Fix (Added try-finally flag reset & 15s coroutine timeout so thinking never gets stuck)",
-      "🔍 Multi-Window Chat & Input Detection (Scans interactive windows to locate active WhatsApp/Instagram input box)",
-      "🎯 Bottom-Pinned Composer Protection (Prevents header search bars from dropping chat messages)",
-      "💬 Natural Empty-Chat Fallback (Sends engaging Hinglish openers when chat transcript is fresh)",
-      "🚫 AI Refusal Auto-Retry ('I'm sorry' phrases silently retried with safe neutral prompt)",
+      "🛡️ AI Safety Refusal Elimination (All prompt trigger words sanitized + Unicode curly-quote refusal detector & fallback)",
+      "🎯 Contact Control & Whitelist Engine (Safely limit auto-replies to chosen contacts only; block unwanted contacts)",
+      "⚡ On-Screen WhatsApp Foreground Auto-Reply (Accessibility listener replies dynamically even when chat is open on screen)",
+      "📱 1-Tap Floating Bubble Reply (Directly queries AI and types response into active WhatsApp/Instagram chat)",
       "✨ Instant 0ms Bubble & Dock Dismiss (removeViewImmediate + animation cancel)"
     ],
-    "lastUpdated": "Today at 11:48 PM IST (Nov 19, 2026)",
-    "versionFull": "v6.3.6 (Build 50 - 1-Tap Thinking Hang Fix & Multi-Window Accessibility)"
+    "lastUpdated": "Today at 10:45 AM IST (Nov 20, 2026)",
+    "versionFull": "v6.3.7 (Build 51 - AI Safety Refusal Fix, Contact Whitelist & Foreground Auto-Reply)"
   },
   "latestExtension": {
     "version": "v5.2",
@@ -44,10 +43,22 @@
   },
   "history": [
     {
+      "version": "v6.3.7",
+      "platform": "Android APK",
+      "date": "Nov 20, 2026 • 10:45 AM",
+      "badge": "LATEST",
+      "changes": [
+        "AI Safety Refusal Fix: Completely removed prompt trigger words and added Unicode-normalized refusal detector with intelligent fallbacks.",
+        "Contact Whitelist Control: User can select between Whitelist Mode (reply only to selected contacts) and Blocklist Mode to prevent embarrassing replies.",
+        "On-Screen Foreground Auto-Reply: Debounced accessibility watcher auto-replies to allowed contacts even when WhatsApp is open on screen.",
+        "1-Tap Bubble Reply: Tapping floating bubble directly inspects active chat and types generated reply."
+      ]
+    },
+    {
       "version": "v6.3.6",
       "platform": "Android APK",
       "date": "Nov 19, 2026 • 11:48 PM",
-      "badge": "LATEST",
+      "badge": "STABLE",
       "changes": [
         "1-Tap Thinking Hang Fix: Added try-finally flag reset and 15s coroutine timeout so bubble never gets locked in 'KYPER is thinking...'.",
         "Multi-Window Accessibility: Iterates interactive windows to locate active WhatsApp/Instagram window and message input box even when overlay is clicked.",
