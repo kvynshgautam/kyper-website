@@ -6,9 +6,9 @@
     "status": "STABLE_PRODUCTION",
     "downloadUrl": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
     "fileName": "Kyper-latest.apk",
-    "fileSizeBytes": 6846761,
-    "fileSizeFormatted": "6.53 MB",
-    "sha256": "8AF81262A2A13DFAA90D50639E5013C7CFB2A51943ABF3E80A5F1CC8E629955C",
+    "fileSizeBytes": 7891743,
+    "fileSizeFormatted": "7.53 MB",
+    "sha256": "1DE5FFB486BB38C852B781A8E5C2AF0934EFC056FF90D2C9CA64EFBE32C2F0C7",
     "minAndroid": "Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)",
     "highlights": [
       "⚡ CodeRabbit Verified Code Hardening (All 12 automated code review security & reliability findings resolved)",
