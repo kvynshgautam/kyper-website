@@ -1,24 +1,24 @@
 {
   "latestAndroid": {
-    "version": "v6.3.8",
-    "versionCode": 52,
+    "version": "v6.3.9",
+    "versionCode": 53,
     "releaseDate": "November 20, 2026",
     "status": "STABLE_PRODUCTION",
     "downloadUrl": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
     "fileName": "Kyper-latest.apk",
-    "fileSizeBytes": 6842481,
-    "fileSizeFormatted": "6.52 MB",
-    "sha256": "7DA14E53A47D11D289C6D633DE3891D83ADE1D6137D7CB090A4AEE5EB66DB7EB",
+    "fileSizeBytes": 6845373,
+    "fileSizeFormatted": "6.53 MB",
+    "sha256": "52848FF6E159485FED0CA05628977DA0C112AD4D2E419DEE30FC2E5A6E8966C5",
     "minAndroid": "Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)",
     "highlights": [
-      "🎯 1-Tap Dock Toggle (Normal tap opens complete dock; 2nd tap closes dock; bubble stays visible)",
-      "🛑 Bulletproof OFF Dismissal (Synchronously removes overlays and cleanly terminates without restart)",
-      "⚡ Live Auto & Chat Chips (Added functional Auto-reply and Chat target whitelist toggle chips in dock)",
-      "👻 Snapchat Support & Sync (Added Snapchat to accessibility & notification listener with platform prefs sync)",
-      "🛡️ Substring Collision Guard (Fixed contact whitelist/blocklist matching with length >= 3 guard)"
+      "🖐️ Flawless 360° Drag & Smooth Move (Scaled touch slop threshold + isDragging state machine prevents stuck bubble)",
+      "🎯 Clean Interaction Separation (Tap toggles dock; drag moves bubble; cancel resets without accidental tap)",
+      "📐 Dynamic System Insets Clamping (Status bar and navigation bar insets strictly respected so bubble never gets lost)",
+      "💾 Persistent Bubble Coordinates (Remembers last position on screen and restores clamped on relaunch)",
+      "⚡ Robust Layout Logging (Detailed updateViewLayout exception & attachment diagnostics replace silent catch)"
     ],
-    "lastUpdated": "Today at 11:25 AM IST (Nov 20, 2026)",
-    "versionFull": "v6.3.8 (Build 52 - 1-Tap Dock, Reliable Lifecycle, Auto & Chat Chips, Snapchat Support)"
+    "lastUpdated": "Today at 11:32 AM IST (Nov 20, 2026)",
+    "versionFull": "v6.3.9 (Build 53 - Flawless Dragging, Slop Detection, Insets Clamping & Position Persistence)"
   },
   "latestExtension": {
     "version": "v5.2",
@@ -43,10 +43,23 @@
   },
   "history": [
     {
+      "version": "v6.3.9",
+      "platform": "Android APK",
+      "date": "Nov 20, 2026 • 11:32 AM",
+      "badge": "LATEST",
+      "changes": [
+        "Flawless Dragging: Implemented ViewConfiguration.getScaledTouchSlop() and isDragging state machine so the floating bubble moves freely and never gets stuck.",
+        "Interaction Separation: Clean separation between Tap (toggles dock), Drag (moves and snaps to edge), and Cancel (resets without accidental tap).",
+        "System Insets Clamping: Dynamic detection of status bar and navigation bar insets prevents the bubble from getting stuck at screen borders.",
+        "Position Persistence: Last known coordinates saved to PreferencesManager and restored safely on relaunch.",
+        "Diagnostic Logging: Replaced silent catch blocks with comprehensive updateBubbleLayout exception logging."
+      ]
+    },
+    {
       "version": "v6.3.8",
       "platform": "Android APK",
       "date": "Nov 20, 2026 • 11:25 AM",
-      "badge": "LATEST",
+      "badge": "STABLE",
       "changes": [
         "1-Tap Dock Toggle: Tapping floating bubble toggles complete dock open/closed; bubble stays visible; snap animation preserved.",
         "Reliable OFF Dismissal: Immediately removes both dock and bubble without restarting service; validates isBubbleEnabled in onCreate & onStartCommand.",
