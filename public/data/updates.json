@@ -1,26 +1,26 @@
 {
   "latestAndroid": {
-    "version": "v6.3.10",
-    "versionCode": 54,
+    "version": "v6.3.11",
+    "versionCode": 55,
     "releaseDate": "November 20, 2026",
     "status": "STABLE_PRODUCTION",
     "downloadUrl": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
     "fileName": "Kyper-latest.apk",
-    "fileSizeBytes": 6933529,
-    "fileSizeFormatted": "6.61 MB",
-    "sha256": "EEB841694155D2B608F9457975A18F994B77AA13D6FF4387EA15429E243826C6",
+    "fileSizeBytes": 6846761,
+    "fileSizeFormatted": "6.53 MB",
+    "sha256": "8AF81262A2A13DFAA90D50639E5013C7CFB2A51943ABF3E80A5F1CC8E629955C",
     "minAndroid": "Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)",
     "highlights": [
-      "🛡️ Strict Cross-Conversation Token Verification (Zero accidental insertions across switched chat tabs)",
-      "⚡ Auto-Cancel Pending Jobs on Toggle OFF (Instant cleanup across notification & accessibility services)",
-      "🔒 Exact Normalized Identity Matching (No false-positive substring matches on names or phone numbers)",
-      "🔄 Persistent Anti-Duplicate Engine (SharedPreferences backed duplicate detection survives app restarts)",
-      "📱 Google Play Accessibility Compliance (Autonomous sending removed; all suggestions reviewable before sending)",
-      "🛑 Safe Quota & API Failure Handling (Explicit ok=false on HTTP failure, quota exhaustion, or error)",
-      "🔞 Teen Build Cleanup & Privacy Disclosure (Removed 18+ mode, cleartext traffic disabled, data disclosure added)"
+      "⚡ CodeRabbit Verified Code Hardening (All 12 automated code review security & reliability findings resolved)",
+      "🛡️ User Draft Preservation (Active typing in message composer is never overwritten; safely falls back to clipboard)",
+      "🔒 Credential & OTP Privacy Filter (Sensitive verification codes and 2FA tokens automatically masked before cloud AI prompts)",
+      "📞 International Phone Shield (Preserves non-91 country codes like +44 to prevent cross-border contact collisions)",
+      "🧠 Context-Aware Tone & Empathy Engine (Multiline emergency detection and strict Flirty vs Romantic mood separation)",
+      "🖼️ Memory-Efficient Image Decoder (Bounded bitmap subsampling prevents OutOfMemory errors on high-res screenshots)",
+      "📱 Google Play Accessibility Compliance (All suggestions remain safely reviewable in composer prior to sending)"
     ],
-    "lastUpdated": "Today at 12:05 PM IST (Nov 20, 2026)",
-    "versionFull": "v6.3.10 (Build 54 - Deep Bug Audit, Google Play Compliance & Strict Privacy Shield)"
+    "lastUpdated": "Today at 3:30 PM IST (Nov 20, 2026)",
+    "versionFull": "v6.3.11 (Build 55 - CodeRabbit Security Hardening & Zero-Defect Release)"
   },
   "latestExtension": {
     "version": "v5.2",
@@ -44,6 +44,20 @@
     "versionFull": "v5.2 (Production)"
   },
   "history": [
+    {
+      "version": "v6.3.11",
+      "platform": "Android APK",
+      "date": "Nov 20, 2026 • 3:30 PM",
+      "badge": "LATEST",
+      "changes": [
+        "CodeRabbit Code Hardening: Fixed all 12 CodeRabbit code review findings across security, state concurrency, and memory management.",
+        "User Draft Preservation: Prevents overwriting in-progress user drafts if composer text changed during asynchronous AI generation.",
+        "Sensitive Token Redaction: Outbound and inbound OTPs, PINs, and auth codes are automatically redacted before sending transcripts to the LLM backend.",
+        "International Phone Normalization: Preserves distinct country codes (e.g. +44 vs +91) preventing contact whitelist collisions.",
+        "Refined AI Refusal Detection: Fixed over-sensitive refusal matching that previously blocked standard conversational apologies.",
+        "Memory-Safe Bitmap Decoding: Subsamples high-resolution screenshots to prevent OOM errors on large camera images."
+      ]
+    },
     {
       "version": "v6.3.10",
       "platform": "Android APK",
