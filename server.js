@@ -247,20 +247,10 @@ const checkAdmin = (req, res, next) => {
 // -------------------------------------------------------------
 // 1. Binary Distribution Endpoints
 // -------------------------------------------------------------
-const GITHUB_APK_URL = "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk";
 const GITHUB_EXT_URL = "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-extension.zip";
 
 app.get('/download/apk', (req, res) => {
-  let apkPath = path.join(__dirname, 'public', 'downloads', 'Kyper-latest.apk');
-  if (!fs.existsSync(apkPath)) {
-    apkPath = path.join(__dirname, 'public', 'downloads', 'GhostTyper-latest.apk');
-  }
-  if (fs.existsSync(apkPath)) {
-    res.setHeader('Content-Disposition', 'attachment; filename="Kyper-latest.apk"');
-    res.setHeader('Content-Type', 'application/vnd.android.package-archive');
-    return res.sendFile(apkPath);
-  }
-  return res.redirect(GITHUB_APK_URL);
+  return res.redirect('/download/extension');
 });
 
 app.get('/download/extension', (req, res) => {
@@ -606,7 +596,6 @@ if (!process.env.VERCEL) {
     console.log(`=======================================================`);
     console.log(`⚡ KYPER Server Live at port: ${PORT}`);
     console.log(`🛡️ KYPER Executive Admin Console: /admin`);
-    console.log(`📱 APK Download: /download/apk`);
     console.log(`💻 Ext Download: /download/extension`);
     console.log(`📡 Updates API: /api/updates`);
     console.log(`=======================================================`);

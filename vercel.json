@@ -14,7 +14,7 @@
   "redirects": [
     {
       "source": "/download/apk",
-      "destination": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
+      "destination": "/download/extension",
       "permanent": false
     },
     {
@@ -24,7 +24,7 @@
     },
     {
       "source": "/downloads/Kyper-latest.apk",
-      "destination": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
+      "destination": "/download/extension",
       "permanent": false
     },
     {
