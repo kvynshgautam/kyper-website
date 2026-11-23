@@ -576,15 +576,16 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Local dev listener
-if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
-  app.listen(PORT, () => {
+// Start HTTP server (Render, VPS, Docker, or Local dev)
+// Only skip if running inside Vercel serverless functions
+if (!process.env.VERCEL) {
+  app.listen(PORT, '0.0.0.0', () => {
     console.log(`=======================================================`);
-    console.log(`⚡ KYPER Self-Hosted Server Live at: http://localhost:${PORT}`);
-    console.log(`🛡️ KYPER Executive Admin Console: http://localhost:${PORT}/admin`);
-    console.log(`📱 APK Download: http://localhost:${PORT}/download/apk`);
-    console.log(`💻 Ext Download: http://localhost:${PORT}/download/extension`);
-    console.log(`📡 Updates API: http://localhost:${PORT}/api/updates`);
+    console.log(`⚡ KYPER Server Live at port: ${PORT}`);
+    console.log(`🛡️ KYPER Executive Admin Console: /admin`);
+    console.log(`📱 APK Download: /download/apk`);
+    console.log(`💻 Ext Download: /download/extension`);
+    console.log(`📡 Updates API: /api/updates`);
     console.log(`=======================================================`);
   });
 }
