@@ -44,7 +44,13 @@ const ADMIN_PASSWORD = "Kavyanshgaut@m";
 
 const FREE_DAILY_LIMIT = 15;
 
-const GROQ_MODELS = ["llama-3.3-70b-versatile", "openai/gpt-oss-120b", "openai/gpt-oss-20b", "llama-3.1-8b-instant"];
+const GROQ_MODELS = [
+  "llama-3.3-70b-versatile",
+  "llama3-70b-8192",
+  "llama3-8b-8192",
+  "mixtral-8x7b-32768",
+  "gemma2-9b-it"
+];
 const GEMINI_MODELS = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-flash-latest"];
 
 const PLAN_CATALOG = {
@@ -163,7 +169,6 @@ async function callGroq(apiKey, system, prompt, maxTok) {
         max_completion_tokens: Math.max(400, maxTok || 600),
         temperature: 0.45,
       };
-      if (/gpt-oss/.test(model)) body.reasoning_effort = "medium";
       const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
