@@ -45,11 +45,10 @@ const ADMIN_PASSWORD = "Kavyanshgaut@m";
 const FREE_DAILY_LIMIT = 15;
 
 const GROQ_MODELS = [
-  "llama-3.3-70b-versatile",
-  "llama3-70b-8192",
-  "llama3-8b-8192",
-  "mixtral-8x7b-32768",
-  "gemma2-9b-it"
+  "openai/gpt-oss-120b",
+  "openai/gpt-oss-20b",
+  "qwen/qwen3.8-27b",
+  "llama-3.3-70b-versatile"
 ];
 const GEMINI_MODELS = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-flash-latest"];
 
@@ -166,9 +165,10 @@ async function callGroq(apiKey, system, prompt, maxTok) {
           { role: "system", content: system },
           { role: "user", content: prompt },
         ],
-        max_completion_tokens: Math.max(400, maxTok || 600),
+        max_completion_tokens: Math.max(600, maxTok || 800),
         temperature: 0.45,
       };
+      if (/gpt-oss/.test(model)) body.reasoning_effort = "low";
       const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
@@ -188,6 +188,20 @@ async function callGroq(apiKey, system, prompt, maxTok) {
   }
   throw lastErr || new Error("Groq API unavailable");
 }
+
+app.get('/api/groq-models', async (req, res) => {
+  const apiKey = process.env.GROQ_API_KEY;
+  if (!apiKey) return res.json({ ok: false, error: "GROQ_API_KEY not configured" });
+  try {
+    const r = await fetch("https://api.groq.com/openai/v1/models", {
+      headers: { Authorization: `Bearer ${apiKey}` }
+    });
+    const d = await r.json();
+    res.json({ ok: r.ok, status: r.status, models: (d.data || []).map(m => m.id) });
+  } catch(e) {
+    res.json({ ok: false, error: e.message });
+  }
+});
 
 async function callGemini(apiKey, system, prompt, pdf) {
   let lastErr;
