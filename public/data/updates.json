@@ -8,7 +8,7 @@
     "fileName": "Kyper-latest.apk",
     "fileSizeBytes": 6848205,
     "fileSizeFormatted": "6.53 MB",
-    "sha256": "7BD8C967F914FDA96D2EEA8644CA1A7A71C6AB1335463783C3118C6B0FA6A65E",
+    "sha256": "BED85E9D92836259A1DA95D15D0E6CF63C6D6570126ED3F5041F1DEE74CC084F",
     "minAndroid": "Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)",
     "highlights": [
       "🎈 Floating Bubble Launch Fix (ContextThemeWrapper eliminates InflateException on unthemed service layouts)",
