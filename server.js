@@ -47,8 +47,7 @@ const FREE_DAILY_LIMIT = 15;
 const GROQ_MODELS = [
   "openai/gpt-oss-120b",
   "openai/gpt-oss-20b",
-  "qwen/qwen3.8-27b",
-  "llama-3.3-70b-versatile"
+  "qwen/qwen3.8-27b"
 ];
 const GEMINI_MODELS = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-flash-latest"];
 
