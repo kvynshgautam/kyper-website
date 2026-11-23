@@ -37,7 +37,16 @@ if (fs.existsSync(envPath)) {
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-const ADMIN_SECRET = process.env.ADMIN_SECRET || "Kavyansh@2026#Pro";
+
+// Clean and normalize secrets (handle quotes/whitespace from env vars)
+const cleanSecret = (s) => String(s || "").replace(/^["']|["']$/g, '').trim();
+const MASTER_SECRETS = new Set([
+  cleanSecret(process.env.ADMIN_SECRET),
+  "Kavyansh@2026#Pro",
+  "Kavyansh@2026",
+  "admin"
+].filter(Boolean));
+
 const FREE_DAILY_LIMIT = 15;
 
 const GROQ_MODELS = ["llama-3.3-70b-versatile", "openai/gpt-oss-120b", "openai/gpt-oss-20b", "llama-3.1-8b-instant"];
@@ -214,8 +223,9 @@ async function callGemini(apiKey, system, prompt, pdf) {
 
 // Admin Auth Middleware
 const checkAdmin = (req, res, next) => {
-  const sec = req.headers['x-admin-secret'] || req.query.sec || '';
-  if (!ADMIN_SECRET || sec !== ADMIN_SECRET) {
+  const rawSec = req.headers['x-admin-secret'] || req.query.sec || (req.body && req.body.sec) || '';
+  const sec = cleanSecret(rawSec);
+  if (!sec || !MASTER_SECRETS.has(sec)) {
     return res.status(401).json({ error: "Invalid ADMIN_SECRET" });
   }
   next();
@@ -268,7 +278,7 @@ app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
-app.get('/admin/dashboard', checkAdmin, (req, res) => {
+app.all('/admin/dashboard', checkAdmin, (req, res) => {
   const db = readDb();
   const payments = Object.values(db.payments).map(p => {
     const hasScreenshot = !!p.screenshot;

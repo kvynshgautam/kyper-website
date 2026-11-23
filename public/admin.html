@@ -886,6 +886,10 @@
     </div>
 
     <div class="header-controls">
+      <div id="backendPill" style="display:inline-flex; align-items:center; gap:6px; font-size:11px; padding:4px 9px; border-radius:6px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:var(--text-dim); font-family:var(--font-mono);">
+        <span style="width:7px; height:7px; border-radius:50%; background:var(--emerald); display:inline-block;"></span>
+        <span id="backendLabel">Render Live</span>
+      </div>
       <div class="input-secret-wrap">
         <input type="password" id="adminSecret" placeholder="ADMIN_SECRET" autocomplete="current-password">
         <button class="toggle-eye" id="btnToggleSecret" title="Toggle visibility">
@@ -1069,8 +1073,13 @@
   const esc = (s) => String(s || "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
   const safeImg = (s) => /^data:image\/(png|jpeg|jpg|webp);base64,[A-Za-z0-9+/=]+$/.test(String(s || "")) ? s : "";
 
-  // Self-hosted backend: uses same origin (/api, /admin)
-  const API_BASE = '';
+  // Self-hosted backend: uses relative path when hosted on Render or localhost,
+  // or targets Render production backend (https://kyper.onrender.com) when running on Vercel or other domains
+  const DEFAULT_REMOTE_BACKEND = 'https://kyper.onrender.com';
+  const isSelfHosted = window.location.hostname.includes('onrender.com') ||
+                       window.location.hostname.includes('localhost') ||
+                       window.location.hostname === '127.0.0.1';
+  let API_BASE = localStorage.getItem("kyper_backend_url") || (isSelfHosted ? '' : DEFAULT_REMOTE_BACKEND);
 
   let currentPayments = [];
   let currentKeys = [];
@@ -1080,6 +1089,49 @@
   let activeTab = 'payments';
   let modalScale = 1;
   let modalRotation = 0;
+
+  const backendLabel = $("backendLabel");
+  if (backendLabel) {
+    backendLabel.textContent = isSelfHosted ? "Direct Host" : "kyper.onrender.com";
+    backendLabel.title = "Connected Backend: " + (API_BASE || window.location.origin);
+  }
+
+  // Resilient API Call wrapper with automatic HTML fallback handling
+  async function apiCall(path, options = {}) {
+    const url = (API_BASE || '') + path;
+    const headers = getHeaders();
+    if (options.headers) Object.assign(headers, options.headers);
+    
+    let res;
+    try {
+      res = await fetch(url, { ...options, headers });
+    } catch(err) {
+      if (!API_BASE && !isSelfHosted) {
+        API_BASE = DEFAULT_REMOTE_BACKEND;
+        return apiCall(path, options);
+      }
+      throw err;
+    }
+
+    const text = await res.text();
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (parseErr) {
+      if (text.trim().startsWith('<')) {
+        if (!API_BASE) {
+          // If relative fetch returned HTML, fallback to Render backend immediately
+          API_BASE = DEFAULT_REMOTE_BACKEND;
+          localStorage.setItem("kyper_backend_url", DEFAULT_REMOTE_BACKEND);
+          return apiCall(path, options);
+        }
+        throw new Error("Server returned HTML instead of API response. Verify backend is running at " + DEFAULT_REMOTE_BACKEND);
+      }
+      throw new Error(text.slice(0, 100) || ("HTTP Error " + res.status));
+    }
+
+    return { res, data };
+  }
 
   // Restore saved secret from session or local
   try {
@@ -1201,8 +1253,7 @@
     $("btnLoad").innerHTML = `<svg class="spin" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg><span>Syncing...</span>`;
 
     try {
-      const res = await fetch(API_BASE + "/admin/dashboard", { headers: getHeaders() });
-      const data = await res.json();
+      const { res, data } = await apiCall("/admin/dashboard");
       const latency = Math.round(performance.now() - t0);
 
       if (!res.ok) {
@@ -1223,7 +1274,7 @@
 
       showToast(`Console synced in ${latency}ms`);
     } catch (err) {
-      showToast("Network error: " + err.message, true);
+      showToast(err.message, true);
       $("kpiStatus").textContent = "Offline";
       $("kpiStatus").style.color = "var(--rose)";
       $("kpiLatency").textContent = err.message;
@@ -1460,12 +1511,10 @@
     }
 
     try {
-      const res = await fetch(API_BASE + "/admin/approve-payment", {
+      const { res, data } = await apiCall("/admin/approve-payment", {
         method: "POST",
-        headers: getHeaders(),
         body: JSON.stringify({ id, days })
       });
-      const data = await res.json();
       if (!res.ok) {
         showToast(data.error || "Approval failed", true);
         if (btn) btn.disabled = false;
@@ -1490,12 +1539,10 @@
     }
 
     try {
-      const res = await fetch(API_BASE + "/admin/reject-payment", {
+      const { res, data } = await apiCall("/admin/reject-payment", {
         method: "POST",
-        headers: getHeaders(),
         body: JSON.stringify({ id, reason })
       });
-      const data = await res.json();
       if (!res.ok) {
         showToast(data.error || "Rejection failed", true);
         if (btn) btn.disabled = false;
@@ -1517,12 +1564,10 @@
       btn.textContent = "Revoking...";
     }
     try {
-      const res = await fetch(API_BASE + "/admin/revoke-key", {
+      const { res, data } = await apiCall("/admin/revoke-key", {
         method: "POST",
-        headers: getHeaders(),
         body: JSON.stringify({ key })
       });
-      const data = await res.json();
       if (!res.ok) {
         showToast(data.error || "Revoke failed", true);
         if (btn) btn.disabled = false;
@@ -1554,12 +1599,10 @@
     btn.innerHTML = `<svg class="spin" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg><span>Generating...</span>`;
 
     try {
-      const res = await fetch(API_BASE + "/admin/create-key", {
+      const { res, data } = await apiCall("/admin/create-key", {
         method: "POST",
-        headers: getHeaders(),
         body: JSON.stringify({ days: selectedPresetDays, note })
       });
-      const data = await res.json();
       if (!res.ok) {
         showToast(data.error || "Key generation failed", true);
         return;
@@ -1601,10 +1644,7 @@
   window.viewRemoteScreenshot = async function(id, el) {
     if (el) el.innerHTML = `<span class="thumb-badge">Fetching...</span>`;
     try {
-      const res = await fetch(API_BASE + "/admin/payment-image?id=" + encodeURIComponent(id), {
-        headers: getHeaders()
-      });
-      const data = await res.json();
+      const { res, data } = await apiCall("/admin/payment-image?id=" + encodeURIComponent(id));
       if (!res.ok || !data.screenshot) {
         showToast(data.error || "Screenshot not found", true);
         if (el) el.innerHTML = `<span class="thumb-badge">Failed</span>`;

@@ -35,8 +35,8 @@
   ],
   "rewrites": [
     { "source": "/api/updates", "destination": "/data/updates.json" },
-    { "source": "/api/(.*)", "destination": "/server.js" },
-    { "source": "/admin/(.*)", "destination": "/server.js" },
+    { "source": "/api/(.*)", "destination": "https://kyper.onrender.com/api/$1" },
+    { "source": "/admin/(.*)", "destination": "https://kyper.onrender.com/admin/$1" },
     { "source": "/admin", "destination": "/admin.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
