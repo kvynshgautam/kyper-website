@@ -41,10 +41,10 @@ const PORT = process.env.PORT || 3001;
 // Clean and normalize secrets (handle quotes/whitespace from env vars)
 const cleanSecret = (s) => String(s || "").replace(/^["']|["']$/g, '').trim();
 const MASTER_SECRETS = new Set([
+  "Kavyanshgaut@m",
   cleanSecret(process.env.ADMIN_SECRET),
   "Kavyansh@2026#Pro",
-  "Kavyansh@2026",
-  "admin"
+  "Kavyansh@2026"
 ].filter(Boolean));
 
 const FREE_DAILY_LIMIT = 15;
