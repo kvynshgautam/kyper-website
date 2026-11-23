@@ -1,26 +1,26 @@
 {
   "latestAndroid": {
-    "version": "v6.3.11",
-    "versionCode": 55,
-    "releaseDate": "November 20, 2026",
+    "version": "v6.3.12",
+    "versionCode": 56,
+    "releaseDate": "November 23, 2026",
     "status": "STABLE_PRODUCTION",
     "downloadUrl": "https://github.com/kvynshgautam/kyper-website/releases/latest/download/Kyper-latest.apk",
     "fileName": "Kyper-latest.apk",
-    "fileSizeBytes": 7891743,
-    "fileSizeFormatted": "7.53 MB",
-    "sha256": "7070FE0F9ED9DEAEF8341CEAABD0AD3953DE1A1E8A44FDD2D2E23A62F84FC70E",
+    "fileSizeBytes": 6848205,
+    "fileSizeFormatted": "6.53 MB",
+    "sha256": "7BD8C967F914FDA96D2EEA8644CA1A7A71C6AB1335463783C3118C6B0FA6A65E",
     "minAndroid": "Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)",
     "highlights": [
-      "⚡ CodeRabbit Verified Code Hardening (All 12 automated code review security & reliability findings resolved)",
-      "🛡️ User Draft Preservation (Active typing in message composer is never overwritten; safely falls back to clipboard)",
-      "🔒 Credential & OTP Privacy Filter (Sensitive verification codes and 2FA tokens automatically masked before cloud AI prompts)",
-      "📞 International Phone Shield (Preserves non-91 country codes like +44 to prevent cross-border contact collisions)",
-      "🧠 Context-Aware Tone & Empathy Engine (Multiline emergency detection and strict Flirty vs Romantic mood separation)",
-      "🖼️ Memory-Efficient Image Decoder (Bounded bitmap subsampling prevents OutOfMemory errors on high-res screenshots)",
+      "🎈 Floating Bubble Launch Fix (ContextThemeWrapper eliminates InflateException on unthemed service layouts)",
+      "📱 Xiaomi / MIUI / HyperOS Optimization (In-app guidance and one-tap shortcut for background pop-up window permissions)",
+      "🔄 Duplicate View Suppression (Prevents duplicate layout inflation across rapid service start cycles)",
+      "⚡ Sticky Screen Persistence (Auto-restarts floating overlay seamlessly when returning to the app)",
+      "🎯 Touch Slop & Nearest Edge Snap (Independent drag physics and instant tap dock toggle)",
+      "🛡️ User Draft Preservation (Active typing in message composer is never overwritten)",
       "📱 Google Play Accessibility Compliance (All suggestions remain safely reviewable in composer prior to sending)"
     ],
-    "lastUpdated": "Today at 3:30 PM IST (Nov 20, 2026)",
-    "versionFull": "v6.3.11 (Build 55 - CodeRabbit Security Hardening & Zero-Defect Release)"
+    "lastUpdated": "Today at 10:35 AM IST (Nov 23, 2026)",
+    "versionFull": "v6.3.12 (Build 56 - Reliable Floating Bubble & Xiaomi/MIUI Fix Release)"
   },
   "latestExtension": {
     "version": "v5.2",
@@ -45,10 +45,23 @@
   },
   "history": [
     {
+      "version": "v6.3.12",
+      "platform": "Android APK",
+      "date": "Nov 23, 2026 • 10:35 AM",
+      "badge": "LATEST",
+      "changes": [
+        "Floating Bubble Theme Fix: Added ContextThemeWrapper to resolve InflateException on unthemed Service Context when inflating selectableItemBackgroundBorderless.",
+        "Xiaomi / MIUI Background Pop-up Guidance: Added dedicated toast alert and MIUI FIX dialog for users on Xiaomi, Redmi, POCO, and Vivo devices.",
+        "Double Setup Guard: Fixed premature View.isAttachedToWindow check in onStartCommand that previously triggered duplicate overlay inflation and orphan views.",
+        "Sticky Screen Persistence: Automatically restores and restarts floating bubble service seamlessly when navigating back to the app.",
+        "Safe Exception Handling: Removed aggressive preferences-resetting catch blocks to preserve user bubble toggle state across orientation or transient glitches."
+      ]
+    },
+    {
       "version": "v6.3.11",
       "platform": "Android APK",
       "date": "Nov 20, 2026 • 3:30 PM",
-      "badge": "LATEST",
+      "badge": "STABLE",
       "changes": [
         "CodeRabbit Code Hardening: Fixed all 12 CodeRabbit code review findings across security, state concurrency, and memory management.",
         "User Draft Preservation: Prevents overwriting in-progress user drafts if composer text changed during asynchronous AI generation.",
