@@ -1069,9 +1069,8 @@
   const esc = (s) => String(s || "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
   const safeImg = (s) => /^data:image\/(png|jpeg|jpg|webp);base64,[A-Za-z0-9+/=]+$/.test(String(s || "")) ? s : "";
 
-  // Dynamic API Base URL: If loaded from worker origin use '', else fallback to production worker
-  const isWorkerDomain = window.location.origin.includes('workers.dev');
-  const API_BASE = isWorkerDomain ? '' : 'https://ghosttyper-api.26c648ynfx.workers.dev';
+  // Self-hosted backend: uses same origin (/api, /admin)
+  const API_BASE = '';
 
   let currentPayments = [];
   let currentKeys = [];
