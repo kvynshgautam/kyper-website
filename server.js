@@ -57,6 +57,11 @@ app.get('/api/updates', (req, res) => {
   return res.status(404).json({ error: 'Updates metadata not found' });
 });
 
+// Admin Console route
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'admin.html'));
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({

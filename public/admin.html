@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KYPER Console — Executive Admin Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/kyper-logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070a12;
+      --card-bg: #0f1626;
+      --card-hover: #131c31;
+      --surface-elevated: #162038;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(56, 189, 248, 0.3);
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+      --text-muted: #64748b;
+      --cyan: #38bdf8;
+      --cyan-glow: rgba(56, 189, 248, 0.15);
+      --emerald: #10b981;
+      --emerald-glow: rgba(16, 185, 129, 0.15);
+      --rose: #f43f5e;
+      --rose-glow: rgba(244, 63, 94, 0.15);
+      --amber: #f59e0b;
+      --amber-glow: rgba(245, 158, 11, 0.15);
+      --purple: #8b5cf6;
+      --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(56, 189, 248, 0.07), transparent),
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 32px 32px, 32px 32px;
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 64px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1080px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Top Navigation Header */
+    .header {
+      background: rgba(15, 22, 38, 0.85);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.4));
+      flex-shrink: 0;
+    }
+
+    .brand-text h1 {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-sub {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: var(--cyan-glow);
+      color: var(--cyan);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      text-transform: uppercase;
+    }
+
+    .brand-text p {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .input-secret-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-secret-wrap input {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 9px 36px 9px 12px;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      width: 210px;
+      transition: all 0.2s;
+    }
+
+    .input-secret-wrap input:focus {
+      outline: none;
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 3px var(--cyan-glow);
+    }
+
+    .toggle-eye {
+      position: absolute;
+      right: 10px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 2px;
+    }
+    .toggle-eye:hover { color: var(--text); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 9px 15px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: var(--font);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+      color: #04101e;
+      font-weight: 700;
+      box-shadow: 0 2px 10px rgba(14, 165, 233, 0.25);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #7dd3fc, #38bdf8);
+      transform: translateY(-1px);
+    }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-emerald {
+      background: var(--emerald);
+      color: #022013;
+      font-weight: 700;
+    }
+    .btn-emerald:hover {
+      background: #34d399;
+      transform: translateY(-1px);
+    }
+
+    .btn-rose {
+      background: rgba(244, 63, 94, 0.15);
+      border-color: rgba(244, 63, 94, 0.35);
+      color: #fda4af;
+    }
+    .btn-rose:hover {
+      background: var(--rose);
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: var(--surface-elevated);
+      color: var(--text);
+      border-color: var(--border);
+    }
+    .btn-secondary:hover {
+      background: #1e2b4a;
+      border-color: var(--border-accent);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-dim);
+      border-color: transparent;
+      padding: 7px 10px;
+    }
+    .btn-ghost:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* KPI Summary Stats Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .stat-card:hover {
+      border-color: rgba(255, 255, 255, 0.14);
+      transform: translateY(-2px);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stat-value {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      font-family: var(--font-mono);
+    }
+
+    .stat-sub {
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+
+    /* Navigation Tabs & Filter Bar */
+    .toolbar-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .tabs-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .tab-nav {
+      display: flex;
+      gap: 8px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-size: 13.5px;
+      font-weight: 600;
+      font-family: var(--font);
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s;
+    }
+    .tab-btn:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .tab-btn.active {
+      color: var(--cyan);
+      background: var(--cyan-glow);
+      font-weight: 700;
+    }
+
+    .tab-badge {
+      font-size: 11px;
+      padding: 1px 7px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+    }
+    .tab-btn.active .tab-badge {
+      background: rgba(56, 189, 248, 0.25);
+      color: var(--cyan);
+    }
+
+    .live-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .dot-live {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 8px var(--emerald);
+    }
+
+    .auto-refresh-check {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      user-select: none;
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    /* Filter Row */
+    .filter-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 240px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px 8px 34px;
+      color: var(--text);
+      font-size: 13px;
+      font-family: var(--font);
+    }
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--cyan);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .filter-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .filter-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 5px 11px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-pill:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .filter-pill.active {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      font-weight: 700;
+    }
+
+    /* Payments List / Cards */
+    .content-area {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .pay-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      transition: all 0.2s;
+    }
+    .pay-card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      background: var(--card-hover);
+    }
+    .pay-card.pending {
+      border-color: rgba(245, 158, 11, 0.4);
+      background: linear-gradient(to right, rgba(245, 158, 11, 0.03), var(--card-bg));
+    }
+
+    .thumb-wrap {
+      width: 110px;
+      height: 140px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #040711;
+      overflow: hidden;
+      flex-shrink: 0;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .thumb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.2s ease;
+    }
+    .thumb-wrap:hover .thumb-img {
+      transform: scale(1.05);
+    }
+
+    .thumb-badge {
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #fff;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .pay-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .pay-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .customer-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .status-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .status-pending {
+      background: var(--amber-glow);
+      color: var(--amber);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+    .status-approved {
+      background: var(--emerald-glow);
+      color: var(--emerald);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+    .status-rejected {
+      background: var(--rose-glow);
+      color: var(--rose);
+      border: 1px solid rgba(244, 63, 94, 0.35);
+    }
+
+    .plan-info {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--cyan);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .meta-line {
+      font-size: 12px;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .mono-pill {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      padding: 2px 7px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 5px;
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .copy-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      padding: 2px;
+    }
+    .copy-btn:hover { color: var(--cyan); }
+
+    .unlocked-box {
+      margin-top: 6px;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: var(--emerald);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-family: var(--font-mono);
+    }
+
+    .reject-box {
+      margin-top: 6px;
+      background: rgba(244, 63, 94, 0.08);
+      border: 1px solid rgba(244, 63, 94, 0.25);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: #fda4af;
+    }
+
+    .action-row {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .days-select {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 7px;
+      padding: 7px 10px;
+      font-size: 12.5px;
+      font-family: var(--font);
+    }
+
+    /* Key Manager Tab & Generator */
+    .generator-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .presets-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .preset-pill {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .preset-pill:hover, .preset-pill.active {
+      color: var(--text);
+      border-color: var(--cyan);
+      background: var(--cyan-glow);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-dim);
+    }
+
+    .form-input {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 12px;
+      color: var(--text);
+      font-size: 13.5px;
+      font-family: var(--font);
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--cyan);
+    }
+
+    .keys-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .keys-table th {
+      text-align: left;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid var(--border);
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+
+    .keys-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-dim);
+    }
+
+    .keys-table tr:last-child td { border-bottom: none; }
+    .keys-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+    /* Empty state */
+    .empty-state {
+      background: var(--card-bg);
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+      padding: 48px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-dim);
+    }
+
+    /* Modal for Fullscreen Screenshot */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 6, 14, 0.92);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .modal-box {
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    .modal-img {
+      max-width: 85vw;
+      max-height: 80vh;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+      object-fit: contain;
+      transition: transform 0.2s ease;
+    }
+
+    .modal-toolbar {
+      display: flex;
+      gap: 10px;
+      background: rgba(15, 22, 38, 0.8);
+      backdrop-filter: blur(8px);
+      padding: 8px 14px;
+      border-radius: 30px;
+      border: 1px solid var(--border);
+    }
+
+    .modal-btn {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+    .modal-btn:hover { color: var(--text); background: rgba(255, 255, 255, 0.08); }
+
+    /* Toast Notification */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: #111a2f;
+      border: 1px solid var(--border-accent);
+      color: var(--text);
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      animation: toastIn 0.25s ease-out forwards;
+      pointer-events: auto;
+    }
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(12px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Responsive */
+    @media (max-width: 720px) {
+      .pay-card {
+        flex-direction: column;
+      }
+      .thumb-wrap {
+        width: 100%;
+        height: 180px;
+      }
+      .input-secret-wrap input {
+        width: 100%;
+      }
+      .header-controls {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Top Navigation Header -->
+  <header class="header">
+    <div class="brand-wrap">
+      <svg class="brand-logo" viewBox="0 0 120 120">
+        <defs>
+          <linearGradient id="shieldBase" x1="14" y1="6" x2="106" y2="114" gradientUnits="userSpaceOnUse">
+            <stop offset="0.0" stop-color="#181B2C" />
+            <stop offset="0.4" stop-color="#0E121F" />
+            <stop offset="1.0" stop-color="#06080F" />
+          </linearGradient>
+          <linearGradient id="rimGrad" x1="14" y1="6" x2="106" y2="114" gradientUnits="userSpaceOnUse">
+            <stop offset="0.0" stop-color="#FFFFFF" />
+            <stop offset="0.25" stop-color="#A78BFA" />
+            <stop offset="0.55" stop-color="#8B5CF6" />
+            <stop offset="0.8" stop-color="#06B6D4" />
+            <stop offset="1.0" stop-color="#1E293B" />
+          </linearGradient>
+          <linearGradient id="stemGrad" x1="36" y1="30" x2="48" y2="90" gradientUnits="userSpaceOnUse">
+            <stop offset="0.0" stop-color="#FFFFFF" />
+            <stop offset="0.4" stop-color="#E2E8F0" />
+            <stop offset="0.8" stop-color="#A78BFA" />
+            <stop offset="1.0" stop-color="#7C3AED" />
+          </linearGradient>
+          <linearGradient id="upperWing" x1="48" y1="30" x2="88" y2="60" gradientUnits="userSpaceOnUse">
+            <stop offset="0.0" stop-color="#FFFFFF" />
+            <stop offset="0.4" stop-color="#C084FC" />
+            <stop offset="0.8" stop-color="#8B5CF6" />
+            <stop offset="1.0" stop-color="#06B6D4" />
+          </linearGradient>
+          <linearGradient id="lowerWing" x1="46" y1="54" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+            <stop offset="0.0" stop-color="#8B5CF6" />
+            <stop offset="0.45" stop-color="#6366F1" />
+            <stop offset="0.8" stop-color="#06B6D4" />
+            <stop offset="1.0" stop-color="#38BDF8" />
+          </linearGradient>
+        </defs>
+        <path d="M 60 14 L 102 26 C 102 62, 85 93, 60 106 C 35 93, 18 62, 18 26 Z" fill="url(#shieldBase)" stroke="url(#rimGrad)" stroke-width="2.5" />
+        <path d="M 37 32 H 47 V 88 H 37 Z" fill="url(#stemGrad)" />
+        <path d="M 47 62 L 77 32 H 91 L 58 65 Z" fill="url(#upperWing)" />
+        <path d="M 52 57 L 91 88 H 76 L 47 64 Z" fill="url(#lowerWing)" />
+      </svg>
+      <div class="brand-text">
+        <h1>KYPER <span class="badge-sub">Console</span></h1>
+        <p>UPI Payment Verification &amp; License Key Management</p>
+      </div>
+    </div>
+
+    <div class="header-controls">
+      <div class="input-secret-wrap">
+        <input type="password" id="adminSecret" placeholder="ADMIN_SECRET" autocomplete="current-password">
+        <button class="toggle-eye" id="btnToggleSecret" title="Toggle visibility">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+      <button class="btn btn-primary" id="btnLoad">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+        <span>Load Console</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- KPI Overview Stat Cards -->
+  <section class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">
+        <span>Total Pro Revenue</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emerald)" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <div class="stat-value" id="kpiRevenue">₹0</div>
+      <div class="stat-sub" id="kpiRevenueSub">Approved UPI transfers</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-label">
+        <span>Pending Verifications</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <div class="stat-value" id="kpiPending" style="color: var(--amber)">0</div>
+      <div class="stat-sub">Needs manual review</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-label">
+        <span>Active Pro Keys</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="m21 2-2 2m-6 6 7 7-3 3-7-7v-3l-4-4c-1.6 0-3-1.4-3-3s1.4-3 3-3 3 1.4 3 3v1l2 2Z"/></svg>
+      </div>
+      <div class="stat-value" id="kpiKeys">0</div>
+      <div class="stat-sub" id="kpiKeysSub">Total issued licenses</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-label">
+        <span>System Status</span>
+        <div class="dot-live"></div>
+      </div>
+      <div class="stat-value" style="font-size: 20px; color: var(--emerald)" id="kpiStatus">Ready</div>
+      <div class="stat-sub" id="kpiLatency">Enter Secret to connect</div>
+    </div>
+  </section>
+
+  <!-- Toolbar & Filters -->
+  <section class="toolbar-card">
+    <div class="tabs-row">
+      <div class="tab-nav">
+        <button class="tab-btn active" data-tab="payments">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+          <span>Payment Proofs</span>
+          <span class="tab-badge" id="badgePaymentsCount">0</span>
+        </button>
+        <button class="tab-btn" data-tab="keys">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 11V7a5 5 0 0 1 10 0v4"/><rect width="18" height="12" x="3" y="11" rx="2"/></svg>
+          <span>License Keys</span>
+          <span class="tab-badge" id="badgeKeysCount">0</span>
+        </button>
+        <button class="tab-btn" data-tab="generator">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+          <span>Generate Key</span>
+        </button>
+      </div>
+
+      <div class="live-status">
+        <label class="auto-refresh-check">
+          <input type="checkbox" id="chkAutoRefresh">
+          <span>Auto-refresh (15s)</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Filter & Search Sub-row (Visible for Payments & Keys) -->
+    <div class="filter-row" id="filterRow">
+      <div class="search-box">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="searchInput" placeholder="Search by customer name, UTR number, or ID...">
+      </div>
+
+      <div class="filter-pills" id="paymentFilterPills">
+        <button class="filter-pill active" data-filter="all">All</button>
+        <button class="filter-pill" data-filter="pending">Pending</button>
+        <button class="filter-pill" data-filter="approved">Approved</button>
+        <button class="filter-pill" data-filter="rejected">Rejected</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tab 1: Payment Proofs Container -->
+  <main class="content-area" id="tabPayments">
+    <div class="empty-state">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.8"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+      <div>Enter your <b>ADMIN_SECRET</b> above and click <b>Load Console</b> to inspect payment proofs.</div>
+    </div>
+  </main>
+
+  <!-- Tab 2: Keys Container -->
+  <main class="content-area" id="tabKeys" style="display: none;">
+    <div class="empty-state">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.8"><path d="m21 2-2 2m-6 6 7 7-3 3-7-7v-3l-4-4c-1.6 0-3-1.4-3-3s1.4-3 3-3 3 1.4 3 3v1l2 2Z"/></svg>
+      <div>Active &amp; expired license keys will be displayed here.</div>
+    </div>
+  </main>
+
+  <!-- Tab 3: Quick Key Generator -->
+  <main class="content-area" id="tabGenerator" style="display: none;">
+    <div class="generator-card">
+      <div style="font-size: 15px; font-weight: 700;">⚡ Instant Pro License Key Generator</div>
+      <p style="font-size: 13px; color: var(--text-dim); margin-top: -6px;">Generate a standalone license key for direct customer support, offline deals, or UPI payments received outside the app.</p>
+
+      <div class="form-group">
+        <label>Plan Preset</label>
+        <div class="presets-row">
+          <button class="preset-pill active" data-days="30">Monthly Pro (30 Days)</button>
+          <button class="preset-pill" data-days="90">Quarterly Pro (90 Days)</button>
+          <button class="preset-pill" data-days="365">Yearly Pro (365 Days)</button>
+          <button class="preset-pill" data-days="0">👑 Lifetime Pro</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="customNote">Customer Name / WhatsApp / Payment Reference</label>
+        <input type="text" id="customNote" class="form-input" placeholder="e.g. Rahul Sharma - UPI ₹99 / PhonePe">
+      </div>
+
+      <div style="display: flex; gap: 10px; align-items: center; margin-top: 4px;">
+        <button class="btn btn-primary" id="btnGenKey">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span>Generate &amp; Copy Key</span>
+        </button>
+      </div>
+
+      <div id="genResultBox" style="display: none; margin-top: 10px;"></div>
+    </div>
+  </main>
+</div>
+
+<!-- Modal Fullscreen Screenshot Viewer -->
+<div class="modal-overlay" id="imgModal">
+  <div class="modal-box">
+    <div class="modal-toolbar">
+      <button class="modal-btn" id="btnZoomIn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        <span>Zoom In</span>
+      </button>
+      <button class="modal-btn" id="btnZoomOut">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        <span>Zoom Out</span>
+      </button>
+      <button class="modal-btn" id="btnRotate">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+        <span>Rotate</span>
+      </button>
+      <button class="modal-btn" id="btnOpenTab">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <span>Open</span>
+      </button>
+      <button class="modal-btn" id="btnCloseModal" style="color: var(--rose);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <span>Close</span>
+      </button>
+    </div>
+    <img id="modalImg" class="modal-img" src="" alt="Proof Screenshot">
+  </div>
+</div>
+
+<!-- Floating Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+(function() {
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s || "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+  const safeImg = (s) => /^data:image\/(png|jpeg|jpg|webp);base64,[A-Za-z0-9+/=]+$/.test(String(s || "")) ? s : "";
+
+  // Dynamic API Base URL: If loaded from worker origin use '', else fallback to production worker
+  const isWorkerDomain = window.location.origin.includes('workers.dev');
+  const API_BASE = isWorkerDomain ? '' : 'https://ghosttyper-api.26c648ynfx.workers.dev';
+
+  let currentPayments = [];
+  let currentKeys = [];
+  let currentFilter = 'all';
+  let currentSearch = '';
+  let autoRefreshTimer = null;
+  let activeTab = 'payments';
+  let modalScale = 1;
+  let modalRotation = 0;
+
+  // Restore saved secret from session or local
+  try {
+    const saved = sessionStorage.getItem("kyper_admin_sec") || localStorage.getItem("kyper_admin_sec");
+    if (saved) {
+      $("adminSecret").value = saved;
+      setTimeout(loadDashboard, 100);
+    }
+  } catch(e) {}
+
+  // Secret Visibility Toggle
+  $("btnToggleSecret").addEventListener("click", () => {
+    const inp = $("adminSecret");
+    inp.type = inp.type === "password" ? "text" : "password";
+  });
+
+  $("adminSecret").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") loadDashboard();
+  });
+
+  $("btnLoad").addEventListener("click", loadDashboard);
+
+  function getHeaders() {
+    const sec = $("adminSecret").value.trim();
+    if (sec) {
+      try {
+        sessionStorage.setItem("kyper_admin_sec", sec);
+        localStorage.setItem("kyper_admin_sec", sec);
+      } catch(e) {}
+    }
+    return {
+      "Content-Type": "application/json",
+      "X-Admin-Secret": sec
+    };
+  }
+
+  function showToast(msg, isError = false) {
+    const toast = document.createElement("div");
+    toast.className = "toast";
+    toast.style.borderColor = isError ? "var(--rose)" : "var(--cyan)";
+    toast.innerHTML = (isError ? "⚠️ " : "✓ ") + esc(msg);
+    $("toastContainer").appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = "0";
+      toast.style.transform = "translateY(10px)";
+      toast.style.transition = "all 0.3s ease";
+      setTimeout(() => toast.remove(), 300);
+    }, 3200);
+  }
+
+  window.copyText = function(text, label = "Text") {
+    if (!navigator.clipboard) {
+      showToast(label + " copied: " + text);
+      return;
+    }
+    navigator.clipboard.writeText(text).then(() => {
+      showToast(label + " copied to clipboard!");
+    }).catch(() => {
+      showToast(label + ": " + text);
+    });
+  };
+
+  // Tab switching
+  document.querySelectorAll(".tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      activeTab = btn.getAttribute("data-tab");
+
+      $("tabPayments").style.display = activeTab === "payments" ? "flex" : "none";
+      $("tabKeys").style.display = activeTab === "keys" ? "flex" : "none";
+      $("tabGenerator").style.display = activeTab === "generator" ? "flex" : "none";
+      $("filterRow").style.display = activeTab === "generator" ? "none" : "flex";
+
+      if (activeTab === "payments") renderPayments();
+      if (activeTab === "keys") renderKeys();
+    });
+  });
+
+  // Filter pills
+  document.querySelectorAll(".filter-pill").forEach(pill => {
+    pill.addEventListener("click", () => {
+      document.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
+      pill.classList.add("active");
+      currentFilter = pill.getAttribute("data-filter");
+      renderPayments();
+    });
+  });
+
+  // Search input
+  $("searchInput").addEventListener("input", (e) => {
+    currentSearch = e.target.value.toLowerCase().trim();
+    if (activeTab === "payments") renderPayments();
+    if (activeTab === "keys") renderKeys();
+  });
+
+  // Auto-refresh toggle
+  $("chkAutoRefresh").addEventListener("change", (e) => {
+    if (e.target.checked) {
+      autoRefreshTimer = setInterval(loadDashboard, 15000);
+      showToast("Auto-refresh active (every 15s)");
+    } else {
+      if (autoRefreshTimer) clearInterval(autoRefreshTimer);
+      autoRefreshTimer = null;
+      showToast("Auto-refresh stopped");
+    }
+  });
+
+  async function loadDashboard() {
+    const sec = $("adminSecret").value.trim();
+    if (!sec) {
+      showToast("Please enter ADMIN_SECRET", true);
+      $("adminSecret").focus();
+      return;
+    }
+
+    const t0 = performance.now();
+    $("btnLoad").disabled = true;
+    $("btnLoad").innerHTML = `<svg class="spin" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg><span>Syncing...</span>`;
+
+    try {
+      const res = await fetch(API_BASE + "/admin/dashboard", { headers: getHeaders() });
+      const data = await res.json();
+      const latency = Math.round(performance.now() - t0);
+
+      if (!res.ok) {
+        showToast(data.error || "Authentication failed", true);
+        $("kpiStatus").textContent = "Error";
+        $("kpiStatus").style.color = "var(--rose)";
+        $("kpiLatency").textContent = data.error || "Unauthorized";
+        return;
+      }
+
+      currentPayments = data.payments || [];
+      currentKeys = data.keys || [];
+
+      // Update KPI Cards
+      updateKPIs(latency);
+      renderPayments();
+      renderKeys();
+
+      showToast(`Console synced in ${latency}ms`);
+    } catch (err) {
+      showToast("Network error: " + err.message, true);
+      $("kpiStatus").textContent = "Offline";
+      $("kpiStatus").style.color = "var(--rose)";
+      $("kpiLatency").textContent = err.message;
+    } finally {
+      $("btnLoad").disabled = false;
+      $("btnLoad").innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg><span>Load Console</span>`;
+    }
+  }
+
+  function updateKPIs(latency) {
+    let totalRevenue = 0;
+    let pendingCount = 0;
+
+    currentPayments.forEach(p => {
+      if (p.status === "approved") {
+        totalRevenue += Number(p.amount) || 0;
+      } else if (p.status === "pending") {
+        pendingCount++;
+      }
+    });
+
+    $("kpiRevenue").textContent = "₹" + totalRevenue.toLocaleString('en-IN');
+    $("kpiRevenueSub").textContent = `${currentPayments.filter(p=>p.status==="approved").length} approved payments`;
+
+    $("kpiPending").textContent = pendingCount;
+    $("badgePaymentsCount").textContent = currentPayments.length;
+    $("badgeKeysCount").textContent = currentKeys.length;
+
+    $("kpiKeys").textContent = currentKeys.filter(k => !k.revoked).length;
+    $("kpiKeysSub").textContent = `${currentKeys.length} total generated`;
+
+    $("kpiStatus").textContent = "Connected";
+    $("kpiStatus").style.color = "var(--emerald)";
+    $("kpiLatency").textContent = `Cloudflare KV · ${latency}ms latency`;
+  }
+
+  function renderPayments() {
+    let list = currentPayments.slice();
+
+    if (currentFilter !== "all") {
+      list = list.filter(p => p.status === currentFilter);
+    }
+
+    if (currentSearch) {
+      list = list.filter(p => {
+        const text = [p.name, p.utr, p.id, p.planLabel, p.deviceId, p.licenseKey].filter(Boolean).join(" ").toLowerCase();
+        return text.includes(currentSearch);
+      });
+    }
+
+    if (!list.length) {
+      $("tabPayments").innerHTML = `
+        <div class="empty-state">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.8"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+          <div>No payment records found matching current filter.</div>
+        </div>`;
+      return;
+    }
+
+    $("tabPayments").innerHTML = list.map(p => {
+      const isPend = p.status === "pending";
+      const isAppr = p.status === "approved";
+      const isRej = p.status === "rejected";
+      const stClass = isAppr ? "status-approved" : isRej ? "status-rejected" : "status-pending";
+      const dateStr = p.createdAt ? new Date(p.createdAt).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }) : "N/A";
+      const selDays = p.days === 0 ? "0" : String(p.days || 30);
+
+      const thumbHtml = p.screenshot
+        ? `<div class="thumb-wrap" onclick="viewScreenshot('${esc(p.id)}', '${esc(p.screenshot)}')">
+            <img class="thumb-img" src="${safeImg(p.screenshot)}" alt="Proof">
+            <span class="thumb-badge">Inspect</span>
+           </div>`
+        : `<div class="thumb-wrap" onclick="viewRemoteScreenshot('${esc(p.id)}', this)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span class="thumb-badge">Load Shot</span>
+           </div>`;
+
+      return `
+        <div class="pay-card ${isPend ? 'pending' : ''}">
+          ${thumbHtml}
+          <div class="pay-details">
+            <div class="pay-header">
+              <div class="customer-name">${esc(p.name)}</div>
+              <span class="status-badge ${stClass}">${esc(p.status)}</span>
+            </div>
+
+            <div class="plan-info">
+              <span>${esc(p.planLabel || 'Pro Plan')}</span>
+              <span>•</span>
+              <span style="font-family: var(--font-mono); font-size: 15px; color: var(--emerald);">₹${esc(p.amount)}</span>
+            </div>
+
+            <div class="meta-line">
+              <span>UTR / Ref:</span>
+              <span class="mono-pill">
+                <b>${esc(p.utr || "Not provided")}</b>
+                ${p.utr ? `<button class="copy-btn" onclick="copyText('${esc(p.utr)}', 'UTR')" title="Copy UTR"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button>` : ''}
+              </span>
+              <span>•</span>
+              <span>Submitted: ${esc(dateStr)}</span>
+            </div>
+
+            ${p.deviceId ? `
+              <div class="meta-line" style="font-size: 11px; color: var(--text-muted);">
+                <span>Device ID:</span>
+                <span class="mono-pill" style="font-size: 10.5px;">${esc(p.deviceId.slice(0, 24))}...</span>
+              </div>
+            ` : ''}
+
+            ${isAppr && p.licenseKey ? `
+              <div class="unlocked-box">
+                <div>
+                  <span style="color: var(--text-dim); font-size: 11px;">AUTO-UNLOCKED PRO KEY:</span>
+                  <div style="font-size: 14px; font-weight: 700;">${esc(p.licenseKey)}</div>
+                </div>
+                <button class="btn btn-secondary" style="padding: 5px 10px; font-size: 11.5px;" onclick="copyText('${esc(p.licenseKey)}', 'License Key')">
+                  Copy Key
+                </button>
+              </div>
+            ` : ''}
+
+            ${isRej ? `
+              <div class="reject-box">
+                <b>Reason:</b> ${esc(p.rejectReason || "Payment not received / invalid proof.")}
+              </div>
+            ` : ''}
+
+            ${isPend ? `
+              <div class="action-row">
+                <select class="days-select" id="validity_${esc(p.id)}">
+                  <option value="30" ${selDays === "30" ? "selected" : ""}>30 Days (Monthly Pro)</option>
+                  <option value="90">90 Days (Quarterly)</option>
+                  <option value="365">365 Days (Yearly)</option>
+                  <option value="0" ${selDays === "0" ? "selected" : ""}>👑 Lifetime Pro</option>
+                </select>
+                <button class="btn btn-emerald" onclick="approvePayment('${esc(p.id)}', this)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Approve &amp; Auto-Unlock Pro</span>
+                </button>
+                <button class="btn btn-rose" onclick="rejectPayment('${esc(p.id)}', this)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  <span>Reject</span>
+                </button>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function renderKeys() {
+    let list = currentKeys.slice();
+    if (currentSearch) {
+      list = list.filter(k => {
+        const text = [k.key, k.note, k.label].filter(Boolean).join(" ").toLowerCase();
+        return text.includes(currentSearch);
+      });
+    }
+
+    if (!list.length) {
+      $("tabKeys").innerHTML = `
+        <div class="empty-state">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.8"><path d="m21 2-2 2m-6 6 7 7-3 3-7-7v-3l-4-4c-1.6 0-3-1.4-3-3s1.4-3 3-3 3 1.4 3 3v1l2 2Z"/></svg>
+          <div>No license keys found.</div>
+        </div>`;
+      return;
+    }
+
+    $("tabKeys").innerHTML = `
+      <table class="keys-table">
+        <thead>
+          <tr>
+            <th>License Key</th>
+            <th>Customer / Note</th>
+            <th>Validity &amp; Expiry</th>
+            <th>Status</th>
+            <th style="text-align: right;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${list.map(k => {
+            const isRevoked = !!k.revoked;
+            const expStr = isRevoked ? "Revoked" : k.expiresAt ? "Exp: " + new Date(k.expiresAt).toLocaleDateString() : "Lifetime Pro";
+            const statusBadge = isRevoked
+              ? `<span class="status-badge status-rejected">Revoked</span>`
+              : `<span class="status-badge status-approved">Active</span>`;
+
+            return `
+              <tr>
+                <td>
+                  <span class="mono-pill" style="font-weight: 700; color: var(--cyan);">
+                    ${esc(k.key)}
+                    <button class="copy-btn" onclick="copyText('${esc(k.key)}', 'License Key')" title="Copy Key">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                    </button>
+                  </span>
+                </td>
+                <td>
+                  <div style="font-weight: 600; color: var(--text);">${esc(k.note || "General Pro")}</div>
+                  <div style="font-size: 11px; color: var(--text-muted);">${esc(k.label || "")}</div>
+                </td>
+                <td>
+                  <span style="font-family: var(--font-mono); font-size: 12px;">${esc(expStr)}</span>
+                </td>
+                <td>${statusBadge}</td>
+                <td style="text-align: right;">
+                  ${!isRevoked ? `
+                    <button class="btn btn-rose" style="padding: 5px 10px; font-size: 11px;" onclick="revokeKey('${esc(k.key)}', this)">
+                      Revoke
+                    </button>
+                  ` : '<span style="color: var(--text-muted); font-size: 11.5px;">Revoked</span>'}
+                </td>
+              </tr>
+            `;
+          }).join("")}
+        </tbody>
+      </table>
+    `;
+  }
+
+  // Approve Payment Action
+  window.approvePayment = async function(id, btn) {
+    const sel = $("validity_" + id);
+    const days = sel ? Number(sel.value) : 30;
+
+    if (!confirm("Are you sure you verified this payment?\nThis will generate a Pro key and immediately unlock the customer's extension / app.")) {
+      return;
+    }
+
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = `<svg class="spin" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg><span>Unlocking...</span>`;
+    }
+
+    try {
+      const res = await fetch(API_BASE + "/admin/approve-payment", {
+        method: "POST",
+        headers: getHeaders(),
+        body: JSON.stringify({ id, days })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        showToast(data.error || "Approval failed", true);
+        if (btn) btn.disabled = false;
+        return;
+      }
+      showToast("✓ Approved! Generated Pro Key: " + data.licenseKey);
+      loadDashboard();
+    } catch (e) {
+      showToast("Error: " + e.message, true);
+      if (btn) btn.disabled = false;
+    }
+  };
+
+  // Reject Payment Action
+  window.rejectPayment = async function(id, btn) {
+    const reason = prompt("Enter rejection reason (will be displayed to customer):", "Payment not received / invalid screenshot proof.");
+    if (reason === null) return;
+
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = `<span>Rejecting...</span>`;
+    }
+
+    try {
+      const res = await fetch(API_BASE + "/admin/reject-payment", {
+        method: "POST",
+        headers: getHeaders(),
+        body: JSON.stringify({ id, reason })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        showToast(data.error || "Rejection failed", true);
+        if (btn) btn.disabled = false;
+        return;
+      }
+      showToast("Payment marked as rejected.");
+      loadDashboard();
+    } catch (e) {
+      showToast("Error: " + e.message, true);
+      if (btn) btn.disabled = false;
+    }
+  };
+
+  // Revoke Key Action
+  window.revokeKey = async function(key, btn) {
+    if (!confirm("Permanently revoke key " + key + "?\nThe customer will immediately lose Pro access.")) return;
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = "Revoking...";
+    }
+    try {
+      const res = await fetch(API_BASE + "/admin/revoke-key", {
+        method: "POST",
+        headers: getHeaders(),
+        body: JSON.stringify({ key })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        showToast(data.error || "Revoke failed", true);
+        if (btn) btn.disabled = false;
+        return;
+      }
+      showToast("License key revoked.");
+      loadDashboard();
+    } catch(e) {
+      showToast("Error: " + e.message, true);
+      if (btn) btn.disabled = false;
+    }
+  };
+
+  // Generator Preset selection
+  let selectedPresetDays = 30;
+  document.querySelectorAll(".preset-pill").forEach(p => {
+    p.addEventListener("click", () => {
+      document.querySelectorAll(".preset-pill").forEach(x => x.classList.remove("active"));
+      p.classList.add("active");
+      selectedPresetDays = Number(p.getAttribute("data-days"));
+    });
+  });
+
+  // Manual Generate Key Button
+  $("btnGenKey").addEventListener("click", async () => {
+    const note = $("customNote").value.trim();
+    const btn = $("btnGenKey");
+    btn.disabled = true;
+    btn.innerHTML = `<svg class="spin" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg><span>Generating...</span>`;
+
+    try {
+      const res = await fetch(API_BASE + "/admin/create-key", {
+        method: "POST",
+        headers: getHeaders(),
+        body: JSON.stringify({ days: selectedPresetDays, note })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        showToast(data.error || "Key generation failed", true);
+        return;
+      }
+
+      $("genResultBox").style.display = "block";
+      $("genResultBox").innerHTML = `
+        <div class="unlocked-box" style="padding: 14px 18px; border-color: var(--cyan);">
+          <div>
+            <div style="font-size: 11px; color: var(--text-dim); text-transform: uppercase;">Generated ${esc(data.label)}:</div>
+            <div style="font-size: 19px; font-weight: 800; color: var(--cyan); letter-spacing: 0.05em; margin-top: 3px;">${esc(data.key)}</div>
+          </div>
+          <button class="btn btn-primary" onclick="copyText('${esc(data.key)}', 'Generated Key')">
+            Copy Key
+          </button>
+        </div>
+      `;
+
+      copyText(data.key, "Generated Pro Key");
+      $("customNote").value = "";
+      loadDashboard();
+    } catch(e) {
+      showToast("Error: " + e.message, true);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span>Generate &amp; Copy Key</span>`;
+    }
+  });
+
+  // Screenshot Viewer Modal
+  window.viewScreenshot = function(id, dataUrl) {
+    modalScale = 1;
+    modalRotation = 0;
+    updateModalTransform();
+    $("modalImg").src = dataUrl;
+    $("imgModal").style.display = "flex";
+  };
+
+  window.viewRemoteScreenshot = async function(id, el) {
+    if (el) el.innerHTML = `<span class="thumb-badge">Fetching...</span>`;
+    try {
+      const res = await fetch(API_BASE + "/admin/payment-image?id=" + encodeURIComponent(id), {
+        headers: getHeaders()
+      });
+      const data = await res.json();
+      if (!res.ok || !data.screenshot) {
+        showToast(data.error || "Screenshot not found", true);
+        if (el) el.innerHTML = `<span class="thumb-badge">Failed</span>`;
+        return;
+      }
+      viewScreenshot(id, safeImg(data.screenshot));
+    } catch(e) {
+      showToast("Error fetching image: " + e.message, true);
+      if (el) el.innerHTML = `<span class="thumb-badge">Retry</span>`;
+    }
+  };
+
+  function updateModalTransform() {
+    $("modalImg").style.transform = `scale(${modalScale}) rotate(${modalRotation}deg)`;
+  }
+
+  $("btnZoomIn").addEventListener("click", () => {
+    modalScale = Math.min(3, modalScale + 0.25);
+    updateModalTransform();
+  });
+
+  $("btnZoomOut").addEventListener("click", () => {
+    modalScale = Math.max(0.5, modalScale - 0.25);
+    updateModalTransform();
+  });
+
+  $("btnRotate").addEventListener("click", () => {
+    modalRotation = (modalRotation + 90) % 360;
+    updateModalTransform();
+  });
+
+  $("btnOpenTab").addEventListener("click", () => {
+    const src = $("modalImg").src;
+    if (src) {
+      const w = window.open("");
+      w.document.write(`<img src="${src}" style="max-width:100%">`);
+    }
+  });
+
+  function closeModal() {
+    $("imgModal").style.display = "none";
+    $("modalImg").src = "";
+  }
+
+  $("btnCloseModal").addEventListener("click", closeModal);
+  $("imgModal").addEventListener("click", (e) => {
+    if (e.target === $("imgModal")) closeModal();
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && $("imgModal").style.display === "flex") {
+      closeModal();
+    }
+  });
+
+})();
+</script>
+</body>
+</html>
