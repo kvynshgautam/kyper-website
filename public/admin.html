@@ -129,12 +129,16 @@
       background: var(--bg);
       border: 1px solid var(--border);
       border-radius: 9px;
-      padding: 9px 36px 9px 12px;
+      padding: 9px 14px;
       color: var(--text);
       font-family: var(--font-mono);
       font-size: 13px;
       width: 210px;
       transition: all 0.2s;
+    }
+    .input-secret-wrap input::-ms-reveal,
+    .input-secret-wrap input::-ms-clear {
+      display: none !important;
     }
 
     .input-secret-wrap input:focus {
@@ -142,19 +146,6 @@
       border-color: var(--cyan);
       box-shadow: 0 0 0 3px var(--cyan-glow);
     }
-
-    .toggle-eye {
-      position: absolute;
-      right: 10px;
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      padding: 2px;
-    }
-    .toggle-eye:hover { color: var(--text); }
 
     .btn {
       display: inline-flex;
@@ -891,10 +882,7 @@
         <span id="backendLabel">Render Live</span>
       </div>
       <div class="input-secret-wrap">
-        <input type="password" id="adminSecret" placeholder="ADMIN_SECRET" autocomplete="current-password">
-        <button class="toggle-eye" id="btnToggleSecret" title="Toggle visibility">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        </button>
+        <input type="password" id="adminSecret" placeholder="Enter Password" autocomplete="current-password">
       </div>
       <button class="btn btn-primary" id="btnLoad">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
@@ -1142,11 +1130,6 @@
     }
   } catch(e) {}
 
-  // Secret Visibility Toggle
-  $("btnToggleSecret").addEventListener("click", () => {
-    const inp = $("adminSecret");
-    inp.type = inp.type === "password" ? "text" : "password";
-  });
 
   $("adminSecret").addEventListener("keydown", (e) => {
     if (e.key === "Enter") loadDashboard();
