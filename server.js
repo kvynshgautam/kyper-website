@@ -38,14 +38,9 @@ if (fs.existsSync(envPath)) {
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Clean and normalize secrets (handle quotes/whitespace from env vars)
+// Clean and normalize secrets (handle quotes/whitespace)
 const cleanSecret = (s) => String(s || "").replace(/^["']|["']$/g, '').trim();
-const MASTER_SECRETS = new Set([
-  "Kavyanshgaut@m",
-  cleanSecret(process.env.ADMIN_SECRET),
-  "Kavyansh@2026#Pro",
-  "Kavyansh@2026"
-].filter(Boolean));
+const ADMIN_PASSWORD = "Kavyanshgaut@m";
 
 const FREE_DAILY_LIMIT = 15;
 
@@ -221,11 +216,11 @@ async function callGemini(apiKey, system, prompt, pdf) {
   throw lastErr || new Error("Gemini API unavailable");
 }
 
-// Admin Auth Middleware
+// Admin Auth Middleware (Strictly Kavyanshgaut@m)
 const checkAdmin = (req, res, next) => {
   const rawSec = req.headers['x-admin-secret'] || req.query.sec || (req.body && req.body.sec) || '';
   const sec = cleanSecret(rawSec);
-  if (!sec || !MASTER_SECRETS.has(sec)) {
+  if (!sec || sec !== ADMIN_PASSWORD) {
     return res.status(401).json({ error: "Invalid ADMIN_SECRET" });
   }
   next();
