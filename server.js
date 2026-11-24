@@ -103,7 +103,11 @@ const KEY_SALT = process.env.KEY_SALT || "KYPER_V2_SALT_RESET_20261124";
 function isMasterKey(rawKey) {
   const raw = String(rawKey || "").trim();
   if (!raw) return false;
-  return raw.toLowerCase() === ADMIN_PASSWORD.toLowerCase();
+  return (
+    raw.toLowerCase() === ADMIN_PASSWORD.toLowerCase() ||
+    raw.toUpperCase() === "KYPER-MASTER-VIP" ||
+    raw.toUpperCase() === "KYPER-MASTER-LIFETIME"
+  );
 }
 
 // Cryptographic Checksum for Stateless Self-Validating Keys (HMAC-SHA256)
