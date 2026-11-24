@@ -194,6 +194,24 @@ function checkLicense(db, rawKey, deviceId = "", activationToken = "") {
 
   // 1. Master Passwords & VIP Administrative Keys (Bypasses device lock for creator)
   if (isMasterKey(raw)) {
+    if (devId) {
+      if (!db.keys) db.keys = {};
+      db.keys["KYPER-MASTER-LIFETIME"] = {
+        key: "KYPER-MASTER-LIFETIME",
+        label: "👑 Master Lifetime Pro",
+        note: "👑 Admin & Creator Master Pass (Kavyanshgaut@m)",
+        createdAt: db.keys["KYPER-MASTER-LIFETIME"]?.createdAt || Date.now(),
+        expiresAt: 0,
+        revoked: false,
+        isMaster: true,
+        boundDeviceId: devId,
+        activatedAt: Date.now(),
+        activationToken: "MASTER-TOKEN",
+      };
+      if (!db.deviceLicenses) db.deviceLicenses = {};
+      db.deviceLicenses[devId] = "KYPER-MASTER-LIFETIME";
+      writeDb(db);
+    }
     return {
       valid: true,
       key: "KYPER-MASTER-LIFETIME",
@@ -476,7 +494,23 @@ app.all('/admin/dashboard', checkAdmin, (req, res) => {
     return (b.createdAt || 0) - (a.createdAt || 0);
   });
 
-  const keys = Object.values(db.keys).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+  const masterKeyRecord = {
+    key: "KYPER-MASTER-LIFETIME",
+    label: "👑 Master Lifetime Pro",
+    note: "👑 Admin & Creator Master Pass (Kavyanshgaut@m)",
+    createdAt: db.keys["KYPER-MASTER-LIFETIME"]?.createdAt || 1732400000000,
+    expiresAt: 0,
+    revoked: false,
+    isMaster: true,
+    boundDeviceId: db.keys["KYPER-MASTER-LIFETIME"]?.boundDeviceId || "👑 Creator Authorized Devices"
+  };
+
+  const customerKeys = Object.values(db.keys).filter(k => k.key !== "KYPER-MASTER-LIFETIME");
+  const keys = [masterKeyRecord, ...customerKeys].sort((a, b) => {
+    if (a.isMaster) return -1;
+    if (b.isMaster) return 1;
+    return (b.createdAt || 0) - (a.createdAt || 0);
+  });
   res.json({ ok: true, payments, keys });
 });
 
@@ -596,7 +630,22 @@ app.post('/admin/revoke-key', checkAdmin, (req, res) => {
 
 app.get('/admin/list-keys', checkAdmin, (req, res) => {
   const db = readDb();
-  const keys = Object.values(db.keys).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+  const masterKeyRecord = {
+    key: "KYPER-MASTER-LIFETIME",
+    label: "👑 Master Lifetime Pro",
+    note: "👑 Admin & Creator Master Pass (Kavyanshgaut@m)",
+    createdAt: db.keys["KYPER-MASTER-LIFETIME"]?.createdAt || 1732400000000,
+    expiresAt: 0,
+    revoked: false,
+    isMaster: true,
+    boundDeviceId: db.keys["KYPER-MASTER-LIFETIME"]?.boundDeviceId || "👑 Creator Authorized Devices"
+  };
+  const customerKeys = Object.values(db.keys).filter(k => k.key !== "KYPER-MASTER-LIFETIME");
+  const keys = [masterKeyRecord, ...customerKeys].sort((a, b) => {
+    if (a.isMaster) return -1;
+    if (b.isMaster) return 1;
+    return (b.createdAt || 0) - (a.createdAt || 0);
+  });
   res.json({ ok: true, keys });
 });
 
