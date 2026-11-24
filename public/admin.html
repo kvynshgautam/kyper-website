@@ -1442,9 +1442,14 @@
           ${list.map(k => {
             const isRevoked = !!k.revoked;
             const expStr = isRevoked ? "Revoked" : k.expiresAt ? "Exp: " + new Date(k.expiresAt).toLocaleDateString() : "Lifetime Pro";
-            const statusBadge = isRevoked
-              ? `<span class="status-badge status-rejected">Revoked</span>`
-              : `<span class="status-badge status-approved">Active</span>`;
+            let statusBadge = "";
+            if (isRevoked) {
+              statusBadge = `<span class="status-badge status-rejected">Revoked</span>`;
+            } else if (k.boundDeviceId) {
+              statusBadge = `<span class="status-badge status-approved" title="Bound to: ${esc(k.boundDeviceId)}">🔒 Used (1 Dev)</span>`;
+            } else {
+              statusBadge = `<span class="status-badge" style="background: rgba(56, 189, 248, 0.15); color: var(--cyan);" title="Not used yet">Available</span>`;
+            }
 
             return `
               <tr>
