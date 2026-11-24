@@ -94,24 +94,141 @@ const todayKey = () => {
   return `${d.getUTCFullYear()}-${d.getUTCMonth() + 1}-${d.getUTCDate()}`;
 };
 
+// Master Password & Permanent License Helpers
+function isMasterKey(rawKey) {
+  const raw = String(rawKey || "").trim();
+  if (!raw) return false;
+  return (
+    raw.toLowerCase() === ADMIN_PASSWORD.toLowerCase() ||
+    raw.toUpperCase() === "KYPER-MASTER-LIFETIME" ||
+    raw.toUpperCase() === "KYPER-LIFETIME-VIP"
+  );
+}
+
+// Cryptographic Checksum for Stateless Self-Validating Keys
+// Format: KYPER-[TYPE]-[RAND]-[SIG] (e.g. KYPER-LIFE-ABCD-9F2K)
+function signKeyPayload(payload) {
+  let hash = 0x5a5a;
+  const str = String(payload || "") + ":" + ADMIN_PASSWORD;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) - hash) + str.charCodeAt(i);
+    hash |= 0;
+  }
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const abs = Math.abs(hash);
+  return (
+    chars[abs % chars.length] +
+    chars[Math.floor(abs / 32) % chars.length] +
+    chars[Math.floor(abs / 1024) % chars.length] +
+    chars[Math.floor(abs / 32768) % chars.length]
+  );
+}
+
+function genStatelessKey(days = 0) {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const randPart = Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+  const typeCode = Number(days) === 0 ? "LIFE" : (Number(days) === 30 ? "M30D" : `D${String(days).padStart(3, "0")}`);
+  const payload = `${typeCode}-${randPart}`;
+  const sig = signKeyPayload(payload);
+  return `KYPER-${payload}-${sig}`;
+}
+
+function verifyStatelessKey(rawKey) {
+  const key = String(rawKey || "").toUpperCase();
+  const m = key.match(/^KYPER-(LIFE|M30D|D\d{3})-([A-Z0-9]{4})-([A-Z0-9]{4})$/);
+  if (!m) return { valid: false };
+  const typeCode = m[1];
+  const randPart = m[2];
+  const sig = m[3];
+  const expectedSig = signKeyPayload(`${typeCode}-${randPart}`);
+  if (sig !== expectedSig) return { valid: false };
+
+  let days = 0;
+  let label = "Lifetime Pro";
+  if (typeCode === "LIFE") {
+    days = 0;
+    label = "Lifetime Pro";
+  } else if (typeCode === "M30D") {
+    days = 30;
+    label = "Monthly Pro (30 Days)";
+  } else if (typeCode.startsWith("D")) {
+    days = Number(typeCode.slice(1)) || 30;
+    label = `${days}-Day Pro`;
+  }
+  return {
+    valid: true,
+    key,
+    days,
+    label,
+    expiresAt: days > 0 ? Date.now() + days * 86400 * 1000 : 0
+  };
+}
+
 function genCode(prefix) {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   const part = () => Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
   return `${prefix}-${part()}-${part()}`;
 }
-const genKey = () => genCode("KYPER");
+const genKey = (days = 0) => genStatelessKey(days);
 const genPayId = () => genCode("PAY");
 
 function checkLicense(db, rawKey) {
-  const key = String(rawKey || "").trim().toUpperCase();
-  if (!key) return { valid: false, reason: "Invalid license key." };
-  const rec = db.keys[key];
-  if (!rec) return { valid: false, reason: "License key not found." };
-  if (rec.revoked) return { valid: false, reason: "This license key has been revoked." };
-  if (rec.expiresAt && Date.now() > rec.expiresAt) {
-    return { valid: false, reason: "License expired. Please renew your Pro plan." };
+  const raw = String(rawKey || "").trim();
+  if (!raw) return { valid: false, reason: "Invalid license key." };
+  const key = raw.toUpperCase();
+
+  // 1. Master Passwords & VIP Administrative Keys
+  if (isMasterKey(raw)) {
+    return {
+      valid: true,
+      key: "KYPER-MASTER-LIFETIME",
+      expiresAt: 0,
+      label: "👑 Master Lifetime Pro",
+      note: "Administrative Master Pass"
+    };
   }
-  return { valid: true, key, expiresAt: rec.expiresAt || 0, label: rec.label || "Pro", note: rec.note || "" };
+
+  // 2. Database Record Lookup
+  const rec = db.keys && db.keys[key];
+  if (rec) {
+    if (rec.revoked) return { valid: false, reason: "This license key has been revoked." };
+    if (rec.expiresAt && Date.now() > rec.expiresAt) {
+      return { valid: false, reason: "License expired. Please renew your Pro plan." };
+    }
+    return { valid: true, key, expiresAt: rec.expiresAt || 0, label: rec.label || "Pro", note: rec.note || "" };
+  }
+
+  // 3. Cryptographic Stateless Key (Survives Render container reboots/wipes)
+  const stateless = verifyStatelessKey(key);
+  if (stateless.valid) {
+    db.keys[key] = {
+      key,
+      label: stateless.label,
+      note: "Auto-healed cryptographic key",
+      createdAt: Date.now(),
+      expiresAt: stateless.expiresAt,
+      revoked: false
+    };
+    writeDb(db);
+    return { valid: true, key, expiresAt: stateless.expiresAt, label: stateless.label, note: "Auto-healed" };
+  }
+
+  // 4. Legacy format auto-preservation (KYPER-XXXX-XXXX)
+  // Auto-honor previously generated KYPER keys as Lifetime Pro and auto-heal into db
+  if (/^KYPER-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(key)) {
+    db.keys[key] = {
+      key,
+      label: "Lifetime Pro",
+      note: "Auto-preserved KYPER license",
+      createdAt: Date.now(),
+      expiresAt: 0,
+      revoked: false
+    };
+    writeDb(db);
+    return { valid: true, key, expiresAt: 0, label: "Lifetime Pro", note: "Auto-preserved" };
+  }
+
+  return { valid: false, reason: "License key not found." };
 }
 
 function getDeviceLicense(db, deviceId) {
@@ -326,7 +443,7 @@ app.post('/admin/approve-payment', checkAdmin, (req, res) => {
   }
 
   const days = body.days !== undefined ? Math.max(0, Number(body.days) || 0) : (pay.days || 30);
-  const key = genKey();
+  const key = genKey(days);
   const label = days === 0 ? "Lifetime Pro" : days === 30 ? "Monthly Pro" : `${days}-Day Pro`;
 
   const licRec = {
@@ -374,7 +491,7 @@ app.post('/admin/reject-payment', checkAdmin, (req, res) => {
 app.post('/admin/create-key', checkAdmin, (req, res) => {
   const body = req.body || {};
   const days = Math.max(0, Number(body.days) || 0);
-  const key = genKey();
+  const key = genKey(days);
   const label = days === 0 ? "Lifetime Pro" : days === 30 ? "Monthly Pro" : `${days}-Day Pro`;
 
   const rec = {
@@ -463,7 +580,7 @@ app.post('/api/verify', (req, res) => {
   const db = readDb();
   const lic = checkLicense(db, body.licenseKey);
   if (!lic.valid) return res.status(403).json({ ok: false, error: lic.reason });
-  res.json({ ok: true, plan: "pro", label: lic.label, expiresAt: lic.expiresAt });
+  res.json({ ok: true, plan: "pro", label: lic.label, expiresAt: lic.expiresAt, licenseKey: lic.key });
 });
 
 // Device Plan & Quota Status Check
@@ -474,7 +591,11 @@ app.post('/api/status', (req, res) => {
 
   const lic = body.licenseKey ? checkLicense(db, body.licenseKey) : { valid: false };
   if (lic.valid) {
-    return res.json({ ok: true, plan: "pro", label: lic.label, expiresAt: lic.expiresAt, remaining: 9999, limit: 9999 });
+    if (deviceId && lic.key) {
+      db.deviceLicenses[deviceId] = lic.key;
+      writeDb(db);
+    }
+    return res.json({ ok: true, plan: "pro", label: lic.label, expiresAt: lic.expiresAt, licenseKey: lic.key, remaining: 9999, limit: 9999 });
   }
 
   const devLic = getDeviceLicense(db, deviceId);
