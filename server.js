@@ -407,7 +407,7 @@ async function callGroq(apiKey, system, prompt, maxTok) {
           { role: "user", content: prompt },
         ],
         max_completion_tokens: Math.max(120, Math.min(350, maxTok || 220)),
-        temperature: 0.45,
+        temperature: 0.7,
       };
       if (/gpt-oss/.test(model)) body.reasoning_effort = "low";
       const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -458,7 +458,7 @@ async function callGemini(apiKey, system, prompt, pdf) {
         body: JSON.stringify({
           system_instruction: { parts: [{ text: system }] },
           contents: [{ role: "user", parts }],
-          generationConfig: { maxOutputTokens: 800, temperature: 0.45 },
+          generationConfig: { maxOutputTokens: 800, temperature: 0.7 },
         }),
       });
       const data = await res.json().catch(() => ({}));
@@ -830,10 +830,29 @@ app.post('/api/suggest', async (req, res) => {
       }
     }
 
-    const system = String(body.system || "").slice(0, 12000);
+    const rawSystem = String(body.system || "").slice(0, 12000);
     const prompt = String(body.prompt || "").slice(0, 18000);
     const maxTok = Number(body.maxTok) || 300;
     const pdf = isPro && body.pdf ? body.pdf : null;
+
+    // Zero-AI Human Layer: Prevents stiff, robotic, corporate bot replies
+    const ANTI_AI_DIRECTIVE = `
+[CRITICAL ANTI-AI DIRECTIVE - 100% NATURAL CASUAL HUMAN TEXTING]
+- You are ghost-writing casual instant chat messages for a real person on WhatsApp / Instagram.
+- NEVER SOUND LIKE AN AI BOT OR ASSISTANT. Speak like a real young Indian friend texting casually on their phone.
+- LANGUAGE MATCHING:
+  * If Them texts in Hinglish, Hindi, or casual Indian slang, reply ONLY in natural ROMAN HINGLISH (e.g. 'haan chalega', 'done scene', 'kuch nhi tu bta', 'theek h kal milte h', 'dekh ke batata hu').
+  * NEVER output Devanagari Hindi script (do NOT write 'हाँ', 'नमस्ते', 'बिलकुल') unless Them literally typed in Devanagari.
+  * If Them texts in English, reply in casual, relaxed, everyday English without corporate fluff.
+- ANSWER WHAT THEY ACTUALLY ASKED:
+  * Read the details (time, place, plan). Do NOT ask for details they ALREADY told you.
+- BREVITY:
+  * Keep replies SHORT: 2 to 8 words. Maximum 1 short line. Zero essay answers, zero over-explaining.
+- ZERO AI / BOT TELLS:
+  * NEVER use bot phrases: "Sure thing!", "Certainly", "I'd be happy to", "Looking forward to catching up!", "Hope this helps", "Feel free to", "Great question", "Of course".
+  * NO formal punctuation: NEVER end casual chat replies with a full stop (.) or exclamation mark (!).
+`;
+    const system = rawSystem ? `${rawSystem}\n${ANTI_AI_DIRECTIVE}` : ANTI_AI_DIRECTIVE;
 
     const groqKey = process.env.GROQ_API_KEY;
     const geminiKey = process.env.GEMINI_API_KEY;
@@ -858,6 +877,14 @@ app.post('/api/suggest', async (req, res) => {
       };
     }
 
+    // Post-processing: strip AI formatting, quotes, and robotic trailing punctuation
+    let replyText = String(out?.text || "").trim();
+    replyText = replyText.replace(/^["'“”]+|["'“”]+$/g, "").trim();
+    replyText = replyText.replace(/^(?:me|reply|response)\s*:\s*/i, "").trim();
+    if (!replyText.includes("\n") && replyText.length < 200) {
+      replyText = replyText.replace(/[.!]+$/, "").trim();
+    }
+
     let remaining = 9999;
     if (!isPro) {
       const newUsed = bumpUsage(db, deviceId);
@@ -866,7 +893,7 @@ app.post('/api/suggest', async (req, res) => {
 
     res.json({
       ok: true,
-      reply: out.text,
+      reply: replyText,
       model: out.model,
       plan: isPro ? "pro" : "free",
       remaining,
