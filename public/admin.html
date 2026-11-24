@@ -881,12 +881,20 @@
         <span style="width:7px; height:7px; border-radius:50%; background:var(--emerald); display:inline-block;"></span>
         <span id="backendLabel">Render Live</span>
       </div>
-      <div class="input-secret-wrap">
-        <input type="password" id="adminSecret" placeholder="Enter Password" autocomplete="current-password">
+      <div id="adminSessionBadge" style="display:none; align-items:center; gap:6px; font-size:12px; font-weight:700; padding:6px 12px; border-radius:8px; background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.3); color:var(--emerald);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span>KG Authenticated</span>
+      </div>
+      <div class="input-secret-wrap" id="secretWrap">
+        <input type="password" id="adminSecret" placeholder="Enter Admin Password" autocomplete="new-password">
       </div>
       <button class="btn btn-primary" id="btnLoad">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
-        <span>Load Console</span>
+        <span id="btnLoadText">Unlock Console</span>
+      </button>
+      <button class="btn btn-rose" id="btnLogout" style="display:none;" title="Lock &amp; Logout">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+        <span>Logout</span>
       </button>
     </div>
   </header>
@@ -978,7 +986,7 @@
   <main class="content-area" id="tabPayments">
     <div class="empty-state">
       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.8"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
-      <div>Enter your <b>ADMIN_SECRET</b> above and click <b>Load Console</b> to inspect payment proofs.</div>
+      <div>Enter your <b>Admin Password</b> above and click <b>Unlock Console</b> to inspect payment proofs.</div>
     </div>
   </main>
 
@@ -1121,15 +1129,58 @@
     return { res, data };
   }
 
-  // Restore saved secret from session or local
-  try {
-    const saved = sessionStorage.getItem("kyper_admin_sec") || localStorage.getItem("kyper_admin_sec");
-    if (saved) {
-      $("adminSecret").value = saved;
-      setTimeout(loadDashboard, 100);
-    }
-  } catch(e) {}
+  let sessionSecret = "";
 
+  function setAuthState(loggedIn) {
+    if (loggedIn) {
+      $("secretWrap").style.display = "none";
+      $("adminSecret").value = "";
+      $("adminSessionBadge").style.display = "inline-flex";
+      $("btnLogout").style.display = "inline-flex";
+      const loadSpan = $("btnLoadText");
+      if (loadSpan) loadSpan.textContent = "Refresh";
+    } else {
+      sessionSecret = "";
+      currentPayments = [];
+      currentKeys = [];
+      $("secretWrap").style.display = "flex";
+      $("adminSecret").value = "";
+      $("adminSessionBadge").style.display = "none";
+      $("btnLogout").style.display = "none";
+      const loadSpan = $("btnLoadText");
+      if (loadSpan) loadSpan.textContent = "Unlock Console";
+      $("kpiStatus").textContent = "Locked";
+      $("kpiStatus").style.color = "var(--text-muted)";
+      $("kpiLatency").textContent = "Enter Password to connect";
+      $("kpiRevenue").textContent = "₹0";
+      $("kpiRevenueSub").textContent = "Locked";
+      $("kpiPending").textContent = "0";
+      $("kpiPendingSub").textContent = "Locked";
+      $("kpiKeys").textContent = "0";
+      $("kpiKeysSub").textContent = "Locked";
+      $("badgePaymentsCount").textContent = "0";
+      $("badgeKeysCount").textContent = "0";
+      $("tabPayments").innerHTML = `
+        <div class="empty-state">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.8"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <div style="font-weight:700; margin-top:8px;">Console Locked</div>
+          <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">Enter your Admin Password above and click <b>Unlock Console</b>.</div>
+        </div>`;
+      $("tabKeys").innerHTML = `
+        <div class="empty-state">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.8"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <div style="font-weight:700; margin-top:8px;">License Vault Locked</div>
+          <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">Unlock console to view and manage keys.</div>
+        </div>`;
+    }
+  }
+
+  // Actively purge any historical password saved in browser localStorage
+  try {
+    localStorage.removeItem("kyper_admin_sec");
+    sessionStorage.removeItem("kyper_admin_sec");
+  } catch(e) {}
+  setAuthState(false);
 
   $("adminSecret").addEventListener("keydown", (e) => {
     if (e.key === "Enter") loadDashboard();
@@ -1137,14 +1188,23 @@
 
   $("btnLoad").addEventListener("click", loadDashboard);
 
-  function getHeaders() {
-    const sec = $("adminSecret").value.trim();
-    if (sec) {
-      try {
-        sessionStorage.setItem("kyper_admin_sec", sec);
-        localStorage.setItem("kyper_admin_sec", sec);
-      } catch(e) {}
+  $("btnLogout").addEventListener("click", () => {
+    sessionSecret = "";
+    try {
+      localStorage.removeItem("kyper_admin_sec");
+      sessionStorage.removeItem("kyper_admin_sec");
+    } catch(e) {}
+    if (autoRefreshTimer) {
+      clearInterval(autoRefreshTimer);
+      autoRefreshTimer = null;
+      $("chkAutoRefresh").checked = false;
     }
+    setAuthState(false);
+    showToast("Console locked. Logged out successfully.");
+  });
+
+  function getHeaders() {
+    const sec = sessionSecret || ($("adminSecret") ? $("adminSecret").value.trim() : "");
     return {
       "Content-Type": "application/json",
       "X-Admin-Secret": sec
@@ -1224,28 +1284,33 @@
   });
 
   async function loadDashboard() {
-    const sec = $("adminSecret").value.trim();
+    const sec = sessionSecret || ($("adminSecret") ? $("adminSecret").value.trim() : "");
     if (!sec) {
-      showToast("Please enter ADMIN_SECRET", true);
-      $("adminSecret").focus();
+      showToast("Please enter Admin Password", true);
+      if ($("adminSecret")) $("adminSecret").focus();
       return;
     }
 
     const t0 = performance.now();
     $("btnLoad").disabled = true;
-    $("btnLoad").innerHTML = `<svg class="spin" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg><span>Syncing...</span>`;
+    $("btnLoad").innerHTML = `<svg class="spin" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg><span>Authenticating...</span>`;
 
     try {
       const { res, data } = await apiCall("/admin/dashboard");
       const latency = Math.round(performance.now() - t0);
 
       if (!res.ok) {
-        showToast(data.error || "Authentication failed", true);
-        $("kpiStatus").textContent = "Error";
+        setAuthState(false);
+        showToast(data.error || "Authentication failed: Invalid Password", true);
+        $("kpiStatus").textContent = "Invalid Pass";
         $("kpiStatus").style.color = "var(--rose)";
         $("kpiLatency").textContent = data.error || "Unauthorized";
         return;
       }
+
+      // Successful Auth: store secret in memory, wipe input field from DOM
+      sessionSecret = sec;
+      setAuthState(true);
 
       currentPayments = data.payments || [];
       currentKeys = data.keys || [];
@@ -1255,7 +1320,7 @@
       renderPayments();
       renderKeys();
 
-      showToast(`Console synced in ${latency}ms`);
+      showToast(`Console unlocked in ${latency}ms`);
     } catch (err) {
       showToast(err.message, true);
       $("kpiStatus").textContent = "Offline";
@@ -1263,7 +1328,9 @@
       $("kpiLatency").textContent = err.message;
     } finally {
       $("btnLoad").disabled = false;
-      $("btnLoad").innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg><span>Load Console</span>`;
+      $("btnLoad").innerHTML = sessionSecret
+        ? `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg><span id="btnLoadText">Refresh</span>`
+        : `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg><span id="btnLoadText">Unlock Console</span>`;
     }
   }
 
