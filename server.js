@@ -99,15 +99,11 @@ const crypto = require('crypto');
 // Key Salt - Changing this instantly invalidates all previously issued/unauthorized keys
 const KEY_SALT = process.env.KEY_SALT || "KYPER_V2_SALT_RESET_20261124";
 
-// Master Password & Permanent License Helpers
-function isMasterKey(rawKey) {
+// Master Password Helper - ONLY accepts creator password (Kavyanshgaut@m), NO keys!
+function isMasterPassword(rawKey) {
   const raw = String(rawKey || "").trim();
   if (!raw) return false;
-  return (
-    raw.toLowerCase() === ADMIN_PASSWORD.toLowerCase() ||
-    raw.toUpperCase() === "KYPER-MASTER-VIP" ||
-    raw.toUpperCase() === "KYPER-MASTER-LIFETIME"
-  );
+  return raw.toLowerCase() === ADMIN_PASSWORD.toLowerCase();
 }
 
 // Cryptographic Checksum for Stateless Self-Validating Keys (HMAC-SHA256)
@@ -192,34 +188,52 @@ function checkLicense(db, rawKey, deviceId = "", activationToken = "") {
   const key = raw.toUpperCase();
   const devId = String(deviceId || "").trim().slice(0, 64);
 
-  // 1. Master Passwords & VIP Administrative Keys (Bypasses device lock for creator)
-  if (isMasterKey(raw)) {
+  // 1. Master Creator Password Activation (Strictly Password Only, No Keys!)
+  if (isMasterPassword(raw)) {
+    const token = devId ? signActivationToken("MASTER-CREATOR", devId) : "MASTER-TOKEN";
     if (devId) {
       if (!db.keys) db.keys = {};
-      db.keys["KYPER-MASTER-LIFETIME"] = {
-        key: "KYPER-MASTER-LIFETIME",
+      db.keys["MASTER-PASSWORD-AUTH"] = {
+        key: "MASTER-PASSWORD-AUTH",
         label: "👑 Master Lifetime Pro",
         note: "👑 Admin & Creator Master Pass (Kavyanshgaut@m)",
-        createdAt: db.keys["KYPER-MASTER-LIFETIME"]?.createdAt || Date.now(),
+        createdAt: db.keys["MASTER-PASSWORD-AUTH"]?.createdAt || Date.now(),
         expiresAt: 0,
         revoked: false,
         isMaster: true,
         boundDeviceId: devId,
         activatedAt: Date.now(),
-        activationToken: "MASTER-TOKEN",
+        activationToken: token,
       };
       if (!db.deviceLicenses) db.deviceLicenses = {};
-      db.deviceLicenses[devId] = "KYPER-MASTER-LIFETIME";
+      db.deviceLicenses[devId] = "MASTER-PASSWORD-AUTH";
       writeDb(db);
     }
     return {
       valid: true,
-      key: "KYPER-MASTER-LIFETIME",
+      key: "MASTER-PASSWORD-AUTH",
       expiresAt: 0,
       label: "👑 Master Lifetime Pro",
-      note: "Administrative Master Pass",
-      activationToken: "MASTER-TOKEN",
+      note: "Creator Master Password Auth",
+      activationToken: token,
     };
+  }
+
+  // 1b. Check if device is legitimately activated with Creator's Master Password token
+  if (key === "MASTER-PASSWORD-AUTH" || key === "KYPER-MASTER-LIFETIME" || key === "KYPER-MASTER-VIP") {
+    if (devId && activationToken && verifyActivationToken("MASTER-CREATOR", devId, activationToken)) {
+      return {
+        valid: true,
+        key: "MASTER-PASSWORD-AUTH",
+        expiresAt: 0,
+        label: "👑 Master Lifetime Pro",
+        note: "Creator Master Password Auth",
+        activationToken,
+        boundDeviceId: devId,
+      };
+    }
+    // Rejected if typed as a raw key without creator password!
+    return { valid: false, reason: "Master Pro kisi key se unlock nahi hota! Sirf Creator Password se unlock hota hai." };
   }
 
   // 2. Fetch or restore key record
@@ -495,17 +509,17 @@ app.all('/admin/dashboard', checkAdmin, (req, res) => {
   });
 
   const masterKeyRecord = {
-    key: "KYPER-MASTER-LIFETIME",
+    key: "PASSWORD-AUTH-ONLY",
     label: "👑 Master Lifetime Pro",
     note: "👑 Admin & Creator Master Pass (Kavyanshgaut@m)",
-    createdAt: db.keys["KYPER-MASTER-LIFETIME"]?.createdAt || 1732400000000,
+    createdAt: 1732400000000,
     expiresAt: 0,
     revoked: false,
     isMaster: true,
-    boundDeviceId: db.keys["KYPER-MASTER-LIFETIME"]?.boundDeviceId || "👑 Creator Authorized Devices"
+    boundDeviceId: "👑 Creator Authorized Devices (Password Auth)"
   };
 
-  const customerKeys = Object.values(db.keys).filter(k => k.key !== "KYPER-MASTER-LIFETIME");
+  const customerKeys = Object.values(db.keys).filter(k => !k.isMaster && k.key !== "MASTER-PASSWORD-AUTH" && k.key !== "KYPER-MASTER-LIFETIME" && k.key !== "PASSWORD-AUTH-ONLY");
   const keys = [masterKeyRecord, ...customerKeys].sort((a, b) => {
     if (a.isMaster) return -1;
     if (b.isMaster) return 1;
@@ -631,16 +645,16 @@ app.post('/admin/revoke-key', checkAdmin, (req, res) => {
 app.get('/admin/list-keys', checkAdmin, (req, res) => {
   const db = readDb();
   const masterKeyRecord = {
-    key: "KYPER-MASTER-LIFETIME",
+    key: "PASSWORD-AUTH-ONLY",
     label: "👑 Master Lifetime Pro",
     note: "👑 Admin & Creator Master Pass (Kavyanshgaut@m)",
-    createdAt: db.keys["KYPER-MASTER-LIFETIME"]?.createdAt || 1732400000000,
+    createdAt: 1732400000000,
     expiresAt: 0,
     revoked: false,
     isMaster: true,
-    boundDeviceId: db.keys["KYPER-MASTER-LIFETIME"]?.boundDeviceId || "👑 Creator Authorized Devices"
+    boundDeviceId: "👑 Creator Authorized Devices (Password Auth)"
   };
-  const customerKeys = Object.values(db.keys).filter(k => k.key !== "KYPER-MASTER-LIFETIME");
+  const customerKeys = Object.values(db.keys).filter(k => !k.isMaster && k.key !== "MASTER-PASSWORD-AUTH" && k.key !== "KYPER-MASTER-LIFETIME" && k.key !== "PASSWORD-AUTH-ONLY");
   const keys = [masterKeyRecord, ...customerKeys].sort((a, b) => {
     if (a.isMaster) return -1;
     if (b.isMaster) return 1;
