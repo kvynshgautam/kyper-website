@@ -965,6 +965,10 @@
           <input type="checkbox" id="chkAutoRefresh">
           <span>Auto-refresh (15s)</span>
         </label>
+        <button class="btn btn-rose" id="btnResetAll" style="font-size:12px; padding:6px 12px; margin-left:12px;" title="Reset all active Pro licenses back to Free">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          <span>Reset All Pro Users</span>
+        </button>
       </div>
     </div>
 
@@ -1728,6 +1732,34 @@
       btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span>Generate &amp; Copy Key</span>`;
     }
   });
+
+  // Reset All Pro Licenses Button
+  const btnResetAll = $("btnResetAll");
+  if (btnResetAll) {
+    btnResetAll.addEventListener("click", async () => {
+      const confirmReset = confirm("⚠️ KYA AAP SABHI USERS KA PRO RESET KARNA CHAHATE HAIN?\n\nIsse sabhi existing keys aur devices ka Pro status hat jayega aur sabhi users Free par shift ho jayenge.");
+      if (!confirmReset) return;
+
+      btnResetAll.disabled = true;
+      btnResetAll.innerHTML = `<svg class="spin" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg><span>Resetting...</span>`;
+      try {
+        const { res, data } = await apiCall("/admin/reset-all-licenses", {
+          method: "POST"
+        });
+        if (!res.ok) {
+          showToast(data.error || "Reset failed", true);
+          return;
+        }
+        showToast(data.message || "Sabhi Pro licenses successfully reset ho gaye!");
+        await loadDashboard();
+      } catch(e) {
+        showToast("Error: " + e.message, true);
+      } finally {
+        btnResetAll.disabled = false;
+        btnResetAll.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg><span>Reset All Pro Users</span>`;
+      }
+    });
+  }
 
   // Screenshot Viewer Modal
   window.viewScreenshot = function(id, dataUrl) {

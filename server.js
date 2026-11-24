@@ -96,21 +96,20 @@ const todayKey = () => {
 
 const crypto = require('crypto');
 
+// Key Salt - Changing this instantly invalidates all previously issued/unauthorized keys
+const KEY_SALT = process.env.KEY_SALT || "KYPER_V2_SALT_RESET_20261124";
+
 // Master Password & Permanent License Helpers
 function isMasterKey(rawKey) {
   const raw = String(rawKey || "").trim();
   if (!raw) return false;
-  return (
-    raw.toLowerCase() === ADMIN_PASSWORD.toLowerCase() ||
-    raw.toUpperCase() === "KYPER-MASTER-LIFETIME" ||
-    raw.toUpperCase() === "KYPER-LIFETIME-VIP"
-  );
+  return raw.toLowerCase() === ADMIN_PASSWORD.toLowerCase();
 }
 
 // Cryptographic Checksum for Stateless Self-Validating Keys (HMAC-SHA256)
 // Format: KYPER-[TYPE]-[RAND]-[SIG] (e.g. KYPER-LIFE-ABCD-9F2K)
 function signKeyPayload(payload) {
-  const hmac = crypto.createHmac('sha256', ADMIN_PASSWORD);
+  const hmac = crypto.createHmac('sha256', `${ADMIN_PASSWORD}:${KEY_SALT}`);
   hmac.update(String(payload || ""));
   const hex = hmac.digest('hex').toUpperCase();
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -172,7 +171,7 @@ const genPayId = () => genCode("PAY");
 
 // Cryptographic Activation Token (Binds Key to a Single Device)
 function signActivationToken(key, deviceId) {
-  const hmac = crypto.createHmac('sha256', ADMIN_PASSWORD);
+  const hmac = crypto.createHmac('sha256', `${ADMIN_PASSWORD}:${KEY_SALT}`);
   hmac.update(`${String(key).toUpperCase()}:${String(deviceId).trim()}`);
   return hmac.digest('hex').slice(0, 32);
 }
@@ -595,6 +594,21 @@ app.get('/admin/list-keys', checkAdmin, (req, res) => {
   const db = readDb();
   const keys = Object.values(db.keys).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
   res.json({ ok: true, keys });
+});
+
+// Reset ALL Pro Licenses across all devices (Global Reset)
+app.post('/admin/reset-all-licenses', checkAdmin, (req, res) => {
+  const db = readDb();
+  const keyCount = Object.keys(db.keys || {}).length;
+  const devCount = Object.keys(db.deviceLicenses || {}).length;
+  db.keys = {};
+  db.deviceLicenses = {};
+  db.resetAt = Date.now();
+  writeDb(db);
+  res.json({
+    ok: true,
+    message: `All Pro licenses reset! ${keyCount} keys and ${devCount} active device bindings were wiped. All users are now on Free.`
+  });
 });
 
 // -------------------------------------------------------------
