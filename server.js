@@ -45,8 +45,8 @@ const ADMIN_PASSWORD = "Kavyanshgaut@m";
 const FREE_DAILY_LIMIT = 15;
 
 const GROQ_MODELS = [
-  "openai/gpt-oss-120b",
   "openai/gpt-oss-20b",
+  "openai/gpt-oss-120b",
   "qwen/qwen3.8-27b"
 ];
 const GEMINI_MODELS = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-flash-latest"];
@@ -406,7 +406,7 @@ async function callGroq(apiKey, system, prompt, maxTok) {
           { role: "system", content: system },
           { role: "user", content: prompt },
         ],
-        max_completion_tokens: Math.max(600, maxTok || 800),
+        max_completion_tokens: Math.max(120, Math.min(350, maxTok || 220)),
         temperature: 0.45,
       };
       if (/gpt-oss/.test(model)) body.reasoning_effort = "low";
@@ -905,6 +905,12 @@ if (!process.env.VERCEL) {
     console.log(`📡 Updates API: /api/updates`);
     console.log(`=======================================================`);
   });
+
+  // Keep-Alive Self Ping (Prevents Render Free Container from Sleeping)
+  const RENDER_EXTERNAL_URL = process.env.RENDER_EXTERNAL_URL || "https://kyper.onrender.com";
+  setInterval(() => {
+    fetch(`${RENDER_EXTERNAL_URL}/api/health`).catch(() => {});
+  }, 8 * 60 * 1000);
 }
 
 module.exports = app;
