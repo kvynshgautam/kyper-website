@@ -885,13 +885,15 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         <span>KG Authenticated</span>
       </div>
-      <div class="input-secret-wrap" id="secretWrap">
-        <input type="password" id="adminSecret" placeholder="Enter Admin Password" autocomplete="new-password">
-      </div>
-      <button class="btn btn-primary" id="btnLoad">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
-        <span id="btnLoadText">Unlock Console</span>
-      </button>
+      <form id="authForm" style="display:inline-flex; align-items:center; gap:8px; margin:0;" onsubmit="event.preventDefault(); window.triggerUnlock(); return false;">
+        <div class="input-secret-wrap" id="secretWrap">
+          <input type="password" id="adminSecret" placeholder="Enter Admin Password" autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-primary" id="btnLoad">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          <span id="btnLoadText">Unlock Console</span>
+        </button>
+      </form>
       <button class="btn btn-rose" id="btnLogout" style="display:none;" title="Lock &amp; Logout">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
         <span>Logout</span>
@@ -1182,11 +1184,36 @@
   } catch(e) {}
   setAuthState(false);
 
-  $("adminSecret").addEventListener("keydown", (e) => {
-    if (e.key === "Enter") loadDashboard();
-  });
+  window.triggerUnlock = () => loadDashboard();
 
-  $("btnLoad").addEventListener("click", loadDashboard);
+  const secretInput = $("adminSecret");
+  if (secretInput) {
+    secretInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.keyCode === 13 || e.which === 13) {
+        e.preventDefault();
+        loadDashboard();
+      }
+    });
+    secretInput.addEventListener("keyup", (e) => {
+      if (e.key === "Enter" || e.keyCode === 13 || e.which === 13) {
+        e.preventDefault();
+        loadDashboard();
+      }
+    });
+  }
+
+  const authForm = $("authForm");
+  if (authForm) {
+    authForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      loadDashboard();
+    });
+  }
+
+  $("btnLoad").addEventListener("click", (e) => {
+    e.preventDefault();
+    loadDashboard();
+  });
 
   $("btnLogout").addEventListener("click", () => {
     sessionSecret = "";
