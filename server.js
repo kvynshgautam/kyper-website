@@ -190,49 +190,78 @@ function checkLicense(db, rawKey, deviceId = "", activationToken = "") {
 
   // 1. Master Creator Password Activation (Strictly Password Only, No Keys!)
   if (isMasterPassword(raw)) {
-    const token = devId ? signActivationToken("MASTER-CREATOR", devId) : "MASTER-TOKEN";
-    if (devId) {
-      if (!db.keys) db.keys = {};
-      db.keys["MASTER-PASSWORD-AUTH"] = {
-        key: "MASTER-PASSWORD-AUTH",
-        label: "👑 Master Lifetime Pro",
-        note: "👑 Admin & Creator Master Pass (Kavyanshgaut@m)",
-        createdAt: db.keys["MASTER-PASSWORD-AUTH"]?.createdAt || Date.now(),
-        expiresAt: 0,
-        revoked: false,
-        isMaster: true,
-        boundDeviceId: devId,
-        activatedAt: Date.now(),
-        activationToken: token,
-      };
-      if (!db.deviceLicenses) db.deviceLicenses = {};
-      db.deviceLicenses[devId] = "MASTER-PASSWORD-AUTH";
-      writeDb(db);
+    if (!devId) {
+      return { valid: false, reason: "Device identification is required to activate Master Pro." };
     }
+    const cleanDev = devId.replace(/[^a-zA-Z0-9]/g, "").slice(0, 10).toUpperCase() || "DEV";
+    const masterKey = "MASTER-" + cleanDev;
+
+    if (!db.keys) db.keys = {};
+    const existing = db.keys[masterKey];
+
+    // If this device was explicitly revoked by Admin:
+    if (existing && existing.revoked) {
+      return { valid: false, reason: "Master Pro on this device has been revoked by admin." };
+    }
+
+    const token = signActivationToken(masterKey, devId);
+    db.keys[masterKey] = {
+      key: masterKey,
+      label: "👑 Master Lifetime Pro",
+      note: "👑 Master Pro Activation (Device: " + devId.slice(0, 16) + ")",
+      createdAt: existing?.createdAt || Date.now(),
+      expiresAt: 0,
+      revoked: false,
+      isMaster: true,
+      boundDeviceId: devId,
+      activatedAt: Date.now(),
+      activationToken: token,
+    };
+    if (!db.deviceLicenses) db.deviceLicenses = {};
+    db.deviceLicenses[devId] = masterKey;
+    writeDb(db);
+
     return {
       valid: true,
-      key: "MASTER-PASSWORD-AUTH",
+      key: masterKey,
       expiresAt: 0,
       label: "👑 Master Lifetime Pro",
       note: "Creator Master Password Auth",
       activationToken: token,
+      boundDeviceId: devId,
     };
   }
 
-  // 1b. Check if device is legitimately activated with Creator's Master Password token
-  if (key === "MASTER-PASSWORD-AUTH" || key === "KYPER-MASTER-LIFETIME" || key === "KYPER-MASTER-VIP") {
-    if (devId && activationToken && verifyActivationToken("MASTER-CREATOR", devId, activationToken)) {
+  // 1b. Check if device is checking in with an active Master Pro key or token
+  if (key.startsWith("MASTER-") || key === "MASTER-PASSWORD-AUTH" || key === "KYPER-MASTER-LIFETIME" || key === "KYPER-MASTER-VIP") {
+    // If someone tries to enter any master key string directly without an activation token:
+    if (!activationToken) {
+      return { valid: false, reason: "Master Pro kisi key se unlock nahi hota! Sirf Creator Password se unlock hota hai." };
+    }
+
+    const cleanDev = devId ? devId.replace(/[^a-zA-Z0-9]/g, "").slice(0, 10).toUpperCase() : "";
+    const targetKey = key.startsWith("MASTER-") ? key : ("MASTER-" + cleanDev);
+    const rec = db.keys && db.keys[targetKey];
+
+    // Check if device or key was revoked
+    if (rec && rec.revoked) {
+      return { valid: false, reason: "Master Pro on this device has been revoked by admin." };
+    }
+
+    // Verify token
+    const tokenValid = (devId && verifyActivationToken(targetKey, devId, activationToken)) ||
+                       (devId && verifyActivationToken("MASTER-CREATOR", devId, activationToken));
+    if (devId && tokenValid) {
       return {
         valid: true,
-        key: "MASTER-PASSWORD-AUTH",
+        key: targetKey,
         expiresAt: 0,
-        label: "👑 Master Lifetime Pro",
+        label: (rec && rec.label) || "👑 Master Lifetime Pro",
         note: "Creator Master Password Auth",
         activationToken,
         boundDeviceId: devId,
       };
     }
-    // Rejected if typed as a raw key without creator password!
     return { valid: false, reason: "Master Pro kisi key se unlock nahi hota! Sirf Creator Password se unlock hota hai." };
   }
 
@@ -508,21 +537,7 @@ app.all('/admin/dashboard', checkAdmin, (req, res) => {
     return (b.createdAt || 0) - (a.createdAt || 0);
   });
 
-  const masterKeyRecord = {
-    key: "PASSWORD-AUTH-ONLY",
-    label: "👑 Master Lifetime Pro",
-    note: "👑 Admin & Creator Master Pass (Kavyanshgaut@m)",
-    createdAt: 1732400000000,
-    expiresAt: 0,
-    revoked: false,
-    isMaster: true,
-    boundDeviceId: "👑 Creator Authorized Devices (Password Auth)"
-  };
-
-  const customerKeys = Object.values(db.keys).filter(k => !k.isMaster && k.key !== "MASTER-PASSWORD-AUTH" && k.key !== "KYPER-MASTER-LIFETIME" && k.key !== "PASSWORD-AUTH-ONLY");
-  const keys = [masterKeyRecord, ...customerKeys].sort((a, b) => {
-    if (a.isMaster) return -1;
-    if (b.isMaster) return 1;
+  const keys = Object.values(db.keys || {}).filter(k => k.key !== "KYPER-MASTER-LIFETIME" && k.key !== "PASSWORD-AUTH-ONLY").sort((a, b) => {
     return (b.createdAt || 0) - (a.createdAt || 0);
   });
   res.json({ ok: true, payments, keys });
@@ -642,22 +657,23 @@ app.post('/admin/revoke-key', checkAdmin, (req, res) => {
   res.json({ ok: true, key });
 });
 
+app.post('/admin/unrevoke-key', checkAdmin, (req, res) => {
+  const body = req.body || {};
+  const key = String(body.key || "").trim().toUpperCase();
+  const db = readDb();
+  const rec = db.keys && db.keys[key];
+  if (!rec) return res.status(404).json({ error: "Key not found" });
+
+  rec.revoked = false;
+  db.keys[key] = rec;
+  writeDb(db);
+
+  res.json({ ok: true, key });
+});
+
 app.get('/admin/list-keys', checkAdmin, (req, res) => {
   const db = readDb();
-  const masterKeyRecord = {
-    key: "PASSWORD-AUTH-ONLY",
-    label: "👑 Master Lifetime Pro",
-    note: "👑 Admin & Creator Master Pass (Kavyanshgaut@m)",
-    createdAt: 1732400000000,
-    expiresAt: 0,
-    revoked: false,
-    isMaster: true,
-    boundDeviceId: "👑 Creator Authorized Devices (Password Auth)"
-  };
-  const customerKeys = Object.values(db.keys).filter(k => !k.isMaster && k.key !== "MASTER-PASSWORD-AUTH" && k.key !== "KYPER-MASTER-LIFETIME" && k.key !== "PASSWORD-AUTH-ONLY");
-  const keys = [masterKeyRecord, ...customerKeys].sort((a, b) => {
-    if (a.isMaster) return -1;
-    if (b.isMaster) return 1;
+  const keys = Object.values(db.keys || {}).filter(k => k.key !== "KYPER-MASTER-LIFETIME" && k.key !== "PASSWORD-AUTH-ONLY").sort((a, b) => {
     return (b.createdAt || 0) - (a.createdAt || 0);
   });
   res.json({ ok: true, keys });
